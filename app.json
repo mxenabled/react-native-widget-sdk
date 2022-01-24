@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "mx-connect-react-native-demo",
+    "slug": "mx-connect-react-native-demo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "mx-connect-react-native-demo"
+}
