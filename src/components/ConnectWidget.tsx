@@ -14,6 +14,8 @@ import { Interceptor, Action } from "../post_messages/interceptor"
 import { Parser } from "../post_messages/parser"
 import { Type } from "../post_messages/type"
 
+import { exhaustive } from "../utils/exhaustive"
+
 import {
   Payload,
   ConnectLoadedPayload,
@@ -61,24 +63,39 @@ export default function ConnectWidget({
 
   const interceptor = new Interceptor(widgetSsoUrl)
   const onShouldStartLoadWithRequest = (request: WebViewNavigation) => {
-    switch (interceptor.action(request)) {
+    const action = interceptor.action(request)
+    switch (action) {
       case Action.LoadInApp:
         return true
 
       case Action.Intercept:
-        const message = new Parser(request.url)
-        if (message.isValid()) {
-          dispatchMessage(message.type(), message.payload())
-        } else {
-          console.log(`unable to parse this url: ${request.url}`)
-        }
-
+        requestIntercept(request.url)
         return false
 
       case Action.LoadInBrowser:
-      default:
-        Linking.openURL(request.url)
+        requestLoadInBrowser(request.url)
         return false
+
+      default:
+        exhaustive(action)
+    }
+  }
+
+  const requestIntercept = (url: string) => {
+    const message = new Parser(url)
+    if (!message.isValid()) {
+      console.log(`unable to parse this url: ${url}`)
+      return
+    }
+
+    dispatchMessage(message.type(), message.payload())
+  }
+
+  const requestLoadInBrowser = (url: string) => {
+    try {
+      Linking.openURL(url)
+    } catch (error) {
+      console.log(`unable to load ${url} in browser app`)
     }
   }
 
@@ -88,6 +105,15 @@ export default function ConnectWidget({
     switch (payload.type) {
       case Type.ConnectLoaded:
         onLoaded(payload)
+        break
+
+      case Type.Load:
+      case Type.ConnectSelectedInstitution:
+      case Type.ConnectStepChange:
+        break
+
+      default:
+        exhaustive(payload)
     }
   }
 
