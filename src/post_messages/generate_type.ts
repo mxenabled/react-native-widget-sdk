@@ -6,7 +6,7 @@ import {
   merge,
   withEachMessageDefinition,
   write,
-} from "./generator_utils"
+} from "./generate_utils"
 
 const template = `
 /**
