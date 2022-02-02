@@ -1,20 +1,23 @@
+account_properties: &account_properties
+  guid: string
+
 user_session_properties: &user_session_properties
   user_guid: string
   session_guid: string
 
-widgets:
-  load:
-    _: {}
-
-  connect:
-    loaded: *user_session_properties
-    selectedInstitution:
-      <<: *user_session_properties
-      code: string
-      guid: string
-      name: string
-      url: string
-    stepChange:
-      <<: *user_session_properties
-      previous: string
-      current: string
+post_messages:
+  widgets:
+    load:
+      _: {}
+    connect:
+      loaded: *user_session_properties
+      selectedInstitution:
+        <<: *user_session_properties
+        code: string
+        guid: string
+        name: string
+        url: string
+      stepChange:
+        <<: *user_session_properties
+        previous: string
+        current: string

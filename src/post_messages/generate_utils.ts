@@ -49,7 +49,8 @@ export const loadDefinitions = (): DefinitionSchema => {
   console.log(`Loading post messages from ${defsFile}`)
 
   const defsData = readFileSync(defsFile)
-  return YAML.parse(defsData.toString()) as DefinitionSchema
+  const data = YAML.parse(defsData.toString()) as { post_messages: DefinitionSchema }
+  return data.post_messages
 }
 
 export const fileHeader = (filename: string) =>
