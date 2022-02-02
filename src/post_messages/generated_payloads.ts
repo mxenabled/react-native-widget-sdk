@@ -8,7 +8,6 @@ import { Type } from "./generated_types"
 
 export type LoadPayload = {
   type: Type.Load
-
 }
 
 export type ConnectLoadedPayload = {
@@ -52,7 +51,6 @@ export function buildPayload(type: Type, metadata: Record<string, string>): Payl
     case Type.Load:
       return {
         type,
-
       }
 
     case Type.ConnectLoaded:

@@ -33,18 +33,31 @@ export function buildPayload(type: Type, metadata: Record<string, string>): Payl
 }
 `
 
-const payloadTypeTemplate = `
+const payloadFilledTypeTemplate = `
 export type {name}Payload = {
   type: Type.{name}
 {fields}
 }
 `
 
-const buildPayloadCaseTemplate = `
+const payloadEmptyTypeTemplate = `
+export type {name}Payload = {
+  type: Type.{name}
+}
+`
+
+const buildFilledPayloadCaseTemplate = `
     case Type.{name}:
       return {
         type,
 {extractions}
+      }
+`
+
+const buildEmptyPayloadCaseTemplate = `
+    case Type.{name}:
+      return {
+        type,
       }
 `
 
@@ -61,12 +74,14 @@ const main = () => {
     const name = genMessageKey(namespace, action)
 
     const fields = Object.keys(defn).map((key) => `  ${key}: ${defn[key]}`)
+    const payloadTypeTemplate = fields.length > 0 ? payloadFilledTypeTemplate : payloadEmptyTypeTemplate
     const payloadType = merge(payloadTypeTemplate, {
       name,
       fields: fields.join("\n")
     })
 
     const extractions = Object.keys(defn).map((key) => `        ${key}: metadata.${key},`)
+    const buildPayloadCaseTemplate = extractions.length > 0 ? buildFilledPayloadCaseTemplate : buildEmptyPayloadCaseTemplate
     const normalizeCase = merge(buildPayloadCaseTemplate, {
       name,
       extractions: extractions.join("\n")
