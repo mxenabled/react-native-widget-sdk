@@ -99,12 +99,12 @@ export class PostMessageParser {
   payload(): Payload {
     let rawMetadata
     if (typeof this.url.query !== "object") {
-      throw new Error("A")
+      throw new Error("unable to parse paylod: invalid request query")
     }
 
     rawMetadata = this.url.query?.["metadata"]
     if (rawMetadata && typeof rawMetadata !== "string") {
-      throw new Error("B")
+      throw new Error("unable to parse paylod: invalid metadata parameter")
     }
 
     const metadata = JSON.parse(rawMetadata || "{}")
@@ -130,6 +130,6 @@ export class PostMessageParser {
         }
     }
 
-    throw new Error("C")
+    throw new Error("unable to parse paylod: unknown type")
   }
 }
