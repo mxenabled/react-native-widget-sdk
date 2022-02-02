@@ -85,6 +85,8 @@ export function genRequest(userGuid, clientId, apiKey, widgetType, environment, 
   const body = JSON.stringify({
     widget_url: {
       widget_type: widgetType,
+      is_mobile_webview: true,
+      ui_message_version: 4,
       ...widgetOptions,
     },
   })

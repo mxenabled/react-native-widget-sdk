@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react"
 
-import { View } from "react-native"
+/**
+ * TODO: SafeAreaView is only available on iOS 11 or later, so make sure
+ * there's a safe fallback for other environments.
+ * https://reactnative.dev/docs/safeareaview
+ */
+import { SafeAreaView, Dimensions, Linking } from "react-native"
 import { WebView } from "react-native-webview"
 
-import { makeConnectWidgetRequest } from "./WidgetUrls"
+import { makeConnectWidgetRequest } from "./widgetUrls"
+import { PostMessageInterceptor, PostMessageInterceptAction, PostMessageParser } from "./postMessages"
 
 /**
  * interface ConnectWidgetProps {
@@ -23,28 +29,61 @@ export default function ConnectWidget({
   onLoadComplete = () => {},
   onLoadError = (error) => {},
 }) {
-  const [url, setUrl] = useState(null)
-
-  const viewStyle = {
-    flex: 1,
-    justifyContent: "center",
-    width: "100%",
-  }
+  const [widgetSsoUrl, setWidgetSsoUrl] = useState(null)
 
   useEffect(() => {
     makeConnectWidgetRequest(userGuid, clientId, apiKey, environment)
-      .then((response) => setUrl(response.widget_url.url))
+      .then((response) => setWidgetSsoUrl(response.widget_url.url))
       .then(() => onLoadComplete())
       .catch((error) => onLoadError(error))
   }, [])
 
-  if (!url) {
-    return <View style={viewStyle} />
+  if (!widgetSsoUrl) {
+    return <SafeAreaView style={viewStyle} />
+  }
+
+  const viewStyle = {
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
+    overflow: "hidden",
+  }
+
+  const interceptor = new PostMessageInterceptor(widgetSsoUrl)
+  const onShouldStartLoadWithRequest = (request) => {
+    switch (interceptor.action(request)) {
+      case PostMessageInterceptAction.LoadInApp:
+        return true
+
+      case PostMessageInterceptAction.Intercept:
+        const message = new PostMessageParser(request.url)
+        if (message.isValid()) {
+          console.log(message.namespace())
+          console.log(message.action())
+          console.log(message.payload())
+        }
+
+        return false
+
+      case PostMessageInterceptAction.LoadInBrowser:
+      default:
+        Linking.openURL(request.url)
+        return false
+    }
   }
 
   return (
-    <View style={viewStyle}>
-      <WebView source={{ uri: url }} />
-    </View>
+    <SafeAreaView style={viewStyle}>
+      <WebView
+        scrollEnabled={true}
+        source={{ uri: widgetSsoUrl }}
+        originWhitelist={['*']}
+        cacheMode="LOAD_NO_CACHE"
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        incognito={true}
+        onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+      />
+    </SafeAreaView>
+
   )
 }
