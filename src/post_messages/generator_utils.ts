@@ -40,6 +40,9 @@ export const loadNamespaces = (): NamespaceDefinition => {
 }
 
 export const write = (dest: string, contents: string) => {
+  if (contents[contents.length - 1] !== "\n") {
+    contents = contents + "\n"
+  }
   console.log("Writing %d bytes to %s", contents.length, dest)
   writeFileSync(dest, contents)
 }
