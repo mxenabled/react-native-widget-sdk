@@ -19,7 +19,16 @@ type ConnectStepChangePayload = UserSessionPayload & {
   current: string
 }
 
+type ConnectSelectedInstitutionPayload = UserSessionPayload & {
+  type: Type.ConnectSelectedInstitution
+  code: string
+  guid: string
+  name: string
+  url: string
+}
+
 export type Payload
   = LoadPayload
   | ConnectLoadedPayload
+  | ConnectSelectedInstitutionPayload
   | ConnectStepChangePayload

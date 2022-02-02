@@ -68,6 +68,16 @@ export class Parser {
           previous: metadata.previous,
           current: metadata.current,
         }
+      case Type.ConnectSelectedInstitution:
+        return {
+          type: Type.ConnectSelectedInstitution,
+          user_guid: metadata.user_guid,
+          session_guid: metadata.session_guid,
+          code: metadata.code,
+          guid: metadata.guid,
+          name: metadata.name,
+          url: metadata.url,
+        }
     }
 
     throw new Error("unable to parse paylod: unknown type")
