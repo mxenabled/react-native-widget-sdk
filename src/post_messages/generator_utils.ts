@@ -46,7 +46,7 @@ export const write = (dest: string, contents: string) => {
 
 export const merge = (template: string, fields: Record<string, string>) =>
   Object.keys(fields).reduce((str, field) =>
-    str.replace(`{${field}}`, fields[field]), template)
+    str.replace(new RegExp(`{${field}}`, "g"), fields[field]), template).trim()
 
 export const genMessageKey = (namespace: string, action: string) =>
   camelCase(isParentDefn(action) ? namespace : `${namespace}_${action}`)

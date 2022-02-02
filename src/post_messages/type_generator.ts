@@ -23,8 +23,6 @@ export const typeMap: Record<string, Type> = {
 `
 
 const main = () => {
-  const dest = join(__dirname, "./generated_type.ts")
-
   const typeDefLines: string[] = []
   const typeMapLines: string[] = []
 
@@ -41,8 +39,9 @@ const main = () => {
     typeDefLines: typeDefLines.join("\n"),
     typeMapLines: typeMapLines.join("\n"),
     filename: basename(__filename),
-  }).trim()
+  })
 
+  const dest = join(__dirname, "./generated_type.ts")
   write(dest, code)
 }
 
