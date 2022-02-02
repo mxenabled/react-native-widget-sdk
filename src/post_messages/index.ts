@@ -1,2 +1,2 @@
-export * from "./generated_type"
-export * from "./generated_payload"
+export * from "./generated_types"
+export * from "./generated_payloads"

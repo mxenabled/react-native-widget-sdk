@@ -43,7 +43,7 @@ const main = () => {
     filename: basename(__filename),
   })
 
-  const dest = join(__dirname, "./generated_type.ts")
+  const dest = join(__dirname, "./generated_types.ts")
   write(dest, code)
 
   console.log("Done generating type definitions")

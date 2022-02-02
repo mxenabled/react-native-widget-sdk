@@ -80,7 +80,7 @@ const main = () => {
     filename: basename(__filename),
   })
 
-  const dest = join(__dirname, "./generated_payload.ts")
+  const dest = join(__dirname, "./generated_payloads.ts")
   write(dest, code)
 
   console.log("Done generating payload definitions")
