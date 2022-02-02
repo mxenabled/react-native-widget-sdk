@@ -1,4 +1,4 @@
-import { ShouldStartLoadRequest } from "react-native-webview"
+import { WebViewNavigation } from "react-native-webview"
 import { parse as parseUrl, Url } from "url"
 
 const mxScheme = "mx:"
@@ -13,7 +13,7 @@ export enum PostMessageInterceptAction {
 export class PostMessageInterceptor {
   constructor(protected widgetSsoUrl: string) {}
 
-  action(request: ShouldStartLoadRequest): PostMessageInterceptAction {
+  action(request: WebViewNavigation): PostMessageInterceptAction {
     if (request.url === this.widgetSsoUrl) {
       return PostMessageInterceptAction.LoadInApp
     }
@@ -33,7 +33,7 @@ enum PostMessageType {
   ConnectStepChange = "mx/connect/stepChange",
 }
 
-const postMessageType: Dictionary<string, PostMessageType> = {
+const postMessageType: Record<string, PostMessageType> = {
   [PostMessageType.Load]: PostMessageType.Load,
   [PostMessageType.ConnectLoaded]: PostMessageType.ConnectLoaded,
   [PostMessageType.ConnectStepChange]: PostMessageType.ConnectStepChange,
@@ -44,7 +44,9 @@ type UserSessionPayload = {
   session_guid: string
 }
 
-type LoadPayload = {}
+type LoadPayload = {
+  type: "mx/load"
+}
 
 type ConnectLoadedPayload = UserSessionPayload & {
   type: "mx/connect/loaded"
@@ -64,8 +66,8 @@ type Payload
 export class PostMessageParser {
   protected url: Url
 
-  constructor(protected url: string) {
-    this.url = parseUrl(url, true)
+  constructor(protected rawUrl: string) {
+    this.url = parseUrl(rawUrl, true)
   }
 
   isValid() {
@@ -95,25 +97,39 @@ export class PostMessageParser {
   }
 
   payload(): Payload {
-    const raw = JSON.parse(this.url.query.metadata || "{}")
+    let rawMetadata
+    if (typeof this.url.query !== "object") {
+      throw new Error("A")
+    }
+
+    rawMetadata = this.url.query?.["metadata"]
+    if (rawMetadata && typeof rawMetadata !== "string") {
+      throw new Error("B")
+    }
+
+    const metadata = JSON.parse(rawMetadata || "{}")
 
     switch (this.type()) {
       case PostMessageType.Load:
-        return {}
+        return {
+          type: "mx/load",
+        }
       case PostMessageType.ConnectLoaded:
         return {
           type: "mx/connect/loaded",
-          user_guid: raw.user_guid,
-          session_guid: raw.session_guid,
+          user_guid: metadata.user_guid,
+          session_guid: metadata.session_guid,
         }
       case PostMessageType.ConnectStepChange:
         return {
           type: "mx/connect/stepChange",
-          user_guid: raw.user_guid,
-          session_guid: raw.session_guid,
-          previous: raw.previous,
-          current: raw.current,
+          user_guid: metadata.user_guid,
+          session_guid: metadata.session_guid,
+          previous: metadata.previous,
+          current: metadata.current,
         }
     }
+
+    throw new Error("C")
   }
 }

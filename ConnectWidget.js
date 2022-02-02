@@ -88,6 +88,5 @@ export default function ConnectWidget({
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
       />
     </SafeAreaView>
-
   )
 }
