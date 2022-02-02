@@ -1,7 +1,6 @@
 import { parse as parseUrl, Url } from "url"
 
-import { Payload, normalize } from "./payload"
-import { Type, typeMap } from "./type"
+import { Type, typeMap, Payload, normalize } from "./"
 
 export class Parser {
   protected url: Url

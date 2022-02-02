@@ -12,14 +12,9 @@ import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { Parser } from "../post_messages/parser"
-import { Type } from "../post_messages/type"
+import { Type, Payload, ConnectLoadedPayload } from "../post_messages"
 
 import { exhaustive } from "../utils/exhaustive"
-
-import {
-  Payload,
-  ConnectLoadedPayload,
-} from "../post_messages/payload"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment } from "../loader/environment"
