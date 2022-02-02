@@ -1,0 +1,20 @@
+user_session_properties: &user_session_properties
+  user_guid: string
+  session_guid: string
+
+namespaces:
+  load:
+    _: {}
+
+  connect:
+    loaded: *user_session_properties
+    selectedInstitution:
+      <<: *user_session_properties
+      code: string
+      guid: string
+      name: string
+      url: string
+    stepChange:
+      <<: *user_session_properties
+      previous: string
+      current: string
