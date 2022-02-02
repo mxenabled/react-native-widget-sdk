@@ -15,16 +15,16 @@ import {
 } from "./generated_payloads"
 
 export type LoadCallback = {
-  onLoad: (payload: LoadPayload) => void
+  onLoad?: (payload: LoadPayload) => void
 }
 
 export type ConnectCallback = {
-  onLoaded: (payload: ConnectLoadedPayload) => void
-  onSelectedInstitution: (payload: ConnectSelectedInstitutionPayload) => void
-  onStepChange: (payload: ConnectStepChangePayload) => void
+  onLoaded?: (payload: ConnectLoadedPayload) => void
+  onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
+  onStepChange?: (payload: ConnectStepChangePayload) => void
 }
 
-function safeCall<P>(fn: (_: P) => void, payload: P) {
+function safeCall<P>(payload: P, fn?: (_: P) => void) {
   if (fn) {
     fn(payload)
   }
@@ -33,7 +33,7 @@ function safeCall<P>(fn: (_: P) => void, payload: P) {
 export function dispatchLoadCallback(callbacks: LoadCallback, payload: Payload) {
   switch (payload.type) {
     case Type.Load:
-      safeCall(callbacks.onLoad, payload)
+      safeCall(payload, callbacks.onLoad)
       break
 
     default:
@@ -44,15 +44,15 @@ export function dispatchLoadCallback(callbacks: LoadCallback, payload: Payload) 
 export function dispatchConnectCallback(callbacks: ConnectCallback, payload: Payload) {
   switch (payload.type) {
     case Type.ConnectLoaded:
-      safeCall(callbacks.onLoaded, payload)
+      safeCall(payload, callbacks.onLoaded)
       break
 
     case Type.ConnectSelectedInstitution:
-      safeCall(callbacks.onSelectedInstitution, payload)
+      safeCall(payload, callbacks.onSelectedInstitution)
       break
 
     case Type.ConnectStepChange:
-      safeCall(callbacks.onStepChange, payload)
+      safeCall(payload, callbacks.onStepChange)
       break
 
     default:

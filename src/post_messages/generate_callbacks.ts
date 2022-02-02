@@ -19,7 +19,7 @@ import {
 
 {callbackTypes}
 
-function safeCall<P>(fn: (_: P) => void, payload: P) {
+function safeCall<P>(payload: P, fn?: (_: P) => void) {
   if (fn) {
     fn(payload)
   }
@@ -35,7 +35,7 @@ export type {callbackType} = {
 `
 
 const callbackFunctionTypeTemplate = `
-{callbackName}: (payload: {payloadType}) => void
+{callbackName}?: (payload: {payloadType}) => void
 `
 
 const dispatchFunctionTemplate = `
@@ -51,7 +51,7 @@ export function dispatch{namespaceType}Callback(callbacks: {callbackType}, paylo
 
 const callCallbackCaseTemplate = `
     case Type.{name}:
-      safeCall(callbacks.{callbackName}, payload)
+      safeCall(payload, callbacks.{callbackName})
       break
 `
 
