@@ -21,8 +21,7 @@ type ConnectWidgetProps = {
   apiKey: string
   userGuid: string
   environment: Environment
-  onLoadComplete: () => void
-  onLoadError: (error: Error) => void
+  onSsoError: (error: Error) => void
 }
 
 export default function ConnectWidget({
@@ -30,16 +29,14 @@ export default function ConnectWidget({
   apiKey,
   userGuid,
   environment,
-  onLoadComplete = () => {},
-  onLoadError = (error) => {},
+  onSsoError = (error) => {},
 }: ConnectWidgetProps) {
   const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
 
   useEffect(() => {
     makeConnectWidgetRequest({ userGuid, clientId, apiKey, environment })
       .then((response) => setWidgetSsoUrl(response.widget_url.url))
-      .then(() => onLoadComplete())
-      .catch((error) => onLoadError(error))
+      .catch((error) => onSsoError(error))
   }, [])
 
   const viewStyle: StyleProp<ViewStyle> = {
@@ -61,6 +58,7 @@ export default function ConnectWidget({
       case Action.Intercept:
         const message = new Parser(request.url)
         if (message.isValid()) {
+
           console.log(`Post message data:
             namespace: ${message.namespace()}
             action: ${message.action()}
