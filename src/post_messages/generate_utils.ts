@@ -5,6 +5,7 @@ import YAML from "yaml"
 YAML.defaultOptions.merge = true
 
 export type DefinitionSchema = {
+  generic: ActionsSchema
   widgets: ActionsSchema
 }
 
@@ -31,11 +32,20 @@ const fileHeaderTemplate = `
 `
 
 export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {
-  const widgets = loadDefinitions().widgets
+  const defs = loadDefinitions()
+  return withEach({ ...defs.generic, ...defs.widgets }, cb)
+}
+
+export const withEachWidgetMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {
+  const defs = loadDefinitions()
+  return withEach(defs.widgets, cb)
+}
+
+export const withEach = <R>(group: ActionsSchema, cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {
   const results: R[] = []
 
-  for (const namespace in widgets) {
-    const actions = widgets[namespace]
+  for (const namespace in group) {
+    const actions = group[namespace]
     for (const action in actions) {
       results.push(cb(namespace, action, actions[action]))
     }

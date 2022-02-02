@@ -6,9 +6,15 @@ user_session_properties: &user_session_properties
   session_guid: string
 
 post_messages:
-  widgets:
+  generic:
     load:
       _: {}
+
+  entities:
+    account:
+      created: *account_properties
+
+  widgets:
     connect:
       loaded: *user_session_properties
       selectedInstitution:

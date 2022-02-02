@@ -5,7 +5,7 @@ import {
   genMessageKey,
   isParentDefn,
   merge,
-  withEachMessageDefinition,
+  withEachWidgetMessageDefinition,
   write,
 } from "./generate_utils"
 
@@ -64,7 +64,7 @@ const main = () => {
   const dispatchFunctions: string[] = []
   const dispatchesByNamespace: Record<string, string[]> = {}
 
-  withEachMessageDefinition((namespace, action, defn) => {
+  withEachWidgetMessageDefinition((namespace, action, defn) => {
     const name = genMessageKey(namespace, action)
     const callbackName = isParentDefn(action) ? `on${name}` : `on${camelCase(action)}`
     const payloadType = `${name}Payload`
