@@ -12,6 +12,12 @@ import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { Parser } from "../post_messages/parser"
+import { Type } from "../post_messages/type"
+
+import {
+  Payload,
+  ConnectLoadedPayload,
+} from "../post_messages/payload"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment } from "../loader/environment"
@@ -22,6 +28,8 @@ type ConnectWidgetProps = {
   userGuid: string
   environment: Environment
   onSsoError: (error: Error) => void
+  onMessage: (type: Type, payload: Payload) => void
+  onLoaded: (payload: ConnectLoadedPayload) => void
 }
 
 export default function ConnectWidget({
@@ -30,6 +38,8 @@ export default function ConnectWidget({
   userGuid,
   environment,
   onSsoError = (error) => {},
+  onMessage = (type, payload) => {},
+  onLoaded = (payload) => {},
 }: ConnectWidgetProps) {
   const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
 
@@ -58,12 +68,7 @@ export default function ConnectWidget({
       case Action.Intercept:
         const message = new Parser(request.url)
         if (message.isValid()) {
-
-          console.log(`Post message data:
-            namespace: ${message.namespace()}
-            action: ${message.action()}
-            type: ${message.type()}
-            payload: ${JSON.stringify(message.payload())}`)
+          dispatchMessage(message.type(), message.payload())
         } else {
           console.log(`unable to parse this url: ${request.url}`)
         }
@@ -74,6 +79,15 @@ export default function ConnectWidget({
       default:
         Linking.openURL(request.url)
         return false
+    }
+  }
+
+  const dispatchMessage = (type: Type, payload: Payload) => {
+    onMessage(type, payload)
+
+    switch (payload.type) {
+      case Type.ConnectLoaded:
+        onLoaded(payload)
     }
   }
 
