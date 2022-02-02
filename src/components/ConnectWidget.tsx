@@ -17,14 +17,14 @@ import { dispatchCallback, ConnectCallback } from "../post_messages/callbacks"
 import { exhaustive } from "../utils/exhaustive"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
-import { Environment } from "../loader/environment"
+import { Environment, lookupEnvironment } from "../loader/environment"
 
 type ConnectWidgetProps = ConnectCallback & {
   clientId: string
   apiKey: string
   userGuid: string
-  environment: Environment
-  onSsoError: (error: Error) => void
+  environment: Environment | string
+  onSsoError?: (error: Error) => void
 }
 
 export default function ConnectWidget({
@@ -35,10 +35,11 @@ export default function ConnectWidget({
   onSsoError = (error) => {},
   ...callbacks
 }: ConnectWidgetProps) {
+  const validatedEnv = lookupEnvironment(environment)
   const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    makeConnectWidgetRequest({ userGuid, clientId, apiKey, environment })
+    makeConnectWidgetRequest({ userGuid, clientId, apiKey, environment: validatedEnv })
       .then((response) => setWidgetSsoUrl(response.widget_url.url))
       .catch((error) => onSsoError(error))
   }, [])
