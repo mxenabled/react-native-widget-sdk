@@ -57,14 +57,13 @@ export default function ConnectWidget({
       case PostMessageInterceptAction.Intercept:
         const message = new PostMessageParser(request.url)
         if (message.isValid()) {
-          console.log(message.namespace())
-          console.log(message.action())
-          console.log(message.payload())
-          console.log(message.type())
+          console.log(`Post message data:
+            namespace: ${message.namespace()}
+            action: ${message.action()}
+            type: ${message.type()}
+            payload: ${JSON.stringify(message.payload())}`)
         } else {
-          console.log("INVALID")
-          console.log(request.url)
-          console.log("INVALID")
+          console.log(`unable to parse this url: ${request.url}`)
         }
 
         return false

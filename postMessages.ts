@@ -28,11 +28,13 @@ export class PostMessageInterceptor {
 }
 
 enum PostMessageType {
+  Load = "mx/load",
   ConnectLoaded = "mx/connect/loaded",
   ConnectStepChange = "mx/connect/stepChange",
 }
 
 const postMessageType: Dictionary<string, PostMessageType> = {
+  [PostMessageType.Load]: PostMessageType.Load,
   [PostMessageType.ConnectLoaded]: PostMessageType.ConnectLoaded,
   [PostMessageType.ConnectStepChange]: PostMessageType.ConnectStepChange,
 }
@@ -41,6 +43,8 @@ type UserSessionPayload = {
   user_guid: string
   session_guid: string
 }
+
+type LoadPayload = {}
 
 type ConnectLoadedPayload = UserSessionPayload & {
   type: "mx/connect/loaded"
@@ -53,7 +57,8 @@ type ConnectStepChangePayload = UserSessionPayload & {
 }
 
 type Payload
-  = ConnectLoadedPayload
+  = LoadPayload
+  | ConnectLoadedPayload
   | ConnectStepChangePayload
 
 export class PostMessageParser {
@@ -80,7 +85,7 @@ export class PostMessageParser {
   }
 
   type(): PostMessageType {
-    const raw = `mx/${this.namespace()}/${this.action()}`
+    const raw = this.action() ? `mx/${this.namespace()}/${this.action()}` : `mx/${this.namespace()}`
     const value = postMessageType[raw]
     if (value) {
       return value
@@ -93,7 +98,9 @@ export class PostMessageParser {
     const raw = JSON.parse(this.url.query.metadata || "{}")
 
     switch (this.type()) {
-      case PostMessageType.ConnectLoadedPayload:
+      case PostMessageType.Load:
+        return {}
+      case PostMessageType.ConnectLoaded:
         return {
           type: "mx/connect/loaded",
           user_guid: raw.user_guid,
