@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import Config from "react-native-config"
-import ConnectWidget from "./ConnectWidget"
+import ConnectWidget from "./src/components/ConnectWidget"
 
 export default function App() {
   return (

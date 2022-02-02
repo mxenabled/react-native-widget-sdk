@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { StyleProp, ViewStyle } from "react-native"
+import { WebViewNavigation } from "react-native-webview"
 
 /**
  * TODO: SafeAreaView is only available on iOS 11 or later, so make sure
@@ -8,20 +10,21 @@ import React, { useEffect, useState } from "react"
 import { SafeAreaView, Dimensions, Linking } from "react-native"
 import { WebView } from "react-native-webview"
 
-import { makeConnectWidgetRequest } from "./widgetUrls"
-import { Interceptor, Action } from "./src/post_messages/interceptor"
-import { Parser } from "./src/post_messages/parser"
+import { Interceptor, Action } from "../post_messages/interceptor"
+import { Parser } from "../post_messages/parser"
 
-/**
- * interface ConnectWidgetProps {
- *   clientId: String
- *   apiKey: String
- *   userGuid: String
- *   environment: Environment
- *   onLoadComplete?: () => void
- *   onLoadError?: (Error) => void
- * }
- */
+import { makeConnectWidgetRequest } from "../loader/sso"
+import { Environment } from "../loader/environment"
+
+type ConnectWidgetProps = {
+  clientId: string
+  apiKey: string
+  userGuid: string
+  environment: Environment
+  onLoadComplete: () => void
+  onLoadError: (error: Error) => void
+}
+
 export default function ConnectWidget({
   clientId,
   apiKey,
@@ -29,28 +32,28 @@ export default function ConnectWidget({
   environment,
   onLoadComplete = () => {},
   onLoadError = (error) => {},
-}) {
-  const [widgetSsoUrl, setWidgetSsoUrl] = useState(null)
+}: ConnectWidgetProps) {
+  const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    makeConnectWidgetRequest(userGuid, clientId, apiKey, environment)
+    makeConnectWidgetRequest({ userGuid, clientId, apiKey, environment })
       .then((response) => setWidgetSsoUrl(response.widget_url.url))
       .then(() => onLoadComplete())
       .catch((error) => onLoadError(error))
   }, [])
 
-  if (!widgetSsoUrl) {
-    return <SafeAreaView style={viewStyle} />
-  }
-
-  const viewStyle = {
+  const viewStyle: StyleProp<ViewStyle> = {
     height: Dimensions.get("window").height,
     width: Dimensions.get("window").width,
     overflow: "hidden",
   }
 
+  if (!widgetSsoUrl) {
+    return <SafeAreaView style={viewStyle} />
+  }
+
   const interceptor = new Interceptor(widgetSsoUrl)
-  const onShouldStartLoadWithRequest = (request) => {
+  const onShouldStartLoadWithRequest = (request: WebViewNavigation) => {
     switch (interceptor.action(request)) {
       case Action.LoadInApp:
         return true
