@@ -8,9 +8,10 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "build": "tsc",
-    "generate:post_messages_payload": "ts-node src/post_messages/generate_payloads.ts",
-    "generate:post_messages_type": "ts-node src/post_messages/generate_types.ts",
-    "generate": "npm run generate:post_messages_type && echo && npm run generate:post_messages_payload"
+    "generate:post_message_types": "ts-node src/post_messages/generate_types.ts",
+    "generate:post_message_payloads": "ts-node src/post_messages/generate_payloads.ts",
+    "generate:post_message_callbacks": "ts-node src/post_messages/generate_callbacks.ts",
+    "generate": "npm run generate:post_message_types && echo && npm run generate:post_message_payloads && echo && npm run generate:post_message_callbacks"
   },
   "dependencies": {
     "expo": "~44.0.2",

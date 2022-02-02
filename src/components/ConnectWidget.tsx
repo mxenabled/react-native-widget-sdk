@@ -12,7 +12,7 @@ import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { Parser } from "../post_messages/parser"
-import { dispatchCallback, ConnectCallback } from "../post_messages/callbacks"
+import { dispatchConnectCallback, ConnectCallback } from "../post_messages"
 
 import { exhaustive } from "../utils/exhaustive"
 
@@ -81,7 +81,7 @@ export default function ConnectWidget({
       return
     }
 
-    dispatchCallback(callbacks, message.payload())
+    dispatchConnectCallback(callbacks, message.payload())
   }
 
   const requestLoadInBrowser = (url: string) => {
