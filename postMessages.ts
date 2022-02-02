@@ -31,7 +31,7 @@ export class PostMessageParser {
   protected url: Url
 
   constructor(protected url: string) {
-    this.url = parseUrl(url)
+    this.url = parseUrl(url, true)
   }
 
   isValid() {
