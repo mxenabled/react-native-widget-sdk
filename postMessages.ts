@@ -45,15 +45,15 @@ type UserSessionPayload = {
 }
 
 type LoadPayload = {
-  type: "mx/load"
+  type: PostMessageType.Load
 }
 
 type ConnectLoadedPayload = UserSessionPayload & {
-  type: "mx/connect/loaded"
+  type: PostMessageType.ConnectLoaded
 }
 
 type ConnectStepChangePayload = UserSessionPayload & {
-  type: "mx/connect/stepChange"
+  type: PostMessageType.ConnectStepChange
   previous: string
   current: string
 }
@@ -112,17 +112,17 @@ export class PostMessageParser {
     switch (this.type()) {
       case PostMessageType.Load:
         return {
-          type: "mx/load",
+          type: PostMessageType.Load,
         }
       case PostMessageType.ConnectLoaded:
         return {
-          type: "mx/connect/loaded",
+          type: PostMessageType.ConnectLoaded,
           user_guid: metadata.user_guid,
           session_guid: metadata.session_guid,
         }
       case PostMessageType.ConnectStepChange:
         return {
-          type: "mx/connect/stepChange",
+          type: PostMessageType.ConnectStepChange,
           user_guid: metadata.user_guid,
           session_guid: metadata.session_guid,
           previous: metadata.previous,
