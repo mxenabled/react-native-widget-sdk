@@ -1,6 +1,7 @@
 import { join } from "path"
 
 import {
+  DefinitionType,
   genMessageKey,
   merge,
   withEachMessageDefinition,
@@ -12,8 +13,15 @@ import { Type } from "./generated_types"
 
 {payloadTypes}
 
+export type GenericPayload
+  = {payloadGenericTypesUnion}
+
+export type WidgetPayload
+  = {payloadWidgetTypesUnion}
+
 export type Payload
-  = {payloadUnion}
+  = GenericPayload
+  | WidgetPayload
 
 export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
   switch (type) {
@@ -44,10 +52,12 @@ const main = () => {
   console.log("Generating payload definitions")
 
   const payloadTypes: string[] = []
-  const payloadTypeNames: string[] = []
+  const payloadAllTypeNames: string[] = []
+  const payloadGenericTypeNames: string[] = []
+  const payloadWidgetTypeNames: string[] = []
   const buildPayloadCases: string[] = []
 
-  withEachMessageDefinition((namespace, action, defn) => {
+  withEachMessageDefinition((namespace, action, defn, defType) => {
     const name = genMessageKey(namespace, action)
 
     const fields = Object.keys(defn).map((key) => `  ${key}: ${defn[key]}`)
@@ -62,14 +72,29 @@ const main = () => {
       extractions: extractions.join("\n")
     })
 
-    payloadTypeNames.push(`${name}Payload`)
+    switch (defType) {
+      case DefinitionType.Generic:
+        payloadGenericTypeNames.push(`${name}Payload`)
+        break
+
+      case DefinitionType.Widget:
+        payloadWidgetTypeNames.push(`${name}Payload`)
+        break
+
+      case DefinitionType.Entity:
+        break
+    }
+
+    payloadAllTypeNames.push(`${name}Payload`)
     payloadTypes.push(payloadType)
     buildPayloadCases.push(normalizeCase)
   })
 
   const code = merge(template, {
     payloadTypes: payloadTypes.join("\n\n"),
-    payloadUnion: payloadTypeNames.join("\n  | "),
+    payloadAllTypesUnion: payloadAllTypeNames.join("\n  | "),
+    payloadGenericTypesUnion: payloadGenericTypeNames.join("\n  | "),
+    payloadWidgetTypesUnion: payloadWidgetTypeNames.join("\n  | "),
     buildPayloadCases: buildPayloadCases.join("\n\n    "),
   })
 

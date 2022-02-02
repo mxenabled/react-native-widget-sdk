@@ -4,6 +4,12 @@ import YAML from "yaml"
 
 YAML.defaultOptions.merge = true
 
+export enum DefinitionType {
+  Generic,
+  Widget,
+  Entity,
+}
+
 export type DefinitionSchema = {
   generic: ActionsSchema
   widgets: ActionsSchema
@@ -31,9 +37,16 @@ const fileHeaderTemplate = `
  */
 `
 
-export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {
+export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition, defType: DefinitionType) => R): R[] => {
   const defs = loadDefinitions()
-  return withEach({ ...defs.generic, ...defs.widgets }, cb)
+  const ret1 = withEach(defs.generic, (ns, action, defn) => cb(ns, action, defn, DefinitionType.Generic))
+  const ret2 = withEach(defs.widgets, (ns, action, defn) => cb(ns, action, defn, DefinitionType.Widget))
+  return [...ret1, ...ret2]
+}
+
+export const withEachGenericMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {
+  const defs = loadDefinitions()
+  return withEach(defs.generic, cb)
 }
 
 export const withEachWidgetMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {

@@ -7,8 +7,7 @@ user_session_properties: &user_session_properties
 
 post_messages:
   generic:
-    load:
-      _: {}
+    load: { _: {} }
 
   entities:
     account:

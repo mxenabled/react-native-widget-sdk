@@ -35,11 +35,17 @@ export type ConnectStepChangePayload = {
   current: string
 }
 
-export type Payload
+export type GenericPayload
   = LoadPayload
-  | ConnectLoadedPayload
+
+export type WidgetPayload
+  = ConnectLoadedPayload
   | ConnectSelectedInstitutionPayload
   | ConnectStepChangePayload
+
+export type Payload
+  = GenericPayload
+  | WidgetPayload
 
 export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
   switch (type) {
