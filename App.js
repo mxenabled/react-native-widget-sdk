@@ -4,12 +4,16 @@ import Config from "react-native-config"
 import ConnectWidget from "./src/components/ConnectWidget"
 
 export default function App() {
-  const onMessage = (type, payload) => {
-    console.log(`Received ${type} message (${JSON.stringify(payload)})`)
-  }
-
   const onLoaded = (payload) => {
     console.log("Connect has loaded")
+  }
+
+  const onStepChange = (payload) => {
+    console.log(`Moving from ${payload.previous} to ${payload.current}`)
+  }
+
+  const onSelectedInstitution = (payload) => {
+    console.log(`Selecting ${payload.name}`)
   }
 
   return (
@@ -19,8 +23,9 @@ export default function App() {
         apiKey={Config.MX_API_KEY}
         userGuid={Config.MX_USER_GUID}
         environment={Config.MX_ENVIRONMENT}
-        onMessage={onMessage}
         onLoaded={onLoaded}
+        onStepChange={onStepChange}
+        onSelectedInstitution={onSelectedInstitution}
       />
     </View>
   )

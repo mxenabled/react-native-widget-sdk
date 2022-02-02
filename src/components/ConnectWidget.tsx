@@ -12,21 +12,19 @@ import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { Parser } from "../post_messages/parser"
-import { Type, Payload, ConnectLoadedPayload } from "../post_messages"
+import { dispatchCallback, ConnectCallback } from "../post_messages/callbacks"
 
 import { exhaustive } from "../utils/exhaustive"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment } from "../loader/environment"
 
-type ConnectWidgetProps = {
+type ConnectWidgetProps = ConnectCallback & {
   clientId: string
   apiKey: string
   userGuid: string
   environment: Environment
   onSsoError: (error: Error) => void
-  onMessage: (type: Type, payload: Payload) => void
-  onLoaded: (payload: ConnectLoadedPayload) => void
 }
 
 export default function ConnectWidget({
@@ -35,8 +33,7 @@ export default function ConnectWidget({
   userGuid,
   environment,
   onSsoError = (error) => {},
-  onMessage = (type, payload) => {},
-  onLoaded = (payload) => {},
+  ...callbacks
 }: ConnectWidgetProps) {
   const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
 
@@ -83,7 +80,7 @@ export default function ConnectWidget({
       return
     }
 
-    dispatchMessage(message.type(), message.payload())
+    dispatchCallback(callbacks, message.payload())
   }
 
   const requestLoadInBrowser = (url: string) => {
@@ -91,24 +88,6 @@ export default function ConnectWidget({
       Linking.openURL(url)
     } catch (error) {
       console.log(`unable to load ${url} in browser app`)
-    }
-  }
-
-  const dispatchMessage = (type: Type, payload: Payload) => {
-    onMessage(type, payload)
-
-    switch (payload.type) {
-      case Type.ConnectLoaded:
-        onLoaded(payload)
-        break
-
-      case Type.Load:
-      case Type.ConnectSelectedInstitution:
-      case Type.ConnectStepChange:
-        break
-
-      default:
-        exhaustive(payload)
     }
   }
 
