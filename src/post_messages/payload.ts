@@ -1,6 +1,6 @@
 import { Type } from "./type"
 
-export type UserSessionPayload = {
+type UserSession = {
   user_guid: string
   session_guid: string
 }
@@ -9,17 +9,17 @@ export type LoadPayload = {
   type: Type.Load
 }
 
-export type ConnectLoadedPayload = UserSessionPayload & {
+export type ConnectLoadedPayload = UserSession & {
   type: Type.ConnectLoaded
 }
 
-export type ConnectStepChangePayload = UserSessionPayload & {
+export type ConnectStepChangePayload = UserSession & {
   type: Type.ConnectStepChange
   previous: string
   current: string
 }
 
-export type ConnectSelectedInstitutionPayload = UserSessionPayload & {
+export type ConnectSelectedInstitutionPayload = UserSession & {
   type: Type.ConnectSelectedInstitution
   code: string
   guid: string
@@ -33,7 +33,7 @@ export type Payload
   | ConnectSelectedInstitutionPayload
   | ConnectStepChangePayload
 
-function userSession(metadata: Record<string, string>): UserSessionPayload {
+function userSession(metadata: Record<string, string>): UserSession {
   return {
     user_guid: metadata.user_guid,
     session_guid: metadata.session_guid,
