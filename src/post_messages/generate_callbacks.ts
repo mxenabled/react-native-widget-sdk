@@ -69,8 +69,6 @@ const main = () => {
   const dispatchesByNamespace: Record<string, string[]> = {}
 
   withEachMessageDefinition((namespace, action, defn) => {
-    console.log(`  - Generating callback definition for "${namespace}/${action}" event`)
-
     const name = genMessageKey(namespace, action)
     const callbackName = isParentDefn(action) ? `on${name}` : `on${camelCase(action)}`
     const payloadType = `${name}Payload`

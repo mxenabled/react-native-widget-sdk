@@ -52,8 +52,6 @@ const main = () => {
   const buildPayloadCases: string[] = []
 
   withEachMessageDefinition((namespace, action, defn) => {
-    console.log(`  - Generating post message payload definition for "${namespace}/${action}" event`)
-
     const name = genMessageKey(namespace, action)
 
     const fields = Object.keys(defn).map((key) => `  ${key}: ${defn[key]}`)

@@ -29,8 +29,6 @@ const main = () => {
   const typeMapLines: string[] = []
 
   withEachMessageDefinition((namespace, action, defn) => {
-    console.log(`  - Generating post message type definition for "${namespace}/${action}" event`)
-
     const key = genMessageKey(namespace, action)
     const type = genMessageType(namespace, action)
     typeDefLines.push(`  ${key} = "${type}",`)
