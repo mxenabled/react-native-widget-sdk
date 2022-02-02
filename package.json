@@ -10,7 +10,7 @@
     "build": "tsc",
     "generate:post_messages_payload": "ts-node src/post_messages/payload_generator.ts",
     "generate:post_messages_type": "ts-node src/post_messages/type_generator.ts",
-    "generate": "npm run generate:post_messages_type && npm run generate:post_messages_payload"
+    "generate": "npm run generate:post_messages_type && echo && npm run generate:post_messages_payload"
   },
   "dependencies": {
     "expo": "~44.0.2",

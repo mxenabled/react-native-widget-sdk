@@ -45,12 +45,14 @@ const buildPayloadCaseTemplate = `
 `
 
 const main = () => {
+  console.log("Generating payload definitions")
+
   const payloadTypes: string[] = []
   const payloadTypeNames: string[] = []
   const buildPayloadCases: string[] = []
 
   withEachMessageDefinition((namespace, action, defn) => {
-    console.log(`Generating post message payload definition for "${namespace}/${action}" event`)
+    console.log(`  - Generating post message payload definition for "${namespace}/${action}" event`)
 
     const name = genMessageKey(namespace, action)
 
@@ -80,6 +82,8 @@ const main = () => {
 
   const dest = join(__dirname, "./generated_payload.ts")
   write(dest, code)
+
+  console.log("Done generating payload definitions")
 }
 
 main()

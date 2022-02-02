@@ -32,7 +32,7 @@ export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, de
 
 export const loadNamespaces = (): NamespaceDefinition => {
   const defsFile = join(__dirname, "./event_definitions.yml")
-  console.log(`Loading post message event definitions from ${defsFile}`)
+  console.log(`Loading post messages from ${defsFile}`)
 
   const defsData = readFileSync(defsFile)
   const data =  YAML.parse(defsData.toString()) as { namespaces: NamespaceDefinition }
@@ -43,7 +43,7 @@ export const write = (dest: string, contents: string) => {
   if (contents[contents.length - 1] !== "\n") {
     contents = contents + "\n"
   }
-  console.log("Writing %d bytes to %s", contents.length, dest)
+  console.log(`Writing ${contents.length} bytes to ${dest}`)
   writeFileSync(dest, contents)
 }
 

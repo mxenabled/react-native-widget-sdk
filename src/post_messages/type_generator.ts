@@ -23,11 +23,13 @@ export const typeLookup: Record<string, Type> = {
 `
 
 const main = () => {
+  console.log("Generating type definitions")
+
   const typeDefLines: string[] = []
   const typeMapLines: string[] = []
 
   withEachMessageDefinition((namespace, action, defn) => {
-    console.log(`Generating post message type definition for "${namespace}/${action}" event`)
+    console.log(`  - Generating post message type definition for "${namespace}/${action}" event`)
 
     const key = genMessageKey(namespace, action)
     const type = genMessageType(namespace, action)
@@ -43,6 +45,8 @@ const main = () => {
 
   const dest = join(__dirname, "./generated_type.ts")
   write(dest, code)
+
+  console.log("Done generating type definitions")
 }
 
 main()
