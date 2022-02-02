@@ -17,7 +17,7 @@ export enum Type {
 {typeDefLines}
 }
 
-export const typeMap: Record<string, Type> = {
+export const typeLookup: Record<string, Type> = {
 {typeMapLines}
 }
 `

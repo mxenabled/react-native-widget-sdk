@@ -1,6 +1,6 @@
 import { parse as parseUrl, Url } from "url"
 
-import { Type, typeMap, Payload, normalize } from "./"
+import { Type, typeLookup, Payload, buildPayload } from "./"
 
 export class Parser {
   protected url: Url
@@ -27,7 +27,7 @@ export class Parser {
 
   type(): Type {
     const raw = this.action() ? `mx/${this.namespace()}/${this.action()}` : `mx/${this.namespace()}`
-    const value = typeMap[raw]
+    const value = typeLookup[raw]
     if (value) {
       return value
     }
@@ -47,6 +47,6 @@ export class Parser {
     }
 
     const metadata = JSON.parse(rawMetadata || "{}")
-    return normalize(this.type(), metadata)
+    return buildPayload(this.type(), metadata)
   }
 }

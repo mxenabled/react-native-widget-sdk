@@ -39,7 +39,7 @@ export type Payload
   | ConnectSelectedInstitutionPayload
   | ConnectStepChangePayload
 
-export function normalize(type: Type, metadata: Record<string, string>): Payload {
+export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
   switch (type) {
     case Type.Load:
       return {

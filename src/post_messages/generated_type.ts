@@ -9,7 +9,7 @@ export enum Type {
   ConnectStepChange = "mx/connect/stepChange",
 }
 
-export const typeMap: Record<string, Type> = {
+export const typeLookup: Record<string, Type> = {
   [Type.Load]: Type.Load,
   [Type.ConnectLoaded]: Type.ConnectLoaded,
   [Type.ConnectSelectedInstitution]: Type.ConnectSelectedInstitution,

@@ -19,9 +19,9 @@ import { Type } from "./"
 export type Payload
   = {payloadUnion}
 
-export function normalize(type: Type, metadata: Record<string, string>): Payload {
+export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
   switch (type) {
-    {normalizeCases}
+    {buildPayloadCases}
 
     default:
       throw new Error(\`unknown post message type: \${type}\`)
@@ -36,7 +36,7 @@ export type {name}Payload = {
 }
 `
 
-const normalizeCaseTemplate = `
+const buildPayloadCaseTemplate = `
     case Type.{name}:
       return {
         type,
@@ -47,7 +47,7 @@ const normalizeCaseTemplate = `
 const main = () => {
   const payloadTypes: string[] = []
   const payloadTypeNames: string[] = []
-  const normalizeCases: string[] = []
+  const buildPayloadCases: string[] = []
 
   withEachMessageDefinition((namespace, action, defn) => {
     console.log(`Generating post message payload definition for "${namespace}/${action}" event`)
@@ -61,20 +61,20 @@ const main = () => {
     })
 
     const extractions = Object.keys(defn).map((key) => `        ${key}: metadata.${key},`)
-    const normalizeCase = merge(normalizeCaseTemplate, {
+    const normalizeCase = merge(buildPayloadCaseTemplate, {
       name,
       extractions: extractions.join("\n")
     })
 
     payloadTypeNames.push(`${name}Payload`)
     payloadTypes.push(payloadType)
-    normalizeCases.push(normalizeCase)
+    buildPayloadCases.push(normalizeCase)
   })
 
   const code = merge(template, {
     payloadTypes: payloadTypes.join("\n\n"),
     payloadUnion: payloadTypeNames.join("\n  | "),
-    normalizeCases: normalizeCases.join("\n\n    "),
+    buildPayloadCases: buildPayloadCases.join("\n\n    "),
     filename: basename(__filename),
   })
 
