@@ -60,6 +60,11 @@ export default function ConnectWidget({
           console.log(message.namespace())
           console.log(message.action())
           console.log(message.payload())
+          console.log(message.type())
+        } else {
+          console.log("INVALID")
+          console.log(request.url)
+          console.log("INVALID")
         }
 
         return false
