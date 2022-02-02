@@ -33,34 +33,38 @@ export type Payload
   | ConnectSelectedInstitutionPayload
   | ConnectStepChangePayload
 
-export function normalize(typ: Type, metadata: Record<string, string>): Payload {
-  switch (typ) {
+function userSession(metadata: Record<string, string>): UserSessionPayload {
+  return {
+    user_guid: metadata.user_guid,
+    session_guid: metadata.session_guid,
+  }
+}
+
+export function normalize(type: Type, metadata: Record<string, string>): Payload {
+  switch (type) {
     case Type.Load:
       return {
-        type: Type.Load,
+        type,
       }
 
     case Type.ConnectLoaded:
       return {
-        type: Type.ConnectLoaded,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
+        type,
+        ...userSession(metadata),
       }
 
     case Type.ConnectStepChange:
       return {
-        type: Type.ConnectStepChange,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
+        type,
+        ...userSession(metadata),
         previous: metadata.previous,
         current: metadata.current,
       }
 
     case Type.ConnectSelectedInstitution:
       return {
-        type: Type.ConnectSelectedInstitution,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
+        type,
+        ...userSession(metadata),
         code: metadata.code,
         guid: metadata.guid,
         name: metadata.name,
@@ -68,6 +72,6 @@ export function normalize(typ: Type, metadata: Record<string, string>): Payload 
       }
 
     default:
-      throw new Error(`unknown post message type: ${typ}`)
+      throw new Error(`unknown post message type: ${type}`)
   }
 }
