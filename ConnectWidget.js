@@ -9,7 +9,8 @@ import { SafeAreaView, Dimensions, Linking } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { makeConnectWidgetRequest } from "./widgetUrls"
-import { PostMessageInterceptor, PostMessageInterceptAction, PostMessageParser } from "./postMessages"
+import { Interceptor, Action } from "./src/post_messages/interceptor"
+import { Parser } from "./src/post_messages/parser"
 
 /**
  * interface ConnectWidgetProps {
@@ -48,14 +49,14 @@ export default function ConnectWidget({
     overflow: "hidden",
   }
 
-  const interceptor = new PostMessageInterceptor(widgetSsoUrl)
+  const interceptor = new Interceptor(widgetSsoUrl)
   const onShouldStartLoadWithRequest = (request) => {
     switch (interceptor.action(request)) {
-      case PostMessageInterceptAction.LoadInApp:
+      case Action.LoadInApp:
         return true
 
-      case PostMessageInterceptAction.Intercept:
-        const message = new PostMessageParser(request.url)
+      case Action.Intercept:
+        const message = new Parser(request.url)
         if (message.isValid()) {
           console.log(`Post message data:
             namespace: ${message.namespace()}
@@ -68,7 +69,7 @@ export default function ConnectWidget({
 
         return false
 
-      case PostMessageInterceptAction.LoadInBrowser:
+      case Action.LoadInBrowser:
       default:
         Linking.openURL(request.url)
         return false
