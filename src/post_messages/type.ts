@@ -4,8 +4,7 @@ export enum Type {
   ConnectStepChange = "mx/connect/stepChange",
 }
 
-export const typeMap: Record<string, Type> = {
-  [Type.Load]: Type.Load,
-  [Type.ConnectLoaded]: Type.ConnectLoaded,
-  [Type.ConnectStepChange]: Type.ConnectStepChange,
+export const typeMap: Record<string, Type> = {}
+for (const typ in Type) {
+  typeMap[Type[typ]] = Type[typ]
 }
