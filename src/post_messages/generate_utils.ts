@@ -4,7 +4,11 @@ import YAML from "yaml"
 
 YAML.defaultOptions.merge = true
 
-export type NamespaceDefinition = {
+export type DefinitionSchema = {
+  widgets: ActionsSchema
+}
+
+export type ActionsSchema = {
   [index: string]: ActionDefinition
 }
 
@@ -27,11 +31,11 @@ const fileHeaderTemplate = `
 `
 
 export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {
-  const namespaces = loadNamespaces()
+  const widgets = loadDefinitions().widgets
   const results: R[] = []
 
-  for (const namespace in namespaces) {
-    const actions = namespaces[namespace]
+  for (const namespace in widgets) {
+    const actions = widgets[namespace]
     for (const action in actions) {
       results.push(cb(namespace, action, actions[action]))
     }
@@ -40,13 +44,12 @@ export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, de
   return results
 }
 
-export const loadNamespaces = (): NamespaceDefinition => {
+export const loadDefinitions = (): DefinitionSchema => {
   const defsFile = join(__dirname, defsFilename)
   console.log(`Loading post messages from ${defsFile}`)
 
   const defsData = readFileSync(defsFile)
-  const data =  YAML.parse(defsData.toString()) as { namespaces: NamespaceDefinition }
-  return data.namespaces
+  return YAML.parse(defsData.toString()) as DefinitionSchema
 }
 
 export const fileHeader = (filename: string) =>

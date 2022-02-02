@@ -2,7 +2,7 @@ user_session_properties: &user_session_properties
   user_guid: string
   session_guid: string
 
-namespaces:
+widgets:
   load:
     _: {}
 
