@@ -1,6 +1,6 @@
 import { parse as parseUrl, Url } from "url"
 
-import { Payload } from "./payload"
+import { Payload, normalize } from "./payload"
 import { Type, typeMap } from "./type"
 
 export class Parser {
@@ -48,38 +48,6 @@ export class Parser {
     }
 
     const metadata = JSON.parse(rawMetadata || "{}")
-
-    switch (this.type()) {
-      case Type.Load:
-        return {
-          type: Type.Load,
-        }
-      case Type.ConnectLoaded:
-        return {
-          type: Type.ConnectLoaded,
-          user_guid: metadata.user_guid,
-          session_guid: metadata.session_guid,
-        }
-      case Type.ConnectStepChange:
-        return {
-          type: Type.ConnectStepChange,
-          user_guid: metadata.user_guid,
-          session_guid: metadata.session_guid,
-          previous: metadata.previous,
-          current: metadata.current,
-        }
-      case Type.ConnectSelectedInstitution:
-        return {
-          type: Type.ConnectSelectedInstitution,
-          user_guid: metadata.user_guid,
-          session_guid: metadata.session_guid,
-          code: metadata.code,
-          guid: metadata.guid,
-          name: metadata.name,
-          url: metadata.url,
-        }
-    }
-
-    throw new Error("unable to parse paylod: unknown type")
+    return normalize(this.type(), metadata)
   }
 }
