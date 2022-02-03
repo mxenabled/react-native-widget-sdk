@@ -2,7 +2,7 @@ import { parse as parseUrl, Url } from "url"
 
 import { Type, typeLookup, Payload, buildPayload } from "./"
 
-export class Parser {
+export class Message {
   protected url: Url
 
   constructor(protected rawUrl: string) {

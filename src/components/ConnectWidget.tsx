@@ -11,7 +11,7 @@ import { SafeAreaView, Dimensions, Linking } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
-import { Parser } from "../post_messages/parser"
+import { Message } from "../post_messages/message"
 import { dispatchConnectCallback, ConnectCallback } from "../post_messages"
 
 import { exhaustive } from "../utils/exhaustive"
@@ -75,7 +75,7 @@ export default function ConnectWidget({
   }
 
   const requestIntercept = (url: string) => {
-    const message = new Parser(url)
+    const message = new Message(url)
     if (!message.isValid()) {
       console.log(`unable to parse this url: ${url}`)
       return
