@@ -24,10 +24,17 @@ const namespaces = {
   generic: [
 {genericNamespaces}
   ],
+  entities: [
+{entityNamespaces}
+  ],
 }
 
 function isGenericMessage(message: Message) {
   return namespaces.generic.includes(message.namespace())
+}
+
+function isEntityMessage(message: Message) {
+  return namespaces.entities.includes(message.namespace())
 }
 
 function safeCall<P>(payload: P, fn?: (_: P) => void) {
@@ -40,7 +47,7 @@ function safeCall<P>(payload: P, fn?: (_: P) => void) {
 `
 
 const callbackEntryTypeTemplate = `
-export type {callbackType} = GenericCallback & {
+export type {callbackType} = GenericCallback & EntityCallback & {
 {functionTypes}
 }
 `
@@ -62,6 +69,9 @@ export function dispatch{namespaceType}Callback(callbacks: {callbackType}, messa
   if (isGenericMessage(message)) {
     dispatchGenericCallback(callbacks, message)
     return
+  } else if (isEntityMessage(message)) {
+    dispatchEntityCallback(callbacks, message)
+    return
   }
 
   switch (payload.type) {
@@ -74,7 +84,7 @@ export function dispatch{namespaceType}Callback(callbacks: {callbackType}, messa
 `
 
 const dispatchFunctionFinalTemplate = `
-function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
+export function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
   const payload = message.payload()
 
   switch (payload.type) {
@@ -105,11 +115,30 @@ const main = () => {
   const widgetNamespaces = new Set<string>()
   const entityNamespaces = new Set<string>()
 
+  callbackFunctionTypesByNamespace["generic"] = []
+  callbackFunctionTypesByNamespace["entity"] = []
+
   withEachMessageDefinition((namespace, action, defn, defType) => {
-    const group = defType === DefinitionType.Generic ? "generic" : namespace
+    let group: string
+    if (defType === DefinitionType.Generic) {
+      group = "generic"
+    } else if (defType === DefinitionType.Entity) {
+      group = "entity"
+    } else {
+      group = namespace
+    }
+
+    const isEntity = defType === DefinitionType.Entity
 
     const name = genMessageKey(namespace, action)
-    const callbackName = isParentDefn(action) ? `on${name}` : `on${camelCase(action)}`
+    let callbackName: string
+    if (isParentDefn(action)) {
+      callbackName = `on${name}`
+    } else if (isEntity) {
+      callbackName = `on${camelCase(namespace)}${name}`
+    } else {
+      callbackName = `on${camelCase(action)}`
+    }
     const payloadType = `${name}Payload`
 
     const callCallbackCase = merge(callCallbackCaseTemplate, { name, callbackName })

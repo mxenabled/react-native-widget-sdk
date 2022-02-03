@@ -16,11 +16,15 @@ import { Type } from "./generated_types"
 export type GenericPayload
   = {payloadGenericTypesUnion}
 
+export type EntityPayload
+  = {payloadEntityTypesUnion}
+
 export type WidgetPayload
   = {payloadWidgetTypesUnion}
 
 export type Payload
   = GenericPayload
+  | EntityPayload
   | WidgetPayload
 
 export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
@@ -67,6 +71,7 @@ const main = () => {
   const payloadTypes: string[] = []
   const payloadAllTypeNames: string[] = []
   const payloadGenericTypeNames: string[] = []
+  const payloadEntityTypeNames: string[] = []
   const payloadWidgetTypeNames: string[] = []
   const buildPayloadCases: string[] = []
 
@@ -97,6 +102,7 @@ const main = () => {
         break
 
       case DefinitionType.Entity:
+        payloadEntityTypeNames.push(`${name}Payload`)
         break
     }
 
@@ -109,6 +115,7 @@ const main = () => {
     payloadTypes: payloadTypes.join("\n\n"),
     payloadAllTypesUnion: payloadAllTypeNames.join("\n  | "),
     payloadGenericTypesUnion: payloadGenericTypeNames.join("\n  | "),
+    payloadEntityTypesUnion: payloadEntityTypeNames.join("\n  | "),
     payloadWidgetTypesUnion: payloadWidgetTypeNames.join("\n  | "),
     buildPayloadCases: buildPayloadCases.join("\n\n    "),
   })

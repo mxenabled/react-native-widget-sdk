@@ -13,6 +13,7 @@ export enum DefinitionType {
 export type DefinitionSchema = {
   generic: ActionsSchema
   widgets: ActionsSchema
+  entities: ActionsSchema
 }
 
 export type ActionsSchema = {
@@ -41,7 +42,8 @@ export const withEachMessageDefinition = <R>(cb: (ns: string, action: string, de
   const defs = loadDefinitions()
   const ret1 = withEach(defs.generic, (ns, action, defn) => cb(ns, action, defn, DefinitionType.Generic))
   const ret2 = withEach(defs.widgets, (ns, action, defn) => cb(ns, action, defn, DefinitionType.Widget))
-  return [...ret1, ...ret2]
+  const ret3 = withEach(defs.entities, (ns, action, defn) => cb(ns, action, defn, DefinitionType.Entity))
+  return [...ret1, ...ret2, ...ret3]
 }
 
 export const withEachGenericMessageDefinition = <R>(cb: (ns: string, action: string, defn: MessageDefinition) => R): R[] => {

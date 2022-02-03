@@ -12,13 +12,18 @@ import {
   ConnectLoadedPayload,
   ConnectSelectedInstitutionPayload,
   ConnectStepChangePayload,
+  AccountCreatedPayload,
 } from "./generated_payloads"
 
 export type GenericCallback = {
   onLoad?: (payload: LoadPayload) => void
 }
 
-export type ConnectCallback = GenericCallback & {
+export type EntityCallback = {
+  onAccountAccountCreated?: (payload: AccountCreatedPayload) => void
+}
+
+export type ConnectCallback = GenericCallback & EntityCallback & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
   onStepChange?: (payload: ConnectStepChangePayload) => void
@@ -28,10 +33,17 @@ const namespaces = {
   generic: [
     "load",
   ],
+  entities: [
+    "account",
+  ],
 }
 
 function isGenericMessage(message: Message) {
   return namespaces.generic.includes(message.namespace())
+}
+
+function isEntityMessage(message: Message) {
+  return namespaces.entities.includes(message.namespace())
 }
 
 function safeCall<P>(payload: P, fn?: (_: P) => void) {
@@ -40,7 +52,7 @@ function safeCall<P>(payload: P, fn?: (_: P) => void) {
   }
 }
 
-function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
+export function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
   const payload = message.payload()
 
   switch (payload.type) {
@@ -53,11 +65,27 @@ function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
   }
 }
 
+export function dispatchEntityCallback(callbacks: EntityCallback, message: Message) {
+  const payload = message.payload()
+
+  switch (payload.type) {
+    case Type.AccountCreated:
+      safeCall(payload, callbacks.onAccountAccountCreated)
+      break
+
+    default:
+      throw new Error(`"unable to dispatch post message with unknown type: ${payload.type}"`)
+  }
+}
+
 export function dispatchConnectCallback(callbacks: ConnectCallback, message: Message) {
   const payload = message.payload()
 
   if (isGenericMessage(message)) {
     dispatchGenericCallback(callbacks, message)
+    return
+  } else if (isEntityMessage(message)) {
+    dispatchEntityCallback(callbacks, message)
     return
   }
 

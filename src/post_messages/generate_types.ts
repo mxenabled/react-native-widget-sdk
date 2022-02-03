@@ -32,8 +32,8 @@ const main = () => {
   })
 
   const code = merge(template, {
-    typeDefLines: typeDefLines.join("\n"),
-    typeMapLines: typeMapLines.join("\n"),
+    typeDefLines: typeDefLines.sort().join("\n"),
+    typeMapLines: typeMapLines.sort().join("\n"),
   })
 
   const dest = join(__dirname, "generated_types.ts")

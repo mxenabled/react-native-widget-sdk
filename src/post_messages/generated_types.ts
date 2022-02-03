@@ -5,15 +5,17 @@
  * modifying definitions.yml.
  */
 export enum Type {
-  Load = "mx/load",
+  AccountCreated = "mx/account/created",
   ConnectLoaded = "mx/connect/loaded",
   ConnectSelectedInstitution = "mx/connect/selectedInstitution",
   ConnectStepChange = "mx/connect/stepChange",
+  Load = "mx/load",
 }
 
 export const typeLookup: Record<string, Type> = {
-  [Type.Load]: Type.Load,
+  [Type.AccountCreated]: Type.AccountCreated,
   [Type.ConnectLoaded]: Type.ConnectLoaded,
   [Type.ConnectSelectedInstitution]: Type.ConnectSelectedInstitution,
   [Type.ConnectStepChange]: Type.ConnectStepChange,
+  [Type.Load]: Type.Load,
 }

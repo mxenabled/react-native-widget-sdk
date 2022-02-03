@@ -34,8 +34,16 @@ export type ConnectStepChangePayload = {
   current: string
 }
 
+export type AccountCreatedPayload = {
+  type: Type.AccountCreated
+  guid: string
+}
+
 export type GenericPayload
   = LoadPayload
+
+export type EntityPayload
+  = AccountCreatedPayload
 
 export type WidgetPayload
   = ConnectLoadedPayload
@@ -44,6 +52,7 @@ export type WidgetPayload
 
 export type Payload
   = GenericPayload
+  | EntityPayload
   | WidgetPayload
 
 export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
@@ -78,6 +87,12 @@ export function buildPayload(type: Type, metadata: Record<string, string>): Payl
         session_guid: metadata.session_guid,
         previous: metadata.previous,
         current: metadata.current,
+      }
+
+    case Type.AccountCreated:
+      return {
+        type,
+        guid: metadata.guid,
       }
 
     default:
