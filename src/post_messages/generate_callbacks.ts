@@ -1,11 +1,12 @@
 import { join } from "path"
 
 import {
+  DefinitionType,
   camelCase,
   genMessageKey,
   isParentDefn,
   merge,
-  withEachWidgetMessageDefinition,
+  withEachMessageDefinition,
   write,
 } from "./generate_utils"
 
@@ -64,24 +65,26 @@ const main = () => {
   const dispatchFunctions: string[] = []
   const dispatchesByNamespace: Record<string, string[]> = {}
 
-  withEachWidgetMessageDefinition((namespace, action, defn) => {
+  withEachMessageDefinition((namespace, action, defn, defType) => {
+    const group = defType === DefinitionType.Generic ? "generic" : namespace
+
     const name = genMessageKey(namespace, action)
     const callbackName = isParentDefn(action) ? `on${name}` : `on${camelCase(action)}`
     const payloadType = `${name}Payload`
 
     const callCallbackCase = merge(callCallbackCaseTemplate, { name, callbackName })
-    dispatchesByNamespace[namespace] = dispatchesByNamespace[namespace] || []
-    dispatchesByNamespace[namespace].push(callCallbackCase)
+    dispatchesByNamespace[group] = dispatchesByNamespace[group] || []
+    dispatchesByNamespace[group].push(callCallbackCase)
 
     const callbackFunctionType = merge(callbackFunctionTypeTemplate, { callbackName, payloadType })
-    callbackFunctionTypesByNamespace[namespace] = callbackFunctionTypesByNamespace[namespace] || []
-    callbackFunctionTypesByNamespace[namespace].push(`  ${callbackFunctionType}`)
+    callbackFunctionTypesByNamespace[group] = callbackFunctionTypesByNamespace[group] || []
+    callbackFunctionTypesByNamespace[group].push(`  ${callbackFunctionType}`)
 
     const payloadTypeImport = `  ${payloadType},`
     payloadTypeImports.push(payloadTypeImport)
   })
 
-  for (const namespace in dispatchesByNamespace) {
+  for (const namespace in callbackFunctionTypesByNamespace) {
     const callbackType = `${camelCase(namespace)}Callback`
 
     const functionTypes = callbackFunctionTypesByNamespace[namespace].join("\n")

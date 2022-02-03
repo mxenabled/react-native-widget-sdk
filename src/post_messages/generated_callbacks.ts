@@ -8,10 +8,15 @@ import { Type } from "./generated_types"
 
 import {
   Payload,
+  LoadPayload,
   ConnectLoadedPayload,
   ConnectSelectedInstitutionPayload,
   ConnectStepChangePayload,
 } from "./generated_payloads"
+
+export type GenericCallback = {
+  onLoad?: (payload: LoadPayload) => void
+}
 
 export type ConnectCallback = {
   onLoaded?: (payload: ConnectLoadedPayload) => void
@@ -22,6 +27,17 @@ export type ConnectCallback = {
 function safeCall<P>(payload: P, fn?: (_: P) => void) {
   if (fn) {
     fn(payload)
+  }
+}
+
+export function dispatchGenericCallback(callbacks: GenericCallback, payload: Payload) {
+  switch (payload.type) {
+    case Type.Load:
+      safeCall(payload, callbacks.onLoad)
+      break
+
+    default:
+      throw new Error(`"unable to dispatch post message with unknown type: ${payload.type}"`)
   }
 }
 
