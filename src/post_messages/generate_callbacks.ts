@@ -12,9 +12,9 @@ import {
 
 const template = `
 import { Type } from "./generated_types"
+import { Message } from "./message"
 
 import {
-  Payload,
 {payloadTypeImports}
 } from "./generated_payloads"
 
@@ -40,7 +40,9 @@ const callbackFunctionTypeTemplate = `
 `
 
 const dispatchFunctionTemplate = `
-export function dispatch{namespaceType}Callback(callbacks: {callbackType}, payload: Payload) {
+export function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
+  const payload = message.payload()
+
   switch (payload.type) {
     {callCallbackCases}
 

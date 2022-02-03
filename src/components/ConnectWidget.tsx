@@ -81,7 +81,7 @@ export default function ConnectWidget({
       return
     }
 
-    dispatchConnectCallback(callbacks, message.payload())
+    dispatchConnectCallback(callbacks, message)
   }
 
   const requestLoadInBrowser = (url: string) => {

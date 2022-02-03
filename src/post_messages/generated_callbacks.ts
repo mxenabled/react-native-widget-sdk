@@ -5,9 +5,9 @@
  * modifying definitions.yml.
  */
 import { Type } from "./generated_types"
+import { Message } from "./message"
 
 import {
-  Payload,
   LoadPayload,
   ConnectLoadedPayload,
   ConnectSelectedInstitutionPayload,
@@ -30,7 +30,9 @@ function safeCall<P>(payload: P, fn?: (_: P) => void) {
   }
 }
 
-export function dispatchGenericCallback(callbacks: GenericCallback, payload: Payload) {
+export function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
+  const payload = message.payload()
+
   switch (payload.type) {
     case Type.Load:
       safeCall(payload, callbacks.onLoad)
@@ -41,7 +43,9 @@ export function dispatchGenericCallback(callbacks: GenericCallback, payload: Pay
   }
 }
 
-export function dispatchConnectCallback(callbacks: ConnectCallback, payload: Payload) {
+export function dispatchConnectCallback(callbacks: ConnectCallback, message: Message) {
+  const payload = message.payload()
+
   switch (payload.type) {
     case Type.ConnectLoaded:
       safeCall(payload, callbacks.onLoaded)
