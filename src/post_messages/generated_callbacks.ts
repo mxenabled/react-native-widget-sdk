@@ -23,7 +23,7 @@ export type GenericCallback = {
 }
 
 export type EntityCallback = {
-  onAccountAccountCreated?: (payload: AccountCreatedPayload) => void
+  onAccountCreated?: (payload: AccountCreatedPayload) => void
 }
 
 export type ConnectCallback = GenericCallback & EntityCallback & {
@@ -79,7 +79,7 @@ export function dispatchEntityCallback(callbacks: EntityCallback, message: Messa
 
   switch (payload.type) {
     case Type.AccountCreated:
-      safeCall(payload, callbacks.onAccountAccountCreated)
+      safeCall(payload, callbacks.onAccountCreated)
       break
 
     default:

@@ -135,7 +135,7 @@ const main = () => {
     if (isParentDefn(action)) {
       callbackName = `on${name}`
     } else if (isEntity) {
-      callbackName = `on${camelCase(namespace)}${name}`
+      callbackName = `on${name}`
     } else {
       callbackName = `on${camelCase(action)}`
     }
