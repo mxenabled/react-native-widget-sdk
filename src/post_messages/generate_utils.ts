@@ -25,7 +25,7 @@ export type ActionDefinition = {
 }
 
 export type MessageDefinition = {
-  [index: string]: "string" | "number"
+  [index: string]: string | Record<string, string>
 }
 
 const defsFilename = "definitions.yml"

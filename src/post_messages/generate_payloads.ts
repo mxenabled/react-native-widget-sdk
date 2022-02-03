@@ -27,7 +27,7 @@ export type Payload
   | EntityPayload
   | WidgetPayload
 
-export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
+export function buildPayload(type: Type, metadata: Record<string, string | Record<string, string>>): Payload {
   switch (type) {
     {buildPayloadCases}
 
@@ -65,6 +65,19 @@ const buildEmptyPayloadCaseTemplate = `
       }
 `
 
+const strinfigyType = (type: string | Record<string, string>): string => {
+  if (typeof type === "string") {
+    return type
+  }
+
+  let fields: string[] = []
+  for (const field in type) {
+    fields.push(`${field}: ${strinfigyType(type[field])}`)
+  }
+
+  return `{ ${fields.join(", ")} }`
+}
+
 const main = () => {
   console.log("Generating payload definitions")
 
@@ -78,14 +91,14 @@ const main = () => {
   withEachMessageDefinition((namespace, action, defn, defType) => {
     const name = genMessageKey(namespace, action)
 
-    const fields = Object.keys(defn).map((key) => `  ${key}: ${defn[key]}`)
+    const fields = Object.keys(defn).map((key) => `  ${key}: ${strinfigyType(defn[key])}`)
     const payloadTypeTemplate = fields.length > 0 ? payloadFilledTypeTemplate : payloadEmptyTypeTemplate
     const payloadType = merge(payloadTypeTemplate, {
       name,
       fields: fields.join("\n")
     })
 
-    const extractions = Object.keys(defn).map((key) => `        ${key}: metadata.${key},`)
+    const extractions = Object.keys(defn).map((key) => `        ${key}: metadata.${key} as ${strinfigyType(defn[key])},`)
     const buildPayloadCaseTemplate = extractions.length > 0 ? buildFilledPayloadCaseTemplate : buildEmptyPayloadCaseTemplate
     const normalizeCase = merge(buildPayloadCaseTemplate, {
       name,

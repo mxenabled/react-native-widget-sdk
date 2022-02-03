@@ -62,7 +62,7 @@ export type Payload
   | EntityPayload
   | WidgetPayload
 
-export function buildPayload(type: Type, metadata: Record<string, string>): Payload {
+export function buildPayload(type: Type, metadata: Record<string, string | Record<string, string>>): Payload {
   switch (type) {
     case Type.Load:
       return {
@@ -72,41 +72,41 @@ export function buildPayload(type: Type, metadata: Record<string, string>): Payl
     case Type.Ping:
       return {
         type,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
       }
 
     case Type.ConnectLoaded:
       return {
         type,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
       }
 
     case Type.ConnectSelectedInstitution:
       return {
         type,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
-        code: metadata.code,
-        guid: metadata.guid,
-        name: metadata.name,
-        url: metadata.url,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
+        code: metadata.code as string,
+        guid: metadata.guid as string,
+        name: metadata.name as string,
+        url: metadata.url as string,
       }
 
     case Type.ConnectStepChange:
       return {
         type,
-        user_guid: metadata.user_guid,
-        session_guid: metadata.session_guid,
-        previous: metadata.previous,
-        current: metadata.current,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
+        previous: metadata.previous as string,
+        current: metadata.current as string,
       }
 
     case Type.AccountCreated:
       return {
         type,
-        guid: metadata.guid,
+        guid: metadata.guid as string,
       }
 
     default:
