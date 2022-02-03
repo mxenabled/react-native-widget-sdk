@@ -18,7 +18,7 @@ export class Message {
   }
 
   namespace() {
-    return this.url.host
+    return (this.url.host || "")
   }
 
   action() {

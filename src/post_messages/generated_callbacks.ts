@@ -18,10 +18,20 @@ export type GenericCallback = {
   onLoad?: (payload: LoadPayload) => void
 }
 
-export type ConnectCallback = {
+export type ConnectCallback = GenericCallback & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
   onStepChange?: (payload: ConnectStepChangePayload) => void
+}
+
+const namespaces = {
+  generic: [
+    "load",
+  ],
+}
+
+function isGenericMessage(message: Message) {
+  return namespaces.generic.includes(message.namespace())
 }
 
 function safeCall<P>(payload: P, fn?: (_: P) => void) {
@@ -30,7 +40,7 @@ function safeCall<P>(payload: P, fn?: (_: P) => void) {
   }
 }
 
-export function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
+function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
   const payload = message.payload()
 
   switch (payload.type) {
@@ -45,6 +55,11 @@ export function dispatchGenericCallback(callbacks: GenericCallback, message: Mes
 
 export function dispatchConnectCallback(callbacks: ConnectCallback, message: Message) {
   const payload = message.payload()
+
+  if (isGenericMessage(message)) {
+    dispatchGenericCallback(callbacks, message)
+    return
+  }
 
   switch (payload.type) {
     case Type.ConnectLoaded:

@@ -11,6 +11,9 @@ export default function App() {
         apiKey={Config.MX_API_KEY}
         userGuid={Config.MX_USER_GUID}
         environment={Config.MX_ENVIRONMENT}
+        onLoad={(payload) => {
+          console.log("Widget is loading")
+        }}
         onLoaded={(payload) => {
           console.log("Connect has loaded")
         }}
