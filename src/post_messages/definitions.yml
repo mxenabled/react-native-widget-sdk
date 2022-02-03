@@ -27,3 +27,8 @@ post_messages:
         <<: *user_session_properties
         previous: string
         current: string
+      enterCredentials:
+        <<: *user_session_properties
+        institution:
+          code: string
+          guid: string

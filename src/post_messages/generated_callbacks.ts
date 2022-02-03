@@ -13,6 +13,7 @@ import {
   ConnectLoadedPayload,
   ConnectSelectedInstitutionPayload,
   ConnectStepChangePayload,
+  ConnectEnterCredentialsPayload,
   AccountCreatedPayload,
 } from "./generated_payloads"
 
@@ -29,6 +30,7 @@ export type ConnectCallback = GenericCallback & EntityCallback & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
   onStepChange?: (payload: ConnectStepChangePayload) => void
+  onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
 }
 
 const namespaces = {
@@ -107,6 +109,10 @@ export function dispatchConnectCallback(callbacks: ConnectCallback, message: Mes
 
     case Type.ConnectStepChange:
       safeCall(payload, callbacks.onStepChange)
+      break
+
+    case Type.ConnectEnterCredentials:
+      safeCall(payload, callbacks.onEnterCredentials)
       break
 
     default:

@@ -40,6 +40,13 @@ export type ConnectStepChangePayload = {
   current: string
 }
 
+export type ConnectEnterCredentialsPayload = {
+  type: Type.ConnectEnterCredentials
+  user_guid: string
+  session_guid: string
+  institution: { code: string, guid: string }
+}
+
 export type AccountCreatedPayload = {
   type: Type.AccountCreated
   guid: string
@@ -56,6 +63,7 @@ export type WidgetPayload
   = ConnectLoadedPayload
   | ConnectSelectedInstitutionPayload
   | ConnectStepChangePayload
+  | ConnectEnterCredentialsPayload
 
 export type Payload
   = GenericPayload
@@ -101,6 +109,14 @@ export function buildPayload(type: Type, metadata: Record<string, string | Recor
         session_guid: metadata.session_guid as string,
         previous: metadata.previous as string,
         current: metadata.current as string,
+      }
+
+    case Type.ConnectEnterCredentials:
+      return {
+        type,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
+        institution: metadata.institution as { code: string, guid: string },
       }
 
     case Type.AccountCreated:

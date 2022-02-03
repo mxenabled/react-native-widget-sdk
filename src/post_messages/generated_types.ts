@@ -6,6 +6,7 @@
  */
 export enum Type {
   AccountCreated = "mx/account/created",
+  ConnectEnterCredentials = "mx/connect/enterCredentials",
   ConnectLoaded = "mx/connect/loaded",
   ConnectSelectedInstitution = "mx/connect/selectedInstitution",
   ConnectStepChange = "mx/connect/stepChange",
@@ -15,6 +16,7 @@ export enum Type {
 
 export const typeLookup: Record<string, Type> = {
   [Type.AccountCreated]: Type.AccountCreated,
+  [Type.ConnectEnterCredentials]: Type.ConnectEnterCredentials,
   [Type.ConnectLoaded]: Type.ConnectLoaded,
   [Type.ConnectSelectedInstitution]: Type.ConnectSelectedInstitution,
   [Type.ConnectStepChange]: Type.ConnectStepChange,
