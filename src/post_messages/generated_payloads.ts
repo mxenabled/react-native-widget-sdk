@@ -70,7 +70,11 @@ export type Payload
   | EntityPayload
   | WidgetPayload
 
-export function buildPayload(type: Type, metadata: Record<string, string | Record<string, string>>): Payload {
+type Value = string | number
+type NestedValue = Record<string, Value>
+type Metadata = Record<string, Value | NestedValue>
+
+export function buildPayload(type: Type, metadata: Metadata): Payload {
   switch (type) {
     case Type.Load:
       return {
