@@ -7,17 +7,18 @@ import { WebViewNavigation } from "react-native-webview"
  * there's a safe fallback for other environments.
  * https://reactnative.dev/docs/safeareaview
  */
-import { SafeAreaView, Dimensions, Linking } from "react-native"
+import { SafeAreaView, Linking } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { Message } from "../post_messages/message"
 import { dispatchConnectCallback, ConnectCallback } from "../post_messages"
 
-import { exhaustive } from "../utils/exhaustive"
-
 import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment, lookupEnvironment } from "../loader/environment"
+
+import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
+import { exhaustive } from "../utils/exhaustive"
 
 type ConnectWidgetProps = ConnectCallback & {
   clientId: string
@@ -36,7 +37,10 @@ export default function ConnectWidget({
   ...callbacks
 }: ConnectWidgetProps) {
   const validatedEnv = lookupEnvironment(environment)
+
   const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
+  const [screenWidth, setScreenWidth] = useState(getScreenWidth())
+  const [screenHeight, setScreenHeight] = useState(getScreenHeight())
 
   useEffect(() => {
     makeConnectWidgetRequest({ userGuid, clientId, apiKey, environment: validatedEnv })
@@ -44,9 +48,16 @@ export default function ConnectWidget({
       .catch((error) => onSsoError(error))
   }, [])
 
+  useEffect(() => {
+    return onDimensionChange((orientation) => {
+      setScreenWidth(getScreenWidth())
+      setScreenHeight(getScreenHeight())
+    })
+  })
+
   const viewStyle: StyleProp<ViewStyle> = {
-    height: Dimensions.get("window").height,
-    width: Dimensions.get("window").width,
+    width: screenWidth,
+    height: screenHeight,
     overflow: "hidden",
   }
 
@@ -97,7 +108,7 @@ export default function ConnectWidget({
       <WebView
         scrollEnabled={true}
         source={{ uri: widgetSsoUrl }}
-        originWhitelist={['*']}
+        originWhitelist={["*"]}
         cacheMode="LOAD_NO_CACHE"
         javaScriptEnabled={true}
         domStorageEnabled={true}
