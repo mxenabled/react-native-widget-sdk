@@ -10,6 +10,7 @@ export enum Type {
   ConnectSelectedInstitution = "mx/connect/selectedInstitution",
   ConnectStepChange = "mx/connect/stepChange",
   Load = "mx/load",
+  Ping = "mx/ping",
 }
 
 export const typeLookup: Record<string, Type> = {
@@ -18,4 +19,5 @@ export const typeLookup: Record<string, Type> = {
   [Type.ConnectSelectedInstitution]: Type.ConnectSelectedInstitution,
   [Type.ConnectStepChange]: Type.ConnectStepChange,
   [Type.Load]: Type.Load,
+  [Type.Ping]: Type.Ping,
 }

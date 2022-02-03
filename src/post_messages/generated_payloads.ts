@@ -10,6 +10,12 @@ export type LoadPayload = {
   type: Type.Load
 }
 
+export type PingPayload = {
+  type: Type.Ping
+  user_guid: string
+  session_guid: string
+}
+
 export type ConnectLoadedPayload = {
   type: Type.ConnectLoaded
   user_guid: string
@@ -41,6 +47,7 @@ export type AccountCreatedPayload = {
 
 export type GenericPayload
   = LoadPayload
+  | PingPayload
 
 export type EntityPayload
   = AccountCreatedPayload
@@ -60,6 +67,13 @@ export function buildPayload(type: Type, metadata: Record<string, string>): Payl
     case Type.Load:
       return {
         type,
+      }
+
+    case Type.Ping:
+      return {
+        type,
+        user_guid: metadata.user_guid,
+        session_guid: metadata.session_guid,
       }
 
     case Type.ConnectLoaded:

@@ -9,6 +9,7 @@ import { Message } from "./message"
 
 import {
   LoadPayload,
+  PingPayload,
   ConnectLoadedPayload,
   ConnectSelectedInstitutionPayload,
   ConnectStepChangePayload,
@@ -17,6 +18,7 @@ import {
 
 export type GenericCallback = {
   onLoad?: (payload: LoadPayload) => void
+  onPing?: (payload: PingPayload) => void
 }
 
 export type EntityCallback = {
@@ -32,6 +34,7 @@ export type ConnectCallback = GenericCallback & EntityCallback & {
 const namespaces = {
   generic: [
     "load",
+    "ping",
   ],
   entities: [
     "account",
@@ -58,6 +61,10 @@ export function dispatchGenericCallback(callbacks: GenericCallback, message: Mes
   switch (payload.type) {
     case Type.Load:
       safeCall(payload, callbacks.onLoad)
+      break
+
+    case Type.Ping:
+      safeCall(payload, callbacks.onPing)
       break
 
     default:

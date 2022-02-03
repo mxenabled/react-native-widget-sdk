@@ -8,6 +8,7 @@ user_session_properties: &user_session_properties
 post_messages:
   generic:
     load: { _: {} }
+    ping: { _: *user_session_properties }
 
   entities:
     account:
