@@ -63,6 +63,15 @@ const callbackFunctionTypeTemplate = `
 `
 
 const dispatchFunctionEntryTemplate = `
+export function handle{namespaceType}Request(callbacks: {callbackType}, url: string) {
+  const message = new Message(url)
+  if (!message.isValid()) {
+    return
+  }
+
+  dispatchConnectCallback(callbacks, message)
+}
+
 export function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
   const payload = message.payload()
 

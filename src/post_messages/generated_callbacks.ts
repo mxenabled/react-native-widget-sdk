@@ -87,6 +87,15 @@ export function dispatchEntityCallback(callbacks: EntityCallback, message: Messa
   }
 }
 
+export function handleConnectRequest(callbacks: ConnectCallback, url: string) {
+  const message = new Message(url)
+  if (!message.isValid()) {
+    return
+  }
+
+  dispatchConnectCallback(callbacks, message)
+}
+
 export function dispatchConnectCallback(callbacks: ConnectCallback, message: Message) {
   const payload = message.payload()
 

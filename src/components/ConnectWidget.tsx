@@ -11,8 +11,7 @@ import { SafeAreaView, Linking } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
-import { Message } from "../post_messages/message"
-import { dispatchConnectCallback, ConnectCallback } from "../post_messages"
+import { handleConnectRequest, ConnectCallback } from "../post_messages"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment, lookupEnvironment } from "../loader/environment"
@@ -73,7 +72,7 @@ export default function ConnectWidget({
         return true
 
       case Action.Intercept:
-        requestIntercept(request.url)
+        handleConnectRequest(callbacks, request.url)
         return false
 
       case Action.LoadInBrowser:
@@ -83,16 +82,6 @@ export default function ConnectWidget({
       default:
         exhaustive(action)
     }
-  }
-
-  const requestIntercept = (url: string) => {
-    const message = new Message(url)
-    if (!message.isValid()) {
-      console.log(`unable to parse this url: ${url}`)
-      return
-    }
-
-    dispatchConnectCallback(callbacks, message)
   }
 
   const requestLoadInBrowser = (url: string) => {
