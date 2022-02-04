@@ -1,15 +1,27 @@
-# macOs setup
+# Setup
 
-npm install
-sudo gem install -n /usr/local/bin cocoapods
-npm link <react-native-webview>
-cd ios
-pod install
+First, you will need to set up your environment so that you can run React
+Native apps. See https://reactnative.dev/docs/environment-setup for
+instructions on how to do that. In addition, you'll need to download and
+install Android Studio and Xcode.
 
-touch .env
-echo MX_CLIENT_ID="..." >> .env
-echo MX_API_KEY="..." >> .env
-echo MX_USER_GUID="..." >> .env
-echo MX_ENVIRONMENT="integration" >> .env
+Once your environment is setup, create a config.json file that looks like the
+one below, but with the appropriate values (all of which you can get from
+Batcave):
 
-npm run ios
+
+    {
+      "MX_CLIENT_ID": "...",
+      "MX_API_KEY": "...",
+      "MX_USER_GUID": "...",
+      "MX_ENVIRONMENT": "integration"
+    }
+
+
+Now you're ready to run the app. Install all dependencies and link any native
+libraried, and then either in an iOS or Android emulator:
+
+    npm install
+    npm link
+    npm run ios
+    npm run android
