@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from "react"
-import { StyleProp, ViewStyle } from "react-native"
-import { WebViewNavigation } from "react-native-webview"
-
-/**
- * TODO: SafeAreaView is only available on iOS 11 or later, so make sure
- * there's a safe fallback for other environments.
- * https://reactnative.dev/docs/safeareaview
- */
-import { SafeAreaView, Linking } from "react-native"
-import { WebView } from "react-native-webview"
+import { SafeAreaView, StyleProp, Linking, ViewStyle } from "react-native"
+import { WebView, WebViewNavigation } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { handleConnectRequest, ConnectCallback } from "../post_messages"
-import { ConnectWidgetMode } from "../widget/widgets"
 
-import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment, lookupEnvironment } from "../loader/environment"
+import { ConnectWidgetMode } from "../widget/widgets"
+import { makeConnectWidgetRequest } from "../loader/sso"
 
 import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
+
 import { exhaustive } from "../utils/exhaustive"
 
-type ConnectWidgetProps = ConnectCallback & {
+export type ConnectWidgetProps = ConnectCallback & {
   clientId: string
   apiKey: string
   userGuid: string
