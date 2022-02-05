@@ -1,5 +1,5 @@
 import React from "react"
-import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
+import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { LoadUrlCallbacks } from "./load_url"
@@ -11,7 +11,7 @@ import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 
 import { useSso, SsoProps } from "./sso"
-import { useScreenDimensions } from "./screen_dimensions"
+import { useFullscreenStyles } from "./screen_dimensions"
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
 export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
@@ -35,22 +35,16 @@ export default function ConnectWidget({
     environment, Type.ConnectWidget, { mode })
 
   const widgetSsoUrl = useSso(ssoParams, onSsoError)
-  const [screenWidth, screenHeight] = useScreenDimensions()
-
-  const viewStyle: StyleProp<ViewStyle> = {
-    width: screenWidth,
-    height: screenHeight,
-    overflow: "hidden",
-  }
+  const viewStyles = useFullscreenStyles()
 
   if (!widgetSsoUrl) {
-    return <SafeAreaView style={viewStyle} />
+    return <SafeAreaView style={viewStyles} />
   }
 
   const onShouldStartLoadWithRequest = makeRequestInterceptor(widgetSsoUrl, callbacks, handleConnectRequest)
 
   return (
-    <SafeAreaView style={viewStyle}>
+    <SafeAreaView style={viewStyles}>
       <WebView
         scrollEnabled={true}
         source={{ uri: widgetSsoUrl }}
