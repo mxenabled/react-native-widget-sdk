@@ -8,7 +8,7 @@ import { ConnectWidgetMode } from "../widget/widgets"
 import { Environment, lookupEnvironment } from "../loader/environment"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
-import { makeModeSpecificComponent } from "./make_mode_specific_component"
+import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 
 import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
