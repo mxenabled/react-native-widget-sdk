@@ -12,6 +12,7 @@ import { WebView } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { handleConnectRequest, ConnectCallback } from "../post_messages"
+import { ConnectWidgetMode } from "../widget/widgets"
 
 import { makeConnectWidgetRequest } from "../loader/sso"
 import { Environment, lookupEnvironment } from "../loader/environment"
@@ -24,6 +25,7 @@ type ConnectWidgetProps = ConnectCallback & {
   apiKey: string
   userGuid: string
   environment: Environment | string
+  mode?: ConnectWidgetMode
   onSsoError?: (error: Error) => void
 }
 
@@ -32,6 +34,7 @@ export default function ConnectWidget({
   apiKey,
   userGuid,
   environment,
+  mode,
   onSsoError = (error) => {},
   ...callbacks
 }: ConnectWidgetProps) {
@@ -42,7 +45,7 @@ export default function ConnectWidget({
   const [screenHeight, setScreenHeight] = useState(getScreenHeight())
 
   useEffect(() => {
-    makeConnectWidgetRequest({ userGuid, clientId, apiKey, environment: validatedEnv })
+    makeConnectWidgetRequest<ConnectWidgetMode>({ userGuid, clientId, apiKey, environment: validatedEnv, options: { mode } })
       .then((response) => setWidgetSsoUrl(response.widget_url.url))
       .catch((error) => onSsoError(error))
   }, [])

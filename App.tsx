@@ -31,6 +31,7 @@ export default function App() {
         apiKey={apiKey}
         userGuid={userGuid}
         environment={environment}
+        mode="aggregation"
         onUnkownRequestIntercept={(request) => {
           console.log(`Unknown request intercepted: ${request.url}`)
         }}

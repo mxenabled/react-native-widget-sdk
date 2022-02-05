@@ -1,10 +1,10 @@
 import base64 from "react-native-base64"
 
 import { Environment, Host } from "./environment"
-import { Type } from "../widget/type"
+import { Type } from "../widget/widgets"
 import { Options } from "../widget/options"
 
-type ExtraOptions = Partial<Omit<Options, "widget_type">>
+type ExtraOptions<Mode> = Partial<Omit<Options<Mode>, "widget_type">>
 
 type SsoWidgetRequest = {
   url: string
@@ -22,26 +22,26 @@ type SsoWidgetResponse = {
   }
 }
 
-type SsoRequestParams = {
+type SsoRequestParams<Mode> = {
   apiKey: string
   clientId: string
   userGuid: string
   widgetType: Type
   environment: Environment
-  options?: ExtraOptions
+  options?: ExtraOptions<Mode>
 }
 
-export function makeConnectWidgetRequest(params: Omit<SsoRequestParams, "widgetType">): Promise<SsoWidgetResponse> {
+export function makeConnectWidgetRequest<Mode>(params: Omit<SsoRequestParams<Mode>, "widgetType">): Promise<SsoWidgetResponse> {
   return makeRequest({ ...params, widgetType: Type.ConnectWidget })
 }
 
-export function makeRequest(params: SsoRequestParams): Promise<SsoWidgetResponse> {
+export function makeRequest<Mode>(params: SsoRequestParams<Mode>): Promise<SsoWidgetResponse> {
   const req = genRequest(params)
   return fetch(req.url, req.options)
     .then((response) => response.json())
 }
 
-function genRequest({ apiKey, clientId, userGuid, widgetType, environment, options = {} }: SsoRequestParams): SsoWidgetRequest {
+function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options = {} }: SsoRequestParams<Mode>): SsoWidgetRequest {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
 
