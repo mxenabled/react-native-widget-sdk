@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "react-native"
 
 import config from "./config.json"
-import ConnectWidget from "./src/components/ConnectWidget"
+import { ConnectAggregationWidget } from "./src/components/ConnectWidget"
 
 const clientId = config["MX_CLIENT_ID"]
 const apiKey = config["MX_API_KEY"]
@@ -26,12 +26,11 @@ if (!clientId || !apiKey || !userGuid || !environment) {
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
-      <ConnectWidget
+      <ConnectAggregationWidget
         clientId={clientId}
         apiKey={apiKey}
         userGuid={userGuid}
         environment={environment}
-        mode="aggregation"
         onUnkownRequestIntercept={(request) => {
           console.log(`Unknown request intercepted: ${request.url}`)
         }}

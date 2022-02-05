@@ -10,8 +10,11 @@ import { ConnectWidgetMode } from "../widget/widgets"
 import { makeConnectWidgetRequest } from "../loader/sso"
 
 import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
-
+import { makeModeSpecificComponent } from "./make_mode_specific_component"
 import { exhaustive } from "../utils/exhaustive"
+
+export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
+export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
 
 export type ConnectWidgetProps = ConnectCallback & {
   clientId: string
