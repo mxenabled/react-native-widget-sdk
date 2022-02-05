@@ -15,6 +15,8 @@ post_messages:
       created: *account_properties
 
   widgets:
+    # This list was taken from this documentation:
+    # https://docs.mx.com/api#connect_postmessage_events
     connect:
       loaded:
         <<: *user_session_properties
