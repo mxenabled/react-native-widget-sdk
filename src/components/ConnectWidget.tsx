@@ -5,7 +5,7 @@ import { WebView } from "react-native-webview"
 import { LoadUrlCallbacks } from "./load_url"
 import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
 import { Type, ConnectWidgetMode } from "../widget/widgets"
-import { buildSsoRequestParams } from "../loader/sso"
+import { buildSsoRequestParams } from "../loader/sso_request"
 
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { makeRequest, SsoRequestParams } from "../loader/sso"
+import { makeRequest, SsoRequestParams } from "../loader/sso_request"
 import { Environment } from "../loader/environment"
 
 type SsoErrorCallback = (error: Error) => void
