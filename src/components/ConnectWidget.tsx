@@ -11,7 +11,7 @@ import { makeConnectWidgetRequest } from "../loader/sso"
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 
-import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
+import { useScreenDimensions } from "./screen_dimensions"
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
 export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
@@ -40,21 +40,13 @@ export default function ConnectWidget({
   const validatedEnv = lookupEnvironment(environment)
 
   const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
-  const [screenWidth, setScreenWidth] = useState(getScreenWidth())
-  const [screenHeight, setScreenHeight] = useState(getScreenHeight())
+  const [screenWidth, screenHeight] = useScreenDimensions()
 
   useEffect(() => {
     makeConnectWidgetRequest<ConnectWidgetMode>({ userGuid, clientId, apiKey, environment: validatedEnv, options: { mode } })
       .then((response) => setWidgetSsoUrl(response.widget_url.url))
       .catch((error) => onSsoError(error))
   }, [])
-
-  useEffect(() => {
-    return onDimensionChange((orientation) => {
-      setScreenWidth(getScreenWidth())
-      setScreenHeight(getScreenHeight())
-    })
-  })
 
   const viewStyle: StyleProp<ViewStyle> = {
     width: screenWidth,
