@@ -13,9 +13,18 @@ import {
   LoadPayload,
   PingPayload,
   ConnectLoadedPayload,
-  ConnectSelectedInstitutionPayload,
-  ConnectStepChangePayload,
   ConnectEnterCredentialsPayload,
+  ConnectInstitutionSearchPayload,
+  ConnectSelectedInstitutionPayload,
+  ConnectMemberConnectedPayload,
+  ConnectMemberDeletedPayload,
+  ConnectCreateMemberErrorPayload,
+  ConnectMemberStatusUpdatePayload,
+  ConnectOauthErrorPayload,
+  ConnectOauthRequestedPayload,
+  ConnectStepChangePayload,
+  ConnectSubmitMFAPayload,
+  ConnectUpdateCredentialsPayload,
   AccountCreatedPayload,
 } from "./generated_payloads"
 
@@ -35,9 +44,18 @@ export type EntityCallback = {
 
 export type ConnectCallback = ErrorCallback & GenericCallback & EntityCallback & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
-  onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
-  onStepChange?: (payload: ConnectStepChangePayload) => void
   onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
+  onInstitutionSearch?: (payload: ConnectInstitutionSearchPayload) => void
+  onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
+  onMemberConnected?: (payload: ConnectMemberConnectedPayload) => void
+  onMemberDeleted?: (payload: ConnectMemberDeletedPayload) => void
+  onCreateMemberError?: (payload: ConnectCreateMemberErrorPayload) => void
+  onMemberStatusUpdate?: (payload: ConnectMemberStatusUpdatePayload) => void
+  onOauthError?: (payload: ConnectOauthErrorPayload) => void
+  onOauthRequested?: (payload: ConnectOauthRequestedPayload) => void
+  onStepChange?: (payload: ConnectStepChangePayload) => void
+  onSubmitMFA?: (payload: ConnectSubmitMFAPayload) => void
+  onUpdateCredentials?: (payload: ConnectUpdateCredentialsPayload) => void
 }
 
 // Thrown when we are unable to process an otherwise valid post message
@@ -146,16 +164,52 @@ export function dispatchConnectCallback(callbacks: ConnectCallback, message: Mes
       safeCall([payload], callbacks.onLoaded)
       break
 
+    case Type.ConnectEnterCredentials:
+      safeCall([payload], callbacks.onEnterCredentials)
+      break
+
+    case Type.ConnectInstitutionSearch:
+      safeCall([payload], callbacks.onInstitutionSearch)
+      break
+
     case Type.ConnectSelectedInstitution:
       safeCall([payload], callbacks.onSelectedInstitution)
+      break
+
+    case Type.ConnectMemberConnected:
+      safeCall([payload], callbacks.onMemberConnected)
+      break
+
+    case Type.ConnectMemberDeleted:
+      safeCall([payload], callbacks.onMemberDeleted)
+      break
+
+    case Type.ConnectCreateMemberError:
+      safeCall([payload], callbacks.onCreateMemberError)
+      break
+
+    case Type.ConnectMemberStatusUpdate:
+      safeCall([payload], callbacks.onMemberStatusUpdate)
+      break
+
+    case Type.ConnectOauthError:
+      safeCall([payload], callbacks.onOauthError)
+      break
+
+    case Type.ConnectOauthRequested:
+      safeCall([payload], callbacks.onOauthRequested)
       break
 
     case Type.ConnectStepChange:
       safeCall([payload], callbacks.onStepChange)
       break
 
-    case Type.ConnectEnterCredentials:
-      safeCall([payload], callbacks.onEnterCredentials)
+    case Type.ConnectSubmitMFA:
+      safeCall([payload], callbacks.onSubmitMFA)
+      break
+
+    case Type.ConnectUpdateCredentials:
+      safeCall([payload], callbacks.onUpdateCredentials)
       break
 
     default:

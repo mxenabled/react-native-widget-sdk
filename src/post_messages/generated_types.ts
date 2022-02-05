@@ -6,20 +6,38 @@
  */
 export enum Type {
   AccountCreated = "mx/account/created",
+  ConnectCreateMemberError = "mx/connect/createMemberError",
   ConnectEnterCredentials = "mx/connect/enterCredentials",
+  ConnectInstitutionSearch = "mx/connect/institutionSearch",
   ConnectLoaded = "mx/connect/loaded",
+  ConnectMemberConnected = "mx/connect/memberConnected",
+  ConnectMemberDeleted = "mx/connect/memberDeleted",
+  ConnectMemberStatusUpdate = "mx/connect/memberStatusUpdate",
+  ConnectOauthError = "mx/connect/oauthError",
+  ConnectOauthRequested = "mx/connect/oauthRequested",
   ConnectSelectedInstitution = "mx/connect/selectedInstitution",
   ConnectStepChange = "mx/connect/stepChange",
+  ConnectSubmitMFA = "mx/connect/submitMFA",
+  ConnectUpdateCredentials = "mx/connect/updateCredentials",
   Load = "mx/load",
   Ping = "mx/ping",
 }
 
 export const typeLookup: Record<string, Type> = {
   [Type.AccountCreated]: Type.AccountCreated,
+  [Type.ConnectCreateMemberError]: Type.ConnectCreateMemberError,
   [Type.ConnectEnterCredentials]: Type.ConnectEnterCredentials,
+  [Type.ConnectInstitutionSearch]: Type.ConnectInstitutionSearch,
   [Type.ConnectLoaded]: Type.ConnectLoaded,
+  [Type.ConnectMemberConnected]: Type.ConnectMemberConnected,
+  [Type.ConnectMemberDeleted]: Type.ConnectMemberDeleted,
+  [Type.ConnectMemberStatusUpdate]: Type.ConnectMemberStatusUpdate,
+  [Type.ConnectOauthError]: Type.ConnectOauthError,
+  [Type.ConnectOauthRequested]: Type.ConnectOauthRequested,
   [Type.ConnectSelectedInstitution]: Type.ConnectSelectedInstitution,
   [Type.ConnectStepChange]: Type.ConnectStepChange,
+  [Type.ConnectSubmitMFA]: Type.ConnectSubmitMFA,
+  [Type.ConnectUpdateCredentials]: Type.ConnectUpdateCredentials,
   [Type.Load]: Type.Load,
   [Type.Ping]: Type.Ping,
 }

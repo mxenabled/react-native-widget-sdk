@@ -16,19 +16,57 @@ post_messages:
 
   widgets:
     connect:
-      loaded: *user_session_properties
+      loaded:
+        <<: *user_session_properties
+        # TODO This is an enum, switch string type for string union type
+        initial_step: string
+      enterCredentials:
+        <<: *user_session_properties
+        institution:
+          code: string
+          guid: string
+      institutionSearch:
+        <<: *user_session_properties
+        query: string
       selectedInstitution:
         <<: *user_session_properties
         code: string
         guid: string
         name: string
         url: string
+      memberConnected:
+        <<: *user_session_properties
+        member_guid: string
+      # TODO Handle subaction
+      # connected/primaryAction:
+      #   <<: *user_session_properties
+      memberDeleted:
+        <<: *user_session_properties
+        member_guid: string
+      createMemberError:
+        <<: *user_session_properties
+        institution_guid: string
+        institution_code: string
+      memberStatusUpdate:
+        <<: *user_session_properties
+        member_guid: string
+        connection_status: number
+      oauthError:
+        <<: *user_session_properties
+        member_guid: string
+      oauthRequested:
+        <<: *user_session_properties
+        url: string
       stepChange:
         <<: *user_session_properties
         previous: string
         current: string
-      enterCredentials:
+      submitMFA:
         <<: *user_session_properties
+        member_guid: string
+      updateCredentials:
+        <<: *user_session_properties
+        member_guid: string
         institution:
           code: string
           guid: string
