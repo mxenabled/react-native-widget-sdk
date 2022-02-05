@@ -16,9 +16,11 @@ import { useScreenDimensions } from "./screen_dimensions"
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
 export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
 
-export type ConnectWidgetProps = SsoProps & ConnectCallbacks & LoadUrlCallbacks & {
-  mode?: ConnectWidgetMode
-}
+export type ConnectWidgetProps
+  = SsoProps
+  & ConnectCallbacks
+  & LoadUrlCallbacks
+  & { mode?: ConnectWidgetMode }
 
 export default function ConnectWidget({
   clientId,
