@@ -82,7 +82,7 @@ const strinfigyType = (type: string | Record<string, string>): string => {
   return `{ ${fields.join(", ")} }`
 }
 
-const main = () => {
+export const main = () => {
   console.log("Generating payload definitions")
 
   const payloadTypes: string[] = []
@@ -143,4 +143,6 @@ const main = () => {
   console.log("Done generating payload definitions")
 }
 
-main()
+if (require.main === module) {
+  main()
+}

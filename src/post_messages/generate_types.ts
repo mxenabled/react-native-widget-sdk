@@ -18,7 +18,7 @@ export const typeLookup: Record<string, Type> = {
 }
 `
 
-const main = () => {
+export const main = () => {
   console.log("Generating type definitions")
 
   const typeDefLines: string[] = []
@@ -42,4 +42,6 @@ const main = () => {
   console.log("Done generating type definitions")
 }
 
-main()
+if (require.main === module) {
+  main()
+}

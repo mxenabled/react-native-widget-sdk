@@ -10,6 +10,10 @@ export enum DefinitionType {
   Entity,
 }
 
+export type DefinitionFile = {
+  post_messages: DefinitionSchema
+}
+
 export type DefinitionSchema = {
   generic: ActionsSchema
   widgets: ActionsSchema
@@ -69,13 +73,17 @@ export const withEach = <R>(group: ActionsSchema, cb: (ns: string, action: strin
   return results
 }
 
+let cachedDefsData: DefinitionFile
 export const loadDefinitions = (): DefinitionSchema => {
-  const defsFile = join(__dirname, defsFilename)
-  console.log(`Loading post messages from ${defsFile}`)
+  if (!cachedDefsData) {
+    const defsFile = join(__dirname, defsFilename)
+    console.log(`Loading post messages from ${defsFile}`)
 
-  const defsData = readFileSync(defsFile)
-  const data = YAML.parse(defsData.toString()) as { post_messages: DefinitionSchema }
-  return data.post_messages
+    const defsData = readFileSync(defsFile)
+    cachedDefsData = YAML.parse(defsData.toString()) as DefinitionFile
+  }
+
+  return { ...cachedDefsData.post_messages }
 }
 
 export const fileHeader = (filename: string) =>

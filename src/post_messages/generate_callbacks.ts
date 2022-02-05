@@ -150,7 +150,7 @@ const callCallbackCaseTemplate = `
       break
 `
 
-const main = () => {
+export const main = () => {
   console.log("Generating callback definitions")
 
   const payloadTypeImports: string[] = []
@@ -254,4 +254,6 @@ const main = () => {
   console.log("Done generating callback definitions")
 }
 
-main()
+if (require.main === module) {
+  main()
+}
