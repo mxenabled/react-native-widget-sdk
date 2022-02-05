@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react"
 import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
-import { WebView, WebViewNavigation } from "react-native-webview"
+import { WebView } from "react-native-webview"
 
-import { Interceptor, Action } from "../post_messages/interceptor"
+import { LoadUrlCallbacks } from "./load_url"
 import { handleConnectRequest, ConnectCallback } from "../post_messages"
-
-import { Environment, lookupEnvironment } from "../loader/environment"
 import { ConnectWidgetMode } from "../widget/widgets"
+import { Environment, lookupEnvironment } from "../loader/environment"
+
 import { makeConnectWidgetRequest } from "../loader/sso"
+import { makeModeSpecificComponent } from "./make_mode_specific_component"
+import { makeRequestInterceptor } from "./request_interceptor"
 
 import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
-import { makeModeSpecificComponent } from "./make_mode_specific_component"
-import { loadUrl, LoadUrlCallbacks } from "./load_url"
-import { exhaustive } from "../utils/exhaustive"
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
 export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
@@ -67,25 +66,7 @@ export default function ConnectWidget({
     return <SafeAreaView style={viewStyle} />
   }
 
-  const interceptor = new Interceptor(widgetSsoUrl)
-  const onShouldStartLoadWithRequest = (request: WebViewNavigation) => {
-    const action = interceptor.action(request)
-    switch (action) {
-      case Action.LoadInApp:
-        return true
-
-      case Action.Intercept:
-        handleConnectRequest(callbacks, request)
-        return false
-
-      case Action.LoadInBrowser:
-        loadUrl(callbacks, request.url)
-        return false
-
-      default:
-        exhaustive(action)
-    }
-  }
+  const onShouldStartLoadWithRequest = makeRequestInterceptor(widgetSsoUrl, callbacks, handleConnectRequest)
 
   return (
     <SafeAreaView style={viewStyle}>
