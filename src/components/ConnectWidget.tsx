@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, StyleProp, Linking, ViewStyle } from "react-native"
+import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
 import { WebView, WebViewNavigation } from "react-native-webview"
 
 import { Interceptor, Action } from "../post_messages/interceptor"
@@ -11,12 +11,16 @@ import { makeConnectWidgetRequest } from "../loader/sso"
 
 import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
 import { makeModeSpecificComponent } from "./make_mode_specific_component"
+import { loadUrl, LoadUrlCallbacks } from "./load_url"
 import { exhaustive } from "../utils/exhaustive"
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
 export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
 
-export type ConnectWidgetProps = ConnectCallback & {
+const defaultOnSsoError = (error: Error) =>
+  console.log(`Error making SSO request: ${error}`)
+
+export type ConnectWidgetProps = ConnectCallback & LoadUrlCallbacks & {
   clientId: string
   apiKey: string
   userGuid: string
@@ -31,7 +35,7 @@ export default function ConnectWidget({
   userGuid,
   environment,
   mode,
-  onSsoError = (error) => {},
+  onSsoError = defaultOnSsoError,
   ...callbacks
 }: ConnectWidgetProps) {
   const validatedEnv = lookupEnvironment(environment)
@@ -75,19 +79,11 @@ export default function ConnectWidget({
         return false
 
       case Action.LoadInBrowser:
-        requestLoadInBrowser(request.url)
+        loadUrl(callbacks, request.url)
         return false
 
       default:
         exhaustive(action)
-    }
-  }
-
-  const requestLoadInBrowser = (url: string) => {
-    try {
-      Linking.openURL(url)
-    } catch (error) {
-      console.log(`unable to load ${url} in browser app`)
     }
   }
 
