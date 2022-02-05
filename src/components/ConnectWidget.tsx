@@ -37,9 +37,18 @@ export default function ConnectWidget({
   onSsoError = defaultOnSsoError,
   ...callbacks
 }: ConnectWidgetProps) {
-  const validatedEnv = lookupEnvironment(environment)
+  const ssoParams = {
+    userGuid,
+    clientId,
+    apiKey,
+    environment: lookupEnvironment(environment),
+    widgetType: Type.ConnectWidget,
+    options: {
+      mode,
+    },
+  }
 
-  const widgetSsoUrl = useSso({ userGuid, clientId, apiKey, environment: validatedEnv, widgetType: Type.ConnectWidget, options: { mode } })
+  const widgetSsoUrl = useSso(ssoParams, onSsoError)
   const [screenWidth, screenHeight] = useScreenDimensions()
 
   const viewStyle: StyleProp<ViewStyle> = {
