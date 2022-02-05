@@ -28,8 +28,13 @@ export type ActionDefinition = {
   [index: string]: MessageDefinition
 }
 
+export type FieldType
+  = string
+  | Array<string>
+  | Record<string, string>
+
 export type MessageDefinition = {
-  [index: string]: string | Record<string, string>
+  [index: string]: FieldType
 }
 
 const defsFilename = "definitions.yml"

@@ -2,6 +2,7 @@ import { join } from "path"
 
 import {
   DefinitionType,
+  FieldType,
   genMessageKey,
   merge,
   withEachMessageDefinition,
@@ -69,9 +70,11 @@ const buildEmptyPayloadCaseTemplate = `
       }
 `
 
-const strinfigyType = (type: string | Record<string, string>): string => {
+const strinfigyType = (type: FieldType): string => {
   if (typeof type === "string") {
     return type
+  } else if (type instanceof Array) {
+    return type.map((v) => `"${v}"`).join(" | ")
   }
 
   let fields: string[] = []

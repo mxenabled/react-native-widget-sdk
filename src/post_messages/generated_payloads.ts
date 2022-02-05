@@ -20,7 +20,7 @@ export type ConnectLoadedPayload = {
   type: Type.ConnectLoaded
   user_guid: string
   session_guid: string
-  initial_step: string
+  initial_step: "search" | "selectMember" | "enterCreds" | "mfa" | "connected" | "loginError"
 }
 
 export type ConnectEnterCredentialsPayload = {
@@ -176,7 +176,7 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
         type,
         user_guid: metadata.user_guid as string,
         session_guid: metadata.session_guid as string,
-        initial_step: metadata.initial_step as string,
+        initial_step: metadata.initial_step as "search" | "selectMember" | "enterCreds" | "mfa" | "connected" | "loginError",
       }
 
     case Type.ConnectEnterCredentials:

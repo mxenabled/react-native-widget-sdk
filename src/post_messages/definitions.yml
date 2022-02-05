@@ -20,8 +20,13 @@ post_messages:
     connect:
       loaded:
         <<: *user_session_properties
-        # TODO This is an enum, switch string type for string union type
-        initial_step: string
+        initial_step:
+          - search
+          - selectMember
+          - enterCreds
+          - mfa
+          - connected
+          - loginError
       enterCredentials:
         <<: *user_session_properties
         institution:
