@@ -29,21 +29,21 @@ import {
   AccountCreatedPayload,
 } from "./generated_payloads"
 
-export type ErrorCallback = {
+export type ErrorCallbacks = {
   onUnkownRequestIntercept?: (request: WebViewNavigation) => void
   onCallbackDispatchError?: (request: WebViewNavigation, error: Error) => void
 }
 
-export type GenericCallback = {
+export type GenericCallbacks = {
   onLoad?: (payload: LoadPayload) => void
   onPing?: (payload: PingPayload) => void
 }
 
-export type EntityCallback = {
+export type EntityCallbacks = {
   onAccountCreated?: (payload: AccountCreatedPayload) => void
 }
 
-export type ConnectCallback = ErrorCallback & GenericCallback & EntityCallback & {
+export type ConnectCallbacks = ErrorCallbacks & GenericCallbacks & EntityCallbacks & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
   onInstitutionSearch?: (payload: ConnectInstitutionSearchPayload) => void
@@ -99,7 +99,7 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   }
 }
 
-export function dispatchGenericCallback(callbacks: GenericCallback, message: Message) {
+export function dispatchGenericCallback(callbacks: GenericCallbacks, message: Message) {
   const payload = message.payload()
 
   switch (payload.type) {
@@ -116,7 +116,7 @@ export function dispatchGenericCallback(callbacks: GenericCallback, message: Mes
   }
 }
 
-export function dispatchEntityCallback(callbacks: EntityCallback, message: Message) {
+export function dispatchEntityCallback(callbacks: EntityCallbacks, message: Message) {
   const payload = message.payload()
 
   switch (payload.type) {
@@ -129,7 +129,7 @@ export function dispatchEntityCallback(callbacks: EntityCallback, message: Messa
   }
 }
 
-export function handleConnectRequest(callbacks: ConnectCallback, request: WebViewNavigation) {
+export function handleConnectRequest(callbacks: ConnectCallbacks, request: WebViewNavigation) {
   const message = new Message(request.url)
   if (!message.isValid()) {
     safeCall([request], callbacks.onUnkownRequestIntercept)
@@ -150,7 +150,7 @@ export function handleConnectRequest(callbacks: ConnectCallback, request: WebVie
   }
 }
 
-export function dispatchConnectCallback(callbacks: ConnectCallback, message: Message) {
+export function dispatchConnectCallback(callbacks: ConnectCallbacks, message: Message) {
   const payload = message.payload()
 
   if (isGenericMessage(message)) {

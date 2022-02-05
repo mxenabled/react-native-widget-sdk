@@ -64,7 +64,7 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
 `
 
 const callbackEntryTypeTemplate = `
-export type {callbackType} = ErrorCallback & GenericCallback & EntityCallback & {
+export type {callbackType} = ErrorCallbacks & GenericCallbacks & EntityCallbacks & {
 {functionTypes}
 }
 `
@@ -221,7 +221,7 @@ export const main = () => {
 
   for (const namespace in callbackFunctionTypesByNamespace) {
     const isWidget = Array.from(widgetNamespaces).includes(namespace)
-    const callbackType = `${normalizeCasing(namespace)}Callback`
+    const callbackType = `${normalizeCasing(namespace)}Callbacks`
 
     const functionTypes = callbackFunctionTypesByNamespace[namespace].join("\n")
     const callbackTypeTemplate = isWidget ? callbackEntryTypeTemplate : callbackFinalTypeTemplate
