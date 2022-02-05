@@ -6,7 +6,7 @@ import { Options } from "../widget/options"
 
 type ExtraOptions<Mode> = Partial<Omit<Options<Mode>, "widget_type">>
 
-type SsoWidgetRequest = {
+export type SsoWidgetRequest = {
   url: string
   options: {
     method: string
@@ -15,24 +15,20 @@ type SsoWidgetRequest = {
   }
 }
 
-type SsoWidgetResponse = {
+export type SsoWidgetResponse = {
   widget_url: {
     type: Type
     url: string
   }
 }
 
-type SsoRequestParams<Mode> = {
+export type SsoRequestParams<Mode> = {
   apiKey: string
   clientId: string
   userGuid: string
   widgetType: Type
   environment: Environment
   options?: ExtraOptions<Mode>
-}
-
-export function makeConnectWidgetRequest<Mode>(params: Omit<SsoRequestParams<Mode>, "widgetType">): Promise<SsoWidgetResponse> {
-  return makeRequest({ ...params, widgetType: Type.ConnectWidget })
 }
 
 export function makeRequest<Mode>(params: SsoRequestParams<Mode>): Promise<SsoWidgetResponse> {

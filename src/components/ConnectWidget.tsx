@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { LoadUrlCallbacks } from "./load_url"
 import { handleConnectRequest, ConnectCallback } from "../post_messages"
-import { ConnectWidgetMode } from "../widget/widgets"
+import { Type, ConnectWidgetMode } from "../widget/widgets"
 import { Environment, lookupEnvironment } from "../loader/environment"
 
-import { makeConnectWidgetRequest } from "../loader/sso"
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 
+import { useSso } from "./sso"
 import { useScreenDimensions } from "./screen_dimensions"
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
@@ -39,14 +39,8 @@ export default function ConnectWidget({
 }: ConnectWidgetProps) {
   const validatedEnv = lookupEnvironment(environment)
 
-  const [widgetSsoUrl, setWidgetSsoUrl] = useState<string | null>(null)
+  const widgetSsoUrl = useSso({ userGuid, clientId, apiKey, environment: validatedEnv, widgetType: Type.ConnectWidget, options: { mode } })
   const [screenWidth, screenHeight] = useScreenDimensions()
-
-  useEffect(() => {
-    makeConnectWidgetRequest<ConnectWidgetMode>({ userGuid, clientId, apiKey, environment: validatedEnv, options: { mode } })
-      .then((response) => setWidgetSsoUrl(response.widget_url.url))
-      .catch((error) => onSsoError(error))
-  }, [])
 
   const viewStyle: StyleProp<ViewStyle> = {
     width: screenWidth,
