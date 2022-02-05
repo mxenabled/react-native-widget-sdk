@@ -5,7 +5,7 @@ import { WebView } from "react-native-webview"
 import { LoadUrlCallbacks } from "./load_url"
 import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
 import { Type, ConnectWidgetMode } from "../widget/widgets"
-import { lookupEnvironment } from "../loader/environment"
+import { buildSsoRequestParams } from "../loader/sso"
 
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
@@ -31,16 +31,8 @@ export default function ConnectWidget({
   onSsoError,
   ...callbacks
 }: ConnectWidgetProps) {
-  const ssoParams = {
-    userGuid,
-    clientId,
-    apiKey,
-    environment: lookupEnvironment(environment),
-    widgetType: Type.ConnectWidget,
-    options: {
-      mode,
-    },
-  }
+  const ssoParams = buildSsoRequestParams(apiKey, clientId, userGuid,
+    environment, Type.ConnectWidget, { mode })
 
   const widgetSsoUrl = useSso(ssoParams, onSsoError)
   const [screenWidth, screenHeight] = useScreenDimensions()
