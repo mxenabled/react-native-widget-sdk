@@ -106,7 +106,7 @@ export const merge = (template: string, fields: Record<string, string>) =>
     str.replace(new RegExp(`{${field}}`, "g"), fields[field]), template).trim()
 
 export const genMessageKey = (namespace: string, action: string) =>
-  camelCase(isParentDefn(action) ? namespace : `${namespace}_${action}`)
+  normalizeCasing(isParentDefn(action) ? namespace : `${namespace}_${action}`)
 
 export const genMessageType =(namespace: string, action: string) =>
   isParentDefn(action) ? `mx/${namespace}` : `mx/${namespace}/${action}`
@@ -114,9 +114,10 @@ export const genMessageType =(namespace: string, action: string) =>
 export const isParentDefn = (action: string) =>
   action === "_"
 
-export const camelCase = (str: string) =>
+export const normalizeCasing = (str: string) =>
   str
     .replace(/(^[a-z])/i, (match) => match.toUpperCase())
-    .replace(/([-_][a-z])/ig, (match) => match.toUpperCase())
+    .replace(/([-_/][a-z])/ig, (match) => match.toUpperCase())
     .replace("-", "")
     .replace("_", "")
+    .replace("/", "")

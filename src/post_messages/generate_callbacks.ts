@@ -2,7 +2,7 @@ import { join } from "path"
 
 import {
   DefinitionType,
-  camelCase,
+  normalizeCasing,
   genMessageKey,
   isParentDefn,
   merge,
@@ -189,7 +189,7 @@ export const main = () => {
     } else if (isEntity) {
       callbackName = `on${name}`
     } else {
-      callbackName = `on${camelCase(action)}`
+      callbackName = `on${normalizeCasing(action)}`
     }
     const payloadType = `${name}Payload`
 
@@ -221,7 +221,7 @@ export const main = () => {
 
   for (const namespace in callbackFunctionTypesByNamespace) {
     const isWidget = Array.from(widgetNamespaces).includes(namespace)
-    const callbackType = `${camelCase(namespace)}Callback`
+    const callbackType = `${normalizeCasing(namespace)}Callback`
 
     const functionTypes = callbackFunctionTypesByNamespace[namespace].join("\n")
     const callbackTypeTemplate = isWidget ? callbackEntryTypeTemplate : callbackFinalTypeTemplate
@@ -231,7 +231,7 @@ export const main = () => {
     // Error dispatches are generated separately so they won't be in
     // `dispatchesByNamespace`.
     if (namespace in dispatchesByNamespace) {
-      const namespaceType = camelCase(namespace)
+      const namespaceType = normalizeCasing(namespace)
       const callCallbackCases = dispatchesByNamespace[namespace].join("\n\n    ")
       const dispatchFunctionTemplate = isWidget ? dispatchFunctionEntryTemplate : dispatchFunctionFinalTemplate
       const dispatchFunction = merge(dispatchFunctionTemplate, { namespaceType, callbackType, callCallbackCases })

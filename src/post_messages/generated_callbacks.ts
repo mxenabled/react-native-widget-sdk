@@ -17,6 +17,7 @@ import {
   ConnectInstitutionSearchPayload,
   ConnectSelectedInstitutionPayload,
   ConnectMemberConnectedPayload,
+  ConnectConnectedPrimaryActionPayload,
   ConnectMemberDeletedPayload,
   ConnectCreateMemberErrorPayload,
   ConnectMemberStatusUpdatePayload,
@@ -48,6 +49,7 @@ export type ConnectCallback = ErrorCallback & GenericCallback & EntityCallback &
   onInstitutionSearch?: (payload: ConnectInstitutionSearchPayload) => void
   onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
   onMemberConnected?: (payload: ConnectMemberConnectedPayload) => void
+  onConnectedPrimaryAction?: (payload: ConnectConnectedPrimaryActionPayload) => void
   onMemberDeleted?: (payload: ConnectMemberDeletedPayload) => void
   onCreateMemberError?: (payload: ConnectCreateMemberErrorPayload) => void
   onMemberStatusUpdate?: (payload: ConnectMemberStatusUpdatePayload) => void
@@ -178,6 +180,10 @@ export function dispatchConnectCallback(callbacks: ConnectCallback, message: Mes
 
     case Type.ConnectMemberConnected:
       safeCall([payload], callbacks.onMemberConnected)
+      break
+
+    case Type.ConnectConnectedPrimaryAction:
+      safeCall([payload], callbacks.onConnectedPrimaryAction)
       break
 
     case Type.ConnectMemberDeleted:

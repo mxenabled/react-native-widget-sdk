@@ -39,9 +39,8 @@ post_messages:
       memberConnected:
         <<: *user_session_properties
         member_guid: string
-      # TODO Handle subaction
-      # connected/primaryAction:
-      #   <<: *user_session_properties
+      connected/primaryAction:
+        <<: *user_session_properties
       memberDeleted:
         <<: *user_session_properties
         member_guid: string

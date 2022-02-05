@@ -54,6 +54,12 @@ export type ConnectMemberConnectedPayload = {
   member_guid: string
 }
 
+export type ConnectConnectedPrimaryActionPayload = {
+  type: Type.ConnectConnectedPrimaryAction
+  user_guid: string
+  session_guid: string
+}
+
 export type ConnectMemberDeletedPayload = {
   type: Type.ConnectMemberDeleted
   user_guid: string
@@ -132,6 +138,7 @@ export type WidgetPayload
   | ConnectInstitutionSearchPayload
   | ConnectSelectedInstitutionPayload
   | ConnectMemberConnectedPayload
+  | ConnectConnectedPrimaryActionPayload
   | ConnectMemberDeletedPayload
   | ConnectCreateMemberErrorPayload
   | ConnectMemberStatusUpdatePayload
@@ -205,6 +212,13 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
         user_guid: metadata.user_guid as string,
         session_guid: metadata.session_guid as string,
         member_guid: metadata.member_guid as string,
+      }
+
+    case Type.ConnectConnectedPrimaryAction:
+      return {
+        type,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
       }
 
     case Type.ConnectMemberDeleted:
