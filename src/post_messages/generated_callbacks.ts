@@ -4,6 +4,8 @@
  * If you need to make changes to the code in this file, you can do so by
  * modifying definitions.yml.
  */
+import { WebViewNavigation } from "react-native-webview"
+
 import { Type } from "./generated_types"
 import { Message } from "./message"
 
@@ -17,6 +19,11 @@ import {
   AccountCreatedPayload,
 } from "./generated_payloads"
 
+export type ErrorCallback = {
+  onUnkownRequestIntercept?: (request: WebViewNavigation) => void
+  onCallbackDispatchError?: (request: WebViewNavigation, error: Error) => void
+}
+
 export type GenericCallback = {
   onLoad?: (payload: LoadPayload) => void
   onPing?: (payload: PingPayload) => void
@@ -26,11 +33,20 @@ export type EntityCallback = {
   onAccountCreated?: (payload: AccountCreatedPayload) => void
 }
 
-export type ConnectCallback = GenericCallback & EntityCallback & {
+export type ConnectCallback = ErrorCallback & GenericCallback & EntityCallback & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onSelectedInstitution?: (payload: ConnectSelectedInstitutionPayload) => void
   onStepChange?: (payload: ConnectStepChangePayload) => void
   onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
+}
+
+// Thrown when we are unable to process an otherwise valid post message
+// request. Used to trigger the `onCallbackDispatchError` callback.
+class CallbackDispatchError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    Object.setPrototypeOf(this, CallbackDispatchError.prototype);
+  }
 }
 
 const namespaces = {
@@ -51,9 +67,15 @@ function isEntityMessage(message: Message) {
   return namespaces.entities.includes(message.namespace())
 }
 
-function safeCall<P>(payload: P, fn?: (_: P) => void) {
+function safeCall(args: [], fn?: () => void): void
+function safeCall<P1>(args: [P1], fn?: (...args: [P1]) => void): void
+function safeCall<P1, P2>(args: [P1, P2], fn?: (...args: [P1, P2]) => void): void
+function safeCall<P1, P2, P3>(args: [P1, P2, P3], fn?: (...args: [P1, P2, P3]) => void): void
+function safeCall<P1, P2, P3, P4>(args: [P1, P2, P3, P4], fn?: (...args: [P1, P2, P3, P4]) => void): void
+function safeCall<P1, P2, P3, P4, P5>(args: [P1, P2, P3, P4, P5], fn?: (...args: [P1, P2, P3, P4, P5]) => void): void
+function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   if (fn) {
-    fn(payload)
+    fn(...args)
   }
 }
 
@@ -62,15 +84,15 @@ export function dispatchGenericCallback(callbacks: GenericCallback, message: Mes
 
   switch (payload.type) {
     case Type.Load:
-      safeCall(payload, callbacks.onLoad)
+      safeCall([payload], callbacks.onLoad)
       break
 
     case Type.Ping:
-      safeCall(payload, callbacks.onPing)
+      safeCall([payload], callbacks.onPing)
       break
 
     default:
-      throw new Error(`"unable to dispatch post message with unknown type: ${payload.type}"`)
+      throw new CallbackDispatchError(`"unable to dispatch post message with unknown type: ${payload.type}"`)
   }
 }
 
@@ -79,21 +101,33 @@ export function dispatchEntityCallback(callbacks: EntityCallback, message: Messa
 
   switch (payload.type) {
     case Type.AccountCreated:
-      safeCall(payload, callbacks.onAccountCreated)
+      safeCall([payload], callbacks.onAccountCreated)
       break
 
     default:
-      throw new Error(`"unable to dispatch post message with unknown type: ${payload.type}"`)
+      throw new CallbackDispatchError(`"unable to dispatch post message with unknown type: ${payload.type}"`)
   }
 }
 
-export function handleConnectRequest(callbacks: ConnectCallback, url: string) {
-  const message = new Message(url)
+export function handleConnectRequest(callbacks: ConnectCallback, request: WebViewNavigation) {
+  const message = new Message(request.url)
   if (!message.isValid()) {
+    safeCall([request], callbacks.onUnkownRequestIntercept)
     return
   }
 
-  dispatchConnectCallback(callbacks, message)
+  try {
+    dispatchConnectCallback(callbacks, message)
+  } catch (error) {
+    // `CallbackDispatchError` is an internal error so pass that back to the
+    // host via the `onCallbackDispatchError` callback. Any other errors are
+    // from user space and should bubble back up to the host.
+    if (error instanceof CallbackDispatchError) {
+      safeCall([request, error], callbacks.onCallbackDispatchError)
+    } else {
+      throw error
+    }
+  }
 }
 
 export function dispatchConnectCallback(callbacks: ConnectCallback, message: Message) {
@@ -109,22 +143,22 @@ export function dispatchConnectCallback(callbacks: ConnectCallback, message: Mes
 
   switch (payload.type) {
     case Type.ConnectLoaded:
-      safeCall(payload, callbacks.onLoaded)
+      safeCall([payload], callbacks.onLoaded)
       break
 
     case Type.ConnectSelectedInstitution:
-      safeCall(payload, callbacks.onSelectedInstitution)
+      safeCall([payload], callbacks.onSelectedInstitution)
       break
 
     case Type.ConnectStepChange:
-      safeCall(payload, callbacks.onStepChange)
+      safeCall([payload], callbacks.onStepChange)
       break
 
     case Type.ConnectEnterCredentials:
-      safeCall(payload, callbacks.onEnterCredentials)
+      safeCall([payload], callbacks.onEnterCredentials)
       break
 
     default:
-      throw new Error(`"unable to dispatch post message with unknown type: ${payload.type}"`)
+      throw new CallbackDispatchError(`"unable to dispatch post message with unknown type: ${payload.type}"`)
   }
 }

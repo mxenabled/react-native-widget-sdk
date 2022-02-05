@@ -11,6 +11,8 @@ import {
 } from "./generate_utils"
 
 const template = `
+import { WebViewNavigation } from "react-native-webview"
+
 import { Type } from "./generated_types"
 import { Message } from "./message"
 
@@ -19,6 +21,15 @@ import {
 } from "./generated_payloads"
 
 {callbackTypes}
+
+// Thrown when we are unable to process an otherwise valid post message
+// request. Used to trigger the \`onCallbackDispatchError\` callback.
+class CallbackDispatchError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    Object.setPrototypeOf(this, CallbackDispatchError.prototype);
+  }
+}
 
 const namespaces = {
   generic: [
@@ -37,9 +48,15 @@ function isEntityMessage(message: Message) {
   return namespaces.entities.includes(message.namespace())
 }
 
-function safeCall<P>(payload: P, fn?: (_: P) => void) {
+function safeCall(args: [], fn?: () => void): void
+function safeCall<P1>(args: [P1], fn?: (...args: [P1]) => void): void
+function safeCall<P1, P2>(args: [P1, P2], fn?: (...args: [P1, P2]) => void): void
+function safeCall<P1, P2, P3>(args: [P1, P2, P3], fn?: (...args: [P1, P2, P3]) => void): void
+function safeCall<P1, P2, P3, P4>(args: [P1, P2, P3, P4], fn?: (...args: [P1, P2, P3, P4]) => void): void
+function safeCall<P1, P2, P3, P4, P5>(args: [P1, P2, P3, P4, P5], fn?: (...args: [P1, P2, P3, P4, P5]) => void): void
+function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   if (fn) {
-    fn(payload)
+    fn(...args)
   }
 }
 
@@ -47,7 +64,7 @@ function safeCall<P>(payload: P, fn?: (_: P) => void) {
 `
 
 const callbackEntryTypeTemplate = `
-export type {callbackType} = GenericCallback & EntityCallback & {
+export type {callbackType} = ErrorCallback & GenericCallback & EntityCallback & {
 {functionTypes}
 }
 `
@@ -58,18 +75,40 @@ export type {callbackType} = {
 }
 `
 
+const unknownRequestCallbackName = "onUnkownRequestIntercept"
+const unknownRequestCallbackFunctionTypeTemplate = `
+${unknownRequestCallbackName}?: (request: WebViewNavigation) => void
+`
+
+const callbackDispatchErrorCallbackName = "onCallbackDispatchError"
+const callbackDispatchErrorCallbackFunctionTypeTemplate = `
+${callbackDispatchErrorCallbackName}?: (request: WebViewNavigation, error: Error) => void
+`
+
 const callbackFunctionTypeTemplate = `
 {callbackName}?: (payload: {payloadType}) => void
 `
 
 const dispatchFunctionEntryTemplate = `
-export function handle{namespaceType}Request(callbacks: {callbackType}, url: string) {
-  const message = new Message(url)
+export function handle{namespaceType}Request(callbacks: {callbackType}, request: WebViewNavigation) {
+  const message = new Message(request.url)
   if (!message.isValid()) {
+    safeCall([request], callbacks.onUnkownRequestIntercept)
     return
   }
 
-  dispatchConnectCallback(callbacks, message)
+  try {
+    dispatch{namespaceType}Callback(callbacks, message)
+  } catch (error) {
+    // \`CallbackDispatchError\` is an internal error so pass that back to the
+    // host via the \`onCallbackDispatchError\` callback. Any other errors are
+    // from user space and should bubble back up to the host.
+    if (error instanceof CallbackDispatchError) {
+      safeCall([request, error], callbacks.onCallbackDispatchError)
+    } else {
+      throw error
+    }
+  }
 }
 
 export function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
@@ -87,7 +126,7 @@ export function dispatch{namespaceType}Callback(callbacks: {callbackType}, messa
     {callCallbackCases}
 
     default:
-      throw new Error(\`"unable to dispatch post message with unknown type: \${payload.type}"\`)
+      throw new CallbackDispatchError(\`"unable to dispatch post message with unknown type: \${payload.type}"\`)
   }
 }
 `
@@ -100,14 +139,14 @@ export function dispatch{namespaceType}Callback(callbacks: {callbackType}, messa
     {callCallbackCases}
 
     default:
-      throw new Error(\`"unable to dispatch post message with unknown type: \${payload.type}"\`)
+      throw new CallbackDispatchError(\`"unable to dispatch post message with unknown type: \${payload.type}"\`)
   }
 }
 `
 
 const callCallbackCaseTemplate = `
     case Type.{name}:
-      safeCall(payload, callbacks.{callbackName})
+      safeCall([payload], callbacks.{callbackName})
       break
 `
 
@@ -124,6 +163,10 @@ const main = () => {
   const widgetNamespaces = new Set<string>()
   const entityNamespaces = new Set<string>()
 
+  callbackFunctionTypesByNamespace["error"] = [
+    `  ${merge(unknownRequestCallbackFunctionTypeTemplate, {})}`,
+    `  ${merge(callbackDispatchErrorCallbackFunctionTypeTemplate, {})}`,
+  ]
   callbackFunctionTypesByNamespace["generic"] = []
   callbackFunctionTypesByNamespace["entity"] = []
 
@@ -185,11 +228,15 @@ const main = () => {
     const callbackTypeDef = merge(callbackTypeTemplate, { callbackType, functionTypes })
     callbackTypes.push(callbackTypeDef)
 
-    const namespaceType = camelCase(namespace)
-    const callCallbackCases = dispatchesByNamespace[namespace].join("\n\n    ")
-    const dispatchFunctionTemplate = isWidget ? dispatchFunctionEntryTemplate : dispatchFunctionFinalTemplate
-    const dispatchFunction = merge(dispatchFunctionTemplate, { namespaceType, callbackType, callCallbackCases })
-    dispatchFunctions.push(dispatchFunction)
+    // Error dispatches are generated separately so they won't be in
+    // `dispatchesByNamespace`.
+    if (namespace in dispatchesByNamespace) {
+      const namespaceType = camelCase(namespace)
+      const callCallbackCases = dispatchesByNamespace[namespace].join("\n\n    ")
+      const dispatchFunctionTemplate = isWidget ? dispatchFunctionEntryTemplate : dispatchFunctionFinalTemplate
+      const dispatchFunction = merge(dispatchFunctionTemplate, { namespaceType, callbackType, callCallbackCases })
+      dispatchFunctions.push(dispatchFunction)
+    }
   }
 
   const code = merge(template, {

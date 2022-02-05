@@ -72,7 +72,7 @@ export default function ConnectWidget({
         return true
 
       case Action.Intercept:
-        handleConnectRequest(callbacks, request.url)
+        handleConnectRequest(callbacks, request)
         return false
 
       case Action.LoadInBrowser:
