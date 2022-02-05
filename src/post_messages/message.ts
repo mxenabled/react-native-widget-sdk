@@ -1,6 +1,7 @@
 import { parse as parseUrl, Url } from "url"
 
-import { Type, typeLookup, Payload, buildPayload } from "./"
+import { Type, typeLookup } from "./generated_types"
+import { Payload, buildPayload } from "./generated_payloads"
 
 export class Message {
   protected url: Url
