@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { readFileSync, writeFileSync } from "fs"
 import { basename, join } from "path"
 import YAML from "yaml"

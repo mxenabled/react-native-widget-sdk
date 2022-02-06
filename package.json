@@ -49,6 +49,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "collectCoverageFrom": [
+      "src/**/**"
+    ],
     "setupFiles": [
       "./test/setup.ts"
     ],

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { loadDefinitions } from "./generate_utils"
 import { main as generateCallbacks } from "./generate_callbacks"
 import { main as generatePayloads } from "./generate_payloads"
