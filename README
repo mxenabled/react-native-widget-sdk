@@ -25,3 +25,10 @@ libraried, and then either in an iOS or Android emulator:
     npm link
     npm run ios
     npm run android
+
+
+Other useful commands for developers:
+
+    npm run build         # Run TypeScript compiler
+    npm run test          # Run unit tests
+    npm run generate      # Run code generators

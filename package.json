@@ -1,5 +1,6 @@
 {
   "name": "mx-mobile-widget-sdk",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,6 +9,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "build": "tsc",
+    "test": "jest",
+    "test:coverage": "npm test -- --coverage",
+    "open:coverage": "open coverage/lcov-report/index.html",
     "generate:post_messages": "ts-node src/post_messages/generate_main.ts",
     "generate": "npm run generate:post_messages"
   },
@@ -26,14 +30,35 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.0",
+    "@types/node-fetch": "^2.5.12",
     "@types/react": "^17.0.38",
     "@types/react-native": "^0.66.15",
     "@types/react-native-base64": "^0.2.0",
     "@types/yaml": "^1.9.7",
+    "jest": "^27.5.0",
+    "msw": "^0.36.8",
+    "node-fetch": "^2.6.7",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
     "uri-scheme": "^1.0.112",
     "yaml": "^1.10.2"
   },
-  "private": true
+  "jest": {
+    "setupFiles": [
+      "./test/setup.ts"
+    ],
+    "testMatch": [
+      "*/**/*_test.[jt]s?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "_setup.ts",
+      "_helper.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+    ]
+  }
 }

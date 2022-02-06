@@ -9,7 +9,8 @@
     "strictNullChecks": true,
     "skipLibCheck": true,
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,

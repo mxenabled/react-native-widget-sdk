@@ -66,7 +66,7 @@ export function makeRequest<Mode>(params: SsoRequestParams<Mode>): Promise<SsoWi
     .then((response) => response.json())
 }
 
-function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options = {} }: SsoRequestParams<Mode>): SsoWidgetRequest {
+function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options }: SsoRequestParams<Mode>): SsoWidgetRequest {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
 
