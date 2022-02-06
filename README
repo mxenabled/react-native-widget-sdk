@@ -9,7 +9,6 @@ Once your environment is setup, create a config.json file that looks like the
 one below, but with the appropriate values (all of which you can get from
 Batcave):
 
-
     {
       "MX_CLIENT_ID": "...",
       "MX_API_KEY": "...",
