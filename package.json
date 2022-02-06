@@ -47,7 +47,10 @@
   },
   "jest": {
     "setupFiles": [
-      "./test/setup.ts"
+      "./test/env_setup.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/sso_setup.ts"
     ],
     "testMatch": [
       "*/**/*_test.[jt]s?(x)"

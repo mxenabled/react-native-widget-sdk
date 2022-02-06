@@ -15,9 +15,3 @@ const handlers = [
 ]
 
 export const server = setupServer(...handlers)
-
-export const runSsoServer = () => {
-  beforeAll(() => server.listen())
-  afterEach(() => server.resetHandlers())
-  afterAll(() => server.close())
-}

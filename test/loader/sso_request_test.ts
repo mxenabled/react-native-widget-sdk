@@ -2,10 +2,6 @@ import { buildSsoRequestParams, makeRequest } from "../../src/loader/sso_request
 import { Environment } from "../../src/loader/environment"
 import { Type } from "../../src/widget/widgets"
 
-import { runSsoServer } from "../mocks/sso_api_server"
-
-runSsoServer()
-
 const apiKey = "myapikey"
 const clientId = "myclientid"
 const userGuid = "USR-777"
