@@ -36,21 +36,24 @@
     "@types/react": "^17.0.38",
     "@types/react-native": "^0.66.15",
     "@types/react-native-base64": "^0.2.0",
+    "@types/react-test-renderer": "^17.0.1",
     "@types/yaml": "^1.9.7",
     "jest": "^27.5.0",
     "msw": "^0.36.8",
     "node-fetch": "^2.6.7",
+    "react-test-renderer": "^17.0.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
     "uri-scheme": "^1.0.112",
     "yaml": "^1.10.2"
   },
   "jest": {
+    "preset": "react-native",
     "setupFiles": [
-      "./test/env_setup.ts"
+      "./test/setup.ts"
     ],
     "setupFilesAfterEnv": [
-      "./test/sso_setup.ts"
+      "./test/mocks/setup.ts"
     ],
     "testMatch": [
       "*/**/*_test.[jt]s?(x)"
