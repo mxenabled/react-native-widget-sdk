@@ -46,6 +46,7 @@ export default function ConnectWidget({
   return (
     <SafeAreaView style={viewStyles}>
       <WebView
+        testID="connect-widget-webview"
         scrollEnabled={true}
         source={{ uri: widgetSsoUrl }}
         originWhitelist={["*"]}

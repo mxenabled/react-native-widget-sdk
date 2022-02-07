@@ -1,10 +1,7 @@
 import React from "react"
-import { WebView } from "react-native-webview"
-import { create } from "react-test-renderer"
+import { render, waitFor } from '@testing-library/react-native';
 
 import ConnectWidget from "../../src/components/ConnectWidget"
-
-import { waitFor } from "./component_helper"
 
 const okProps = {
   clientId: "myveryownclientid",
@@ -15,8 +12,8 @@ const okProps = {
 
 describe("ConnectWidget", () => {
   test("loads widget SSO url", async () => {
-    const component = create(<ConnectWidget {...okProps} />)
-    const webView = await waitFor(async () => await component.root.findByType(WebView))
+    const component = render(<ConnectWidget {...okProps} />)
+    const webView = await waitFor(() => component.findByTestId("connect-widget-webview"))
     expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
   })
 })
