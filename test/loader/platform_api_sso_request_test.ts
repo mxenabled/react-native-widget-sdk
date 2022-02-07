@@ -1,4 +1,4 @@
-import { buildSsoRequestParams, makeRequest } from "../../src/loader/sso_request"
+import { buildRequestParams, makeRequest } from "../../src/loader/platform_api_sso_request"
 import { Environment } from "../../src/loader/environment"
 import { Type } from "../../src/widget/widgets"
 
@@ -6,9 +6,9 @@ const apiKey = "myapikey"
 const clientId = "myclientid"
 const userGuid = "USR-777"
 
-describe("buildSsoRequestParams", () => {
+describe("buildRequestParams", () => {
   test("all properties are included", () => {
-    const params = buildSsoRequestParams(apiKey, clientId, userGuid,
+    const params = buildRequestParams(apiKey, clientId, userGuid,
       Environment.INT, Type.ConnectWidget, { mode: "aggregation" })
 
     expect(params.apiKey).toBe(apiKey)
@@ -20,20 +20,20 @@ describe("buildSsoRequestParams", () => {
   })
 
   test("throws error upon missing value", () => {
-    expect(() => buildSsoRequestParams("", clientId, userGuid, Environment.INT, Type.ConnectWidget, {})).toThrow()
-    expect(() => buildSsoRequestParams(apiKey, "", userGuid, Environment.INT, Type.ConnectWidget, {})).toThrow()
-    expect(() => buildSsoRequestParams(apiKey, clientId, "", Environment.INT, Type.ConnectWidget, {})).toThrow()
-    expect(() => buildSsoRequestParams(apiKey, clientId, userGuid, "", Type.ConnectWidget, {})).toThrow()
+    expect(() => buildRequestParams("", clientId, userGuid, Environment.INT, Type.ConnectWidget, {})).toThrow()
+    expect(() => buildRequestParams(apiKey, "", userGuid, Environment.INT, Type.ConnectWidget, {})).toThrow()
+    expect(() => buildRequestParams(apiKey, clientId, "", Environment.INT, Type.ConnectWidget, {})).toThrow()
+    expect(() => buildRequestParams(apiKey, clientId, userGuid, "", Type.ConnectWidget, {})).toThrow()
   })
 
   test("an invalid environment results in an error", () => {
-    expect(() => buildSsoRequestParams(apiKey, clientId, userGuid, "badtothebone", Type.ConnectWidget, {})).toThrow()
+    expect(() => buildRequestParams(apiKey, clientId, userGuid, "badtothebone", Type.ConnectWidget, {})).toThrow()
   })
 })
 
 describe("makeRequest", () => {
   test("returns loading configuration", () => {
-    const params = buildSsoRequestParams(apiKey, clientId, userGuid,
+    const params = buildRequestParams(apiKey, clientId, userGuid,
       Environment.INT, Type.ConnectWidget, {})
 
     return makeRequest(params).then((res) => {

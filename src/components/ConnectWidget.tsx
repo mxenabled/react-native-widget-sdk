@@ -5,16 +5,16 @@ import { WebView } from "react-native-webview"
 import { LoadUrlCallbacks } from "./load_url"
 import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
 import { Type, ConnectWidgetMode } from "../widget/widgets"
-import { buildSsoRequestParams } from "../loader/sso_request"
+import { buildRequestParams } from "../loader/platform_api_sso_request"
 
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 
-import { useSso, SsoProps } from "./sso"
+import { usePlatformApiSso, PlatformApiSsoProps } from "./platform_api_sso"
 import { useFullscreenStyles } from "./screen_dimensions"
 
 export type ConnectWidgetProps
-  = SsoProps
+  = PlatformApiSsoProps
   & ConnectCallbacks
   & LoadUrlCallbacks
   & { mode?: ConnectWidgetMode }
@@ -31,24 +31,23 @@ export default function ConnectWidget({
   onSsoError,
   ...callbacks
 }: ConnectWidgetProps) {
-  const ssoParams = buildSsoRequestParams(apiKey, clientId, userGuid,
+  const ssoParams = buildRequestParams(apiKey, clientId, userGuid,
     environment, Type.ConnectWidget, { mode })
-
-  const widgetSsoUrl = useSso(ssoParams, onSsoError)
+  const widgetUrl = usePlatformApiSso(ssoParams, onSsoError)
   const viewStyles = useFullscreenStyles()
 
-  if (!widgetSsoUrl) {
+  if (!widgetUrl) {
     return <SafeAreaView style={viewStyles} />
   }
 
-  const onShouldStartLoadWithRequest = makeRequestInterceptor(widgetSsoUrl, callbacks, handleConnectRequest)
+  const onShouldStartLoadWithRequest = makeRequestInterceptor(widgetUrl, callbacks, handleConnectRequest)
 
   return (
     <SafeAreaView style={viewStyles}>
       <WebView
         testID="connect-widget-webview"
         scrollEnabled={true}
-        source={{ uri: widgetSsoUrl }}
+        source={{ uri: widgetUrl }}
         originWhitelist={["*"]}
         cacheMode="LOAD_NO_CACHE"
         javaScriptEnabled={true}

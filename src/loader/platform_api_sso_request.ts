@@ -6,7 +6,7 @@ import { Options } from "../widget/options"
 
 type ExtraOptions<Mode> = Partial<Omit<Options<Mode>, "widget_type">>
 
-export type SsoWidgetRequest = {
+export type Request = {
   url: string
   options: {
     method: string
@@ -15,14 +15,7 @@ export type SsoWidgetRequest = {
   }
 }
 
-export type SsoWidgetResponse = {
-  widget_url: {
-    type: Type
-    url: string
-  }
-}
-
-export type SsoRequestParams<Mode> = {
+export type RequestParams<Mode> = {
   apiKey: string
   clientId: string
   userGuid: string
@@ -31,24 +24,31 @@ export type SsoRequestParams<Mode> = {
   options?: ExtraOptions<Mode>
 }
 
-function assertSsoProperty(name: string, value: string) {
-  if (!value) {
-    throw new Error(`Missing SSO property: ${name}`)
+export type Response = {
+  widget_url: {
+    type: Type
+    url: string
   }
 }
 
-export function buildSsoRequestParams<Mode>(
+function assert(name: string, value: string) {
+  if (!value) {
+    throw new Error(`Unable to make SSO request to Platform API: '${name}' is required but is missing`)
+  }
+}
+
+export function buildRequestParams<Mode>(
   apiKey: string,
   clientId: string,
   userGuid: string,
   environment: Environment | string,
   widgetType: Type,
   options: ExtraOptions<Mode>,
-): SsoRequestParams<Mode> {
-  assertSsoProperty("apiKey", apiKey)
-  assertSsoProperty("clientId", clientId)
-  assertSsoProperty("userGuid", userGuid)
-  assertSsoProperty("environment", environment)
+): RequestParams<Mode> {
+  assert("apiKey", apiKey)
+  assert("clientId", clientId)
+  assert("userGuid", userGuid)
+  assert("environment", environment)
 
   return {
     userGuid,
@@ -60,13 +60,13 @@ export function buildSsoRequestParams<Mode>(
   }
 }
 
-export function makeRequest<Mode>(params: SsoRequestParams<Mode>): Promise<SsoWidgetResponse> {
+export function makeRequest<Mode>(params: RequestParams<Mode>): Promise<Response> {
   const req = genRequest(params)
   return fetch(req.url, req.options)
     .then((response) => response.json())
 }
 
-function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options }: SsoRequestParams<Mode>): SsoWidgetRequest {
+function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options }: RequestParams<Mode>): Request {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
 
