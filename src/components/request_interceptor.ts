@@ -5,11 +5,11 @@ import { loadUrl, LoadUrlCallbacks } from "./load_url"
 import { exhaustive } from "../utils/exhaustive"
 
 export function makeRequestInterceptor<WidgetCallbacks>(
-  widgetSsoUrl: string,
+  widgetUrl: string,
   callbacks: LoadUrlCallbacks & WidgetCallbacks,
   handler: (callbacks: WidgetCallbacks, request: WebViewNavigation) => void,
 ) {
-  const interceptor = new Interceptor(widgetSsoUrl)
+  const interceptor = new Interceptor(widgetUrl)
 
   return function (request: WebViewNavigation) {
     const action = interceptor.action(request)

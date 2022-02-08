@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { makeRequest, RequestParams } from "../loader/platform_api_sso_request"
+import { buildRequestParams, makeRequest, RequestParams } from "../loader/platform_api_sso_request"
 import { Environment } from "../loader/environment"
 
 type ErrorCallback = (error: Error) => void
@@ -16,16 +16,24 @@ export type PlatformApiSsoProps = {
 const defaultOnError = (error: Error) =>
   console.log(`Error making SSO request: ${error}`)
 
-export function usePlatformApiSso<Mode>(
-  params: RequestParams<Mode>,
-  onError: ErrorCallback = defaultOnError
-) {
+export function usePlatformApiSso<Mode>({
+  apiKey,
+  clientId,
+  userGuid,
+  environment,
+  widgetType,
+  options = {},
+  onSsoError = defaultOnError,
+}: PlatformApiSsoProps & Pick<RequestParams<Mode>, "widgetType" | "options">) {
   const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
+
+  const params = buildRequestParams(apiKey, clientId, userGuid,
+    environment, widgetType, options)
 
   useEffect(() => {
     makeRequest(params)
       .then((response) => setWidgetUrl(response.widget_url.url))
-      .catch((error) => onError(error))
+      .catch((error) => onSsoError(error))
   }, [])
 
   return widgetUrl
