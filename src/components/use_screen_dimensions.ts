@@ -3,7 +3,7 @@ import { StyleProp, ViewStyle } from "react-native"
 
 import { getScreenWidth, getScreenHeight, onDimensionChange } from "../platform/screen"
 
-export function useScreenDimensions() {
+export default function useScreenDimensions() {
   const [screenWidth, setScreenWidth] = useState(getScreenWidth())
   const [screenHeight, setScreenHeight] = useState(getScreenHeight())
 

@@ -6,7 +6,7 @@ import { PlatformApiLoadingProps } from "./widget_standard_props"
 const defaultOnError = (error: Error) =>
   console.log(`Error making SSO request: ${error}`)
 
-export function usePlatformApiSso<Options>({
+export default function usePlatformApiSso<Options>({
   apiKey,
   clientId,
   userGuid,

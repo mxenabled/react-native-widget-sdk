@@ -5,7 +5,7 @@ import { Interceptor, Action } from "../post_messages/interceptor"
 import { LoadUrlCallbackProps } from "./widget_standard_props"
 import { exhaustive } from "../utils/exhaustive"
 
-export function makeRequestInterceptor<WidgetCallbackProps>(
+export default function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
   callbacks: LoadUrlCallbackProps & WidgetCallbackProps,
   handler: (callbacks: WidgetCallbackProps, request: WebViewNavigation) => void,
