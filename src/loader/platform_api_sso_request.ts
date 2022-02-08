@@ -1,7 +1,7 @@
 import base64 from "react-native-base64"
 
 import { Environment, Host, lookupEnvironment } from "./environment"
-import { Type, BaseOptions } from "../widget/configuration"
+import { Type, BaseWidgetOptions } from "../widget/configuration"
 
 export type Request = {
   url: string
@@ -74,7 +74,7 @@ function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, environme
     "Content-Type": "application/json",
   }
 
-  const widgetUrl: BaseOptions = {
+  const widgetUrl: BaseWidgetOptions = {
     widget_type: widgetType,
     is_mobile_webview: true,
     ui_message_version: 4,
