@@ -40,6 +40,7 @@ export type BaseWidgetOptions = {
 
 export type ConnectOptions = {
   client_redirect_url?: string
+  color_scheme?: BaseWidgetOptions["color_scheme"],
   current_institution_code?: string
   current_institution_guid?: string
   current_member_guid?: string
@@ -57,6 +58,7 @@ export type ConnectOptionProps = Camelize<ConnectOptions>
 export function connectOptionsFromProps(props: ConnectOptionProps): ConnectOptions {
   return {
     client_redirect_url: props.clientRedirectUrl,
+    color_scheme: props.colorScheme,
     current_institution_code: props.currentInstitutionCode,
     current_institution_guid: props.currentInstitutionGuid,
     current_member_guid: props.currentMemberGuid,
