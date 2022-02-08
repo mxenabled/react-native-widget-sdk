@@ -151,7 +151,7 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("mx/connect/loaded message with missing field value calls onUnkownRequestIntercept", () => {
+    test("mx/connect/loaded message with missing field value calls onUnknownMessage", () => {
       expect.assertions(1)
 
       const user_guid = "USR-123"
@@ -160,7 +160,7 @@ describe("makeRequestInterceptor", () => {
 
       const callbacks = {
         onLoaded: (payload: ConnectLoadedPayload) => expect(false).toBe(true),
-        onUnkownRequestIntercept: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
+        onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
       }
 
       const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid, initial_step }))
@@ -171,11 +171,11 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("an unknown message calls onUnkownRequestIntercept", () => {
+    test("an unknown message calls onUnknownMessage", () => {
       expect.assertions(1)
 
       const callbacks = {
-        onUnkownRequestIntercept: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
+        onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
       }
 
       const newUrl = `mx://connect/notarealmessage?metadata=`
@@ -238,7 +238,7 @@ describe("makeRequestInterceptor", () => {
 
       const callbacks = {
         onMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
-        onUnkownRequestIntercept: (request: WebViewNavigation) => expect(request).toBeDefined(),
+        onUnknownMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
       }
 
       const newUrl = `mx://connect/notarealmessage?metadata=`

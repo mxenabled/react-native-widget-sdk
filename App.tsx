@@ -31,10 +31,13 @@ export default function App() {
         apiKey={apiKey}
         userGuid={userGuid}
         environment={environment}
-        onUnkownRequestIntercept={(request) => {
+        onMessage={(request) => {
+          console.log("Got a message")
+        }}
+        onUnknownMessage={(request) => {
           console.log(`Unknown request intercepted: ${request.url}`)
         }}
-        onCallbackDispatchError={(request, error) => {
+        onMessageDispatchError={(request, error) => {
           console.log(`Error dispatching post message: ${request.url}`)
         }}
         onLoad={(payload) => {

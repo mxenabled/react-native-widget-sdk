@@ -31,8 +31,8 @@ import {
 
 export type BaseCallbackProps = {
   onMessage?: (request: WebViewNavigation) => void
-  onUnkownRequestIntercept?: (request: WebViewNavigation) => void
-  onCallbackDispatchError?: (request: WebViewNavigation, error: Error) => void
+  onUnknownMessage?: (request: WebViewNavigation) => void
+  onMessageDispatchError?: (request: WebViewNavigation, error: Error) => void
 }
 
 export type GenericCallbackProps = {
@@ -62,7 +62,7 @@ export type ConnectCallbackProps = BaseCallbackProps & GenericCallbackProps & En
 }
 
 // Thrown when we are unable to process an otherwise valid post message
-// request. Used to trigger the `onCallbackDispatchError` callback.
+// request. Used to trigger the `onMessageDispatchError` callback.
 class CallbackDispatchError extends Error {
   constructor(msg: string) {
     super(msg);
@@ -135,7 +135,7 @@ export function handleConnectRequest(callbacks: ConnectCallbackProps, request: W
 
   const message = new Message(request.url)
   if (!message.valid) {
-    safeCall([request], callbacks.onUnkownRequestIntercept)
+    safeCall([request], callbacks.onUnknownMessage)
     return
   }
 
@@ -143,10 +143,10 @@ export function handleConnectRequest(callbacks: ConnectCallbackProps, request: W
     dispatchConnectCallback(callbacks, message)
   } catch (error) {
     // `CallbackDispatchError` is an internal error so pass that back to the
-    // host via the `onCallbackDispatchError` callback. Any other errors are
+    // host via the `onMessageDispatchError` callback. Any other errors are
     // from user space and should bubble back up to the host.
     if (error instanceof CallbackDispatchError) {
-      safeCall([request, error], callbacks.onCallbackDispatchError)
+      safeCall([request, error], callbacks.onMessageDispatchError)
     } else {
       throw error
     }

@@ -25,7 +25,7 @@ import {
 {callbackTypes}
 
 // Thrown when we are unable to process an otherwise valid post message
-// request. Used to trigger the \`onCallbackDispatchError\` callback.
+// request. Used to trigger the \`onMessageDispatchError\` callback.
 class CallbackDispatchError extends Error {
   constructor(msg: string) {
     super(msg);
@@ -82,14 +82,14 @@ const onMessageCallbackFunctionTypeTemplate = `
 ${onMessageCallbackName}?: (request: WebViewNavigation) => void
 `
 
-const unknownRequestCallbackName = "onUnkownRequestIntercept"
-const unknownRequestCallbackFunctionTypeTemplate = `
-${unknownRequestCallbackName}?: (request: WebViewNavigation) => void
+const onUnknownMessageCallbackName = "onUnknownMessage"
+const onUnknownMessageCallbackFunctionTypeTemplate = `
+${onUnknownMessageCallbackName}?: (request: WebViewNavigation) => void
 `
 
-const callbackDispatchErrorCallbackName = "onCallbackDispatchError"
-const callbackDispatchErrorCallbackFunctionTypeTemplate = `
-${callbackDispatchErrorCallbackName}?: (request: WebViewNavigation, error: Error) => void
+const onMessageDispatchErrorCallbackName = "onMessageDispatchError"
+const onMessageDispatchErrorCallbackFunctionTypeTemplate = `
+${onMessageDispatchErrorCallbackName}?: (request: WebViewNavigation, error: Error) => void
 `
 
 const callbackFunctionTypeTemplate = `
@@ -102,7 +102,7 @@ export function handle{namespaceType}Request(callbacks: {callbackType}, request:
 
   const message = new Message(request.url)
   if (!message.valid) {
-    safeCall([request], callbacks.onUnkownRequestIntercept)
+    safeCall([request], callbacks.onUnknownMessage)
     return
   }
 
@@ -110,10 +110,10 @@ export function handle{namespaceType}Request(callbacks: {callbackType}, request:
     dispatch{namespaceType}Callback(callbacks, message)
   } catch (error) {
     // \`CallbackDispatchError\` is an internal error so pass that back to the
-    // host via the \`onCallbackDispatchError\` callback. Any other errors are
+    // host via the \`onMessageDispatchError\` callback. Any other errors are
     // from user space and should bubble back up to the host.
     if (error instanceof CallbackDispatchError) {
-      safeCall([request, error], callbacks.onCallbackDispatchError)
+      safeCall([request, error], callbacks.onMessageDispatchError)
     } else {
       throw error
     }
@@ -174,8 +174,8 @@ export const main = () => {
 
   callbackFunctionTypesByNamespace["base"] = [
     `  ${merge(onMessageCallbackFunctionTypeTemplate, {})}`,
-    `  ${merge(unknownRequestCallbackFunctionTypeTemplate, {})}`,
-    `  ${merge(callbackDispatchErrorCallbackFunctionTypeTemplate, {})}`,
+    `  ${merge(onUnknownMessageCallbackFunctionTypeTemplate, {})}`,
+    `  ${merge(onMessageDispatchErrorCallbackFunctionTypeTemplate, {})}`,
   ]
   callbackFunctionTypesByNamespace["generic"] = []
   callbackFunctionTypesByNamespace["entity"] = []
