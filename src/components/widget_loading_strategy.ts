@@ -1,12 +1,4 @@
-import { PlatformApiSsoProps } from "./platform_api_sso"
-
-type UrlProps = {
-  url: string
-}
-
-export type WidgetLoadingProps
-  = PlatformApiSsoProps
-  | UrlProps
+import { UrlLoadingProps, PlatformApiLoadingProps } from "./widget_standard_props"
 
 const badPropsMessage = `Missing required widget props!
 
@@ -17,11 +9,11 @@ Component needs either a 'url' prop or the following props to make an API reques
   - environment
   - userGuid`
 
-export function isLoadingWithUrl(props: Object): props is UrlProps {
+export function isLoadingWithUrl(props: Object): props is UrlLoadingProps {
   return "url" in props
 }
 
-export function isLoadingWithPlatformApiSso(props: Object): props is PlatformApiSsoProps {
+export function isLoadingWithPlatformApiSso(props: Object): props is PlatformApiLoadingProps {
   return "clientId" in props &&
     "apiKey" in props &&
     "userGuid" in props &&

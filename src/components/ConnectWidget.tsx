@@ -2,17 +2,16 @@ import React from "react"
 import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
-import { LoadUrlCallbacks } from "./load_url"
-import { WidgetLoadingProps } from "./loading"
-import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./loading"
+import { WidgetLoadingProps, LoadUrlCallbacks } from "./widget_standard_props"
+import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
 import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
 import { Type, ConnectWidgetMode } from "../widget/widgets"
 
-import { makeModeSpecificComponent } from "./mode_specific_component"
-import { makeRequestInterceptor } from "./request_interceptor"
-import { usePlatformApiSso } from "./platform_api_sso"
-import { useFullscreenStyles } from "./screen_dimensions"
+import { makeModeSpecificComponent } from "./make_mode_specific_component"
+import { makeRequestInterceptor } from "./make_request_interceptor"
+import { usePlatformApiSso } from "./use_platform_api_sso"
+import { useFullscreenStyles } from "./use_screen_dimensions"
 
 export type ConnectWidgetProps
   = WidgetLoadingProps
