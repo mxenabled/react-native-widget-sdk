@@ -43,11 +43,11 @@ const namespaces = {
 }
 
 function isGenericMessage(message: Message) {
-  return namespaces.generic.includes(message.namespace())
+  return namespaces.generic.includes(message.namespace)
 }
 
 function isEntityMessage(message: Message) {
-  return namespaces.entities.includes(message.namespace())
+  return namespaces.entities.includes(message.namespace)
 }
 
 function safeCall(args: [], fn?: () => void): void
@@ -94,7 +94,7 @@ const callbackFunctionTypeTemplate = `
 const dispatchFunctionEntryTemplate = `
 export function handle{namespaceType}Request(callbacks: {callbackType}, request: WebViewNavigation) {
   const message = new Message(request.url)
-  if (!message.isValid()) {
+  if (!message.valid) {
     safeCall([request], callbacks.onUnkownRequestIntercept)
     return
   }
@@ -114,7 +114,7 @@ export function handle{namespaceType}Request(callbacks: {callbackType}, request:
 }
 
 export function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
-  const payload = message.payload()
+  const payload = message.payload
 
   if (isGenericMessage(message)) {
     dispatchGenericCallback(callbacks, message)
@@ -135,7 +135,7 @@ export function dispatch{namespaceType}Callback(callbacks: {callbackType}, messa
 
 const dispatchFunctionFinalTemplate = `
 export function dispatch{namespaceType}Callback(callbacks: {callbackType}, message: Message) {
-  const payload = message.payload()
+  const payload = message.payload
 
   switch (payload.type) {
     {callCallbackCases}

@@ -6,28 +6,28 @@ import { Payload, buildPayload } from "./generated_payloads"
 export class Message {
   protected url: Url
 
-  constructor(protected rawUrl: string) {
+  constructor(rawUrl: string) {
     this.url = parseUrl(rawUrl, true)
   }
 
-  isValid() {
+  get valid() {
     try {
-      return this.type() && this.payload()
+      return this.type && this.payload
     } catch (error) {
       return false
     }
   }
 
-  namespace() {
+  get namespace() {
     return (this.url.host || "")
   }
 
-  action() {
+  get action() {
     return (this.url.pathname || "").substring(1)
   }
 
-  type(): Type {
-    const raw = this.action() ? `mx/${this.namespace()}/${this.action()}` : `mx/${this.namespace()}`
+  get type(): Type {
+    const raw = this.action ? `mx/${this.namespace}/${this.action}` : `mx/${this.namespace}`
     const value = typeLookup[raw]
     if (value) {
       return value
@@ -36,7 +36,7 @@ export class Message {
     throw new Error(`unknown post message type: ${raw}`)
   }
 
-  payload(): Payload {
+  get payload(): Payload {
     let rawMetadata
     if (typeof this.url.query !== "object") {
       throw new Error("unable to parse paylod: invalid request query")
@@ -48,6 +48,6 @@ export class Message {
     }
 
     const metadata = JSON.parse(rawMetadata || "{}")
-    return buildPayload(this.type(), metadata)
+    return buildPayload(this.type, metadata)
   }
 }

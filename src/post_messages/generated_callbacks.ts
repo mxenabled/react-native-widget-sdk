@@ -80,11 +80,11 @@ const namespaces = {
 }
 
 function isGenericMessage(message: Message) {
-  return namespaces.generic.includes(message.namespace())
+  return namespaces.generic.includes(message.namespace)
 }
 
 function isEntityMessage(message: Message) {
-  return namespaces.entities.includes(message.namespace())
+  return namespaces.entities.includes(message.namespace)
 }
 
 function safeCall(args: [], fn?: () => void): void
@@ -100,7 +100,7 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
 }
 
 export function dispatchGenericCallback(callbacks: GenericCallbackProps, message: Message) {
-  const payload = message.payload()
+  const payload = message.payload
 
   switch (payload.type) {
     case Type.Load:
@@ -117,7 +117,7 @@ export function dispatchGenericCallback(callbacks: GenericCallbackProps, message
 }
 
 export function dispatchEntityCallback(callbacks: EntityCallbackProps, message: Message) {
-  const payload = message.payload()
+  const payload = message.payload
 
   switch (payload.type) {
     case Type.AccountCreated:
@@ -131,7 +131,7 @@ export function dispatchEntityCallback(callbacks: EntityCallbackProps, message: 
 
 export function handleConnectRequest(callbacks: ConnectCallbackProps, request: WebViewNavigation) {
   const message = new Message(request.url)
-  if (!message.isValid()) {
+  if (!message.valid) {
     safeCall([request], callbacks.onUnkownRequestIntercept)
     return
   }
@@ -151,7 +151,7 @@ export function handleConnectRequest(callbacks: ConnectCallbackProps, request: W
 }
 
 export function dispatchConnectCallback(callbacks: ConnectCallbackProps, message: Message) {
-  const payload = message.payload()
+  const payload = message.payload
 
   if (isGenericMessage(message)) {
     dispatchGenericCallback(callbacks, message)
