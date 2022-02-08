@@ -20,7 +20,7 @@ export type ConnectWidgetProps
   & ConnectOptionProps
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
-export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
+export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget, { includeTransactions: false })
 
 export default function ConnectWidget(props: ConnectWidgetProps) {
   let widgetUrl: string | null
