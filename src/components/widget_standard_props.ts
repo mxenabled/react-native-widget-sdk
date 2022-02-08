@@ -16,7 +16,7 @@ export type WidgetLoadingProps
   = UrlLoadingProps
   | PlatformApiLoadingProps
 
-export type LoadUrlCallbacks = {
+export type LoadUrlCallbackProps = {
   onLoadUrl?: (url: string) => void
   onLoadUrlError?: (url: string, error: Error) => void
 }

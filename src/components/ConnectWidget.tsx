@@ -2,7 +2,7 @@ import React from "react"
 import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
-import { WidgetLoadingProps, LoadUrlCallbacks } from "./widget_standard_props"
+import { WidgetLoadingProps, LoadUrlCallbackProps } from "./widget_standard_props"
 import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
 import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
@@ -15,9 +15,9 @@ import { useFullscreenStyles } from "./use_screen_dimensions"
 
 export type ConnectWidgetProps
   = WidgetLoadingProps
-  & LoadUrlCallbacks
-  & ConnectCallbacks
-  & ConnectOptions
+  & LoadUrlCallbackProps
+  & ConnectCallbackProps
+  & ConnectOptionProps
 
 export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
 export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget)
