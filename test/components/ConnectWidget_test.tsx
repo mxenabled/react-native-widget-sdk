@@ -4,6 +4,8 @@ import { act } from "react-test-renderer"
 
 import ConnectWidget, { ConnectAggregationWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidget"
 import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
+
+import { rest, server } from "../mocks/sso_api_server"
 import { Dimensions, rotateOrientation } from "../mocks/react_native"
 
 describe("ConnectWidget", () => {
@@ -20,6 +22,24 @@ describe("ConnectWidget", () => {
 
       const webView = await waitFor(() => component.findByTestId("connect-widget-webview"))
       expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
+    })
+
+    test("an error from the Platform API results in the onSsoError callback being triggered", async () => {
+      expect.assertions(1)
+
+      server.use(
+        rest.post("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
+          res(ctx.status(500), ctx.json({ message: "NO!" }))))
+
+      render(
+        <ConnectWidget
+          clientId="myveryownclientid"
+          apiKey="myveryownapikey"
+          userGuid="USR-777"
+          environment="integration"
+          onSsoError={(error) => { expect(error).toBeDefined() }}
+        />
+      )
     })
 
     test("it is able to load widget when a URL prop is passed in", async () => {

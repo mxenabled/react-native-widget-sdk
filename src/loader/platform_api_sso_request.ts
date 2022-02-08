@@ -3,6 +3,20 @@ import base64 from "react-native-base64"
 import { Environment, Host, lookupEnvironment } from "./environment"
 import { Type, BaseWidgetOptions } from "../widget/configuration"
 
+export class RequestError extends Error {
+  #statusCode: number
+
+  constructor(statusCode: number) {
+    super(`Request failed: ${statusCode}`)
+    this.#statusCode = statusCode
+    Object.setPrototypeOf(this, RequestError.prototype)
+  }
+
+  get statusCode() {
+    return this.#statusCode
+  }
+}
+
 export type Request = {
   url: string
   options: {
@@ -60,6 +74,13 @@ export function buildRequestParams<Options>(
 export function makeRequest<Options>(params: RequestParams<Options>): Promise<Response> {
   const req = genRequest(params)
   return fetch(req.url, req.options)
+    .then((response) => {
+      if (!response.ok) {
+        throw new RequestError(response.status)
+      }
+
+      return response
+    })
     .then((response) => response.json())
 }
 

@@ -14,4 +14,6 @@ const handlers = [
     ))
 ]
 
-export const server = setupServer(...handlers)
+const server = setupServer(...handlers)
+
+export { rest, server }
