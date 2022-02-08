@@ -3,7 +3,7 @@ import { render, waitFor } from '@testing-library/react-native';
 import { act } from "react-test-renderer"
 
 import ConnectWidget, { ConnectAggregationWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidget"
-import TestingErrorBoundary from "./TestingErrorBoundary"
+import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
 import { Dimensions, rotateOrientation } from "../mocks/react_native"
 
 describe("ConnectWidget", () => {
