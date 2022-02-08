@@ -1,8 +1,10 @@
 import React from "react"
 import { render, waitFor } from '@testing-library/react-native';
+import { act } from "react-test-renderer"
 
 import ConnectWidget, { ConnectAggregationWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidget"
 import TestingErrorBoundary from "./TestingErrorBoundary"
+import { Dimensions, rotateOrientation } from "../mocks/react_native"
 
 describe("ConnectWidget", () => {
   describe("widget loading", () => {
@@ -62,6 +64,30 @@ describe("ConnectWidget", () => {
 
     test(ConnectVerificationWidget.name, () => {
       expect(render(<ConnectVerificationWidget url="https://int-widgets.moneydesktop.com/md/connect/tototoken" />))
+    })
+  })
+
+  describe("dimensions", () => {
+    test("height and width match the device's screen dimensions", async () => {
+      const { width, height } = Dimensions.get("screen")
+
+      const component = render(<ConnectWidget url="https://int-widgets.moneydesktop.com/md/connect/tototoken" />)
+      const view = await waitFor(() => component.findByTestId("connect-widget-view"))
+
+      expect(view.props.style.width).toBe(width)
+      expect(view.props.style.height).toBe(height)
+    })
+
+    test("screen orientation changes result in the view being resized", async () => {
+      const { width, height } = Dimensions.get("screen")
+
+      const component = render(<ConnectWidget url="https://int-widgets.moneydesktop.com/md/connect/tototoken" />)
+      const view = await waitFor(() => component.findByTestId("connect-widget-view"))
+
+      await act(() => rotateOrientation())
+
+      expect(view.props.style.width).toBe(height)
+      expect(view.props.style.height).toBe(width)
     })
   })
 })

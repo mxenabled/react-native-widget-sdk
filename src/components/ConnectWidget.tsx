@@ -44,7 +44,7 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   }
 
   return (
-    <SafeAreaView style={viewStyles}>
+    <SafeAreaView testID="connect-widget-view" style={viewStyles}>
       <WebView
         testID="connect-widget-webview"
         scrollEnabled={true}
