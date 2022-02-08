@@ -25,7 +25,7 @@ describe("ConnectWidget", () => {
     })
 
     test("an error from the Platform API results in the onSsoError callback being triggered", async () => {
-      expect.assertions(1)
+      let onSsoErrorCalled = false
 
       server.use(
         rest.post("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
@@ -37,9 +37,12 @@ describe("ConnectWidget", () => {
           apiKey="myveryownapikey"
           userGuid="USR-777"
           environment="integration"
-          onSsoError={(error) => { expect(error).toBeDefined() }}
+          onSsoError={(error) => { onSsoErrorCalled = true }}
         />
       )
+
+      await waitFor(() => { if (!onSsoErrorCalled) throw new Error })
+      expect(onSsoErrorCalled).toBe(true)
     })
 
     test("it is able to load widget when a URL prop is passed in", async () => {
