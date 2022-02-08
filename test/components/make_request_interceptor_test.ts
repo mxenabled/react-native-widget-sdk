@@ -1,3 +1,5 @@
+import { WebViewNavigation } from "react-native-webview"
+
 import makeRequestInterceptor from "../../src/components/make_request_interceptor"
 import { handleConnectRequest as handler } from "../../src/post_messages"
 
