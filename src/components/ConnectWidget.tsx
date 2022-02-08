@@ -5,8 +5,8 @@ import { WebView } from "react-native-webview"
 import { WidgetLoadingProps, LoadUrlCallbackProps } from "./widget_standard_props"
 import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
-import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
-import { Type, ConnectOptions, ConnectWidgetOptions, ConnectWidgetMode } from "../widget/configuration"
+import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
+import { Type, ConnectOptionProps, ConnectWidgetOptions, ConnectWidgetMode, connectOptionsFromProps } from "../widget/configuration"
 
 import { makeModeSpecificComponent } from "./make_mode_specific_component"
 import { makeRequestInterceptor } from "./make_request_interceptor"
@@ -30,7 +30,7 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   } else if (isLoadingWithPlatformApiSso(props)) {
     widgetUrl = usePlatformApiSso<ConnectWidgetOptions>({
       widgetType: Type.ConnectWidget,
-      options: { mode: props.mode },
+      options: connectOptionsFromProps(props),
       ...props
     })
   } else {

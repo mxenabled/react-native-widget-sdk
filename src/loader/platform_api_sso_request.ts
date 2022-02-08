@@ -78,6 +78,7 @@ function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, environme
     widget_type: widgetType,
     is_mobile_webview: true,
     ui_message_version: 4,
+    ui_message_webview_url_scheme: "mx",
     ...options,
   }
 
