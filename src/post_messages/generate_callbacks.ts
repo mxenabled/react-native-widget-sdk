@@ -66,7 +66,7 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
 `
 
 const callbackEntryTypeTemplate = `
-export type {callbackType} = ErrorCallbackProps & GenericCallbackProps & EntityCallbackProps & {
+export type {callbackType} = BaseCallbackProps & GenericCallbackProps & EntityCallbackProps & {
 {functionTypes}
 }
 `
@@ -75,6 +75,11 @@ const callbackFinalTypeTemplate = `
 export type {callbackType} = {
 {functionTypes}
 }
+`
+
+const onMessageCallbackName = "onMessage"
+const onMessageCallbackFunctionTypeTemplate = `
+${onMessageCallbackName}?: (request: WebViewNavigation) => void
 `
 
 const unknownRequestCallbackName = "onUnkownRequestIntercept"
@@ -93,6 +98,8 @@ const callbackFunctionTypeTemplate = `
 
 const dispatchFunctionEntryTemplate = `
 export function handle{namespaceType}Request(callbacks: {callbackType}, request: WebViewNavigation) {
+  safeCall([request], callbacks.onMessage)
+
   const message = new Message(request.url)
   if (!message.valid) {
     safeCall([request], callbacks.onUnkownRequestIntercept)
@@ -165,7 +172,8 @@ export const main = () => {
   const widgetNamespaces = new Set<string>()
   const entityNamespaces = new Set<string>()
 
-  callbackFunctionTypesByNamespace["error"] = [
+  callbackFunctionTypesByNamespace["base"] = [
+    `  ${merge(onMessageCallbackFunctionTypeTemplate, {})}`,
     `  ${merge(unknownRequestCallbackFunctionTypeTemplate, {})}`,
     `  ${merge(callbackDispatchErrorCallbackFunctionTypeTemplate, {})}`,
   ]

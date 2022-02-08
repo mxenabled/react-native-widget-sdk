@@ -216,5 +216,36 @@ describe("makeRequestInterceptor", () => {
 
       fn(req)
     })
+
+    test("valid message calls onMessage callback in addition to post message callback", () => {
+      expect.assertions(2)
+
+      const callbacks = {
+        onMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
+        onLoad: (payload: LoadPayload) => expect(payload).toBeDefined(),
+      }
+
+      const metadata = encodeURIComponent(JSON.stringify({}))
+      const newUrl = `mx://load?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const req = makeNavigationEvent(newUrl)
+
+      fn(req)
+    })
+
+    test("invalid message calls onMessage callback in addition to error handler", () => {
+      expect.assertions(2)
+
+      const callbacks = {
+        onMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
+        onUnkownRequestIntercept: (request: WebViewNavigation) => expect(request).toBeDefined(),
+      }
+
+      const newUrl = `mx://connect/notarealmessage?metadata=`
+      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const req = makeNavigationEvent(newUrl)
+
+      fn(req)
+    })
   })
 })

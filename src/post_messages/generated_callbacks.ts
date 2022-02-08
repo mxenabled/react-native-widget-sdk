@@ -29,7 +29,8 @@ import {
   AccountCreatedPayload,
 } from "./generated_payloads"
 
-export type ErrorCallbackProps = {
+export type BaseCallbackProps = {
+  onMessage?: (request: WebViewNavigation) => void
   onUnkownRequestIntercept?: (request: WebViewNavigation) => void
   onCallbackDispatchError?: (request: WebViewNavigation, error: Error) => void
 }
@@ -43,7 +44,7 @@ export type EntityCallbackProps = {
   onAccountCreated?: (payload: AccountCreatedPayload) => void
 }
 
-export type ConnectCallbackProps = ErrorCallbackProps & GenericCallbackProps & EntityCallbackProps & {
+export type ConnectCallbackProps = BaseCallbackProps & GenericCallbackProps & EntityCallbackProps & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
   onInstitutionSearch?: (payload: ConnectInstitutionSearchPayload) => void
@@ -130,6 +131,8 @@ export function dispatchEntityCallback(callbacks: EntityCallbackProps, message: 
 }
 
 export function handleConnectRequest(callbacks: ConnectCallbackProps, request: WebViewNavigation) {
+  safeCall([request], callbacks.onMessage)
+
   const message = new Message(request.url)
   if (!message.valid) {
     safeCall([request], callbacks.onUnkownRequestIntercept)
