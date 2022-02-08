@@ -6,7 +6,7 @@ import { WidgetLoadingProps, LoadUrlCallbackProps } from "./widget_standard_prop
 import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
-import { Type, ConnectOptionProps, ConnectWidgetOptions, ConnectWidgetMode, connectOptionsFromProps } from "../widget/configuration"
+import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
 
 import { makeModeSpecificComponent } from "./make_mode_specific_component"
 import { makeRequestInterceptor } from "./make_request_interceptor"
@@ -19,8 +19,10 @@ export type ConnectWidgetProps
   & ConnectCallbackProps
   & ConnectOptionProps
 
-export const ConnectAggregationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("aggregation", ConnectWidget)
-export const ConnectVerificationWidget = makeModeSpecificComponent<ConnectWidgetProps, ConnectWidgetMode>("verification", ConnectWidget, { includeTransactions: false })
+export const ConnectAggregationWidget = makeModeSpecificComponent("aggregation", ConnectWidget)
+export const ConnectVerificationWidget = makeModeSpecificComponent("verification", ConnectWidget, {
+  includeTransactions: false,
+})
 
 export default function ConnectWidget(props: ConnectWidgetProps) {
   let widgetUrl: string | null
