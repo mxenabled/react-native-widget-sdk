@@ -69,21 +69,23 @@ export function makeRequest<Mode>(params: RequestParams<Mode>): Promise<Response
 function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options }: RequestParams<Mode>): Request {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
-
   const authorization = base64.encode(`${clientId}:${apiKey}`)
+
   const headers = {
     Accept: "application/vnd.mx.api.v1+json",
     Authorization: `Basic ${authorization}`,
     "Content-Type": "application/json",
   }
 
+  const widgetUrl: Options<Mode> = {
+    widget_type: widgetType,
+    is_mobile_webview: true,
+    ui_message_version: 4,
+    ...options,
+  }
+
   const body = JSON.stringify({
-    widget_url: {
-      widget_type: widgetType,
-      is_mobile_webview: true,
-      ui_message_version: 4,
-      ...options,
-    },
+    widget_url: widgetUrl,
   })
 
   return {
