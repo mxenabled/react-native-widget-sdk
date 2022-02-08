@@ -4,6 +4,7 @@ import { Linking } from "react-native"
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { LoadUrlCallbackProps } from "./widget_standard_props"
 import { exhaustive } from "../utils/exhaustive"
+import { asError } from "../utils/error"
 
 export default function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
@@ -47,14 +48,6 @@ function loadUrl(callbacks: LoadUrlCallbackProps, url: string) {
   try {
     onLoadUrl(url)
   } catch (error) {
-    if (error instanceof Error) {
-      onLoadUrlError(url, error)
-    } else if (typeof error === "string") {
-      onLoadUrlError(url, new Error(error))
-    } else {
-      onLoadUrlError(url, new Error(
-        ((error || {}) as {valueOf(): string}).valueOf()
-      ))
-    }
+    onLoadUrlError(url, asError(error))
   }
 }
