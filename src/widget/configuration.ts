@@ -38,8 +38,6 @@ export type BaseWidgetOptions = {
   color_scheme?: "dark" | "light"
 }
 
-export type ConnectOptionProps = Camelize<ConnectOptions>
-
 export type ConnectOptions = {
   client_redirect_url?: string
   current_institution_code?: string
@@ -53,9 +51,8 @@ export type ConnectOptions = {
   wait_for_full_aggregation?: boolean
 }
 
-export type ConnectWidgetOptions
-  = ConnectOptions
-  & Partial<BaseWidgetOptions>
+export type ConnectWidgetOptions = Partial<BaseWidgetOptions> & ConnectOptions
+export type ConnectOptionProps = Camelize<ConnectOptions>
 
 export function connectOptionsFromProps(props: ConnectOptionProps): ConnectOptions {
   return {
