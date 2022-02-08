@@ -6,18 +6,18 @@ import { PlatformApiLoadingProps } from "./widget_standard_props"
 const defaultOnError = (error: Error) =>
   console.log(`Error making SSO request: ${error}`)
 
-export function usePlatformApiSso<Mode>({
+export function usePlatformApiSso<Options>({
   apiKey,
   clientId,
   userGuid,
   environment,
   widgetType,
-  options = {},
+  options,
   onSsoError = defaultOnError,
-}: PlatformApiLoadingProps & Pick<RequestParams<Mode>, "widgetType" | "options">) {
+}: PlatformApiLoadingProps & Required<Pick<RequestParams<Options>, "widgetType" | "options">>) {
   const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
 
-  const params = buildRequestParams(apiKey, clientId, userGuid,
+  const params = buildRequestParams<Options>(apiKey, clientId, userGuid,
     environment, widgetType, options)
 
   useEffect(() => {

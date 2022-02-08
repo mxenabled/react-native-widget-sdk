@@ -1,10 +1,7 @@
 import base64 from "react-native-base64"
 
 import { Environment, Host, lookupEnvironment } from "./environment"
-import { Type } from "../widget/widgets"
-import { Options } from "../widget/options"
-
-type ExtraOptions<Mode> = Partial<Omit<Options<Mode>, "widget_type">>
+import { Type, BaseOptions } from "../widget/configuration"
 
 export type Request = {
   url: string
@@ -15,13 +12,13 @@ export type Request = {
   }
 }
 
-export type RequestParams<Mode> = {
+export type RequestParams<Options> = {
   apiKey: string
   clientId: string
   userGuid: string
   widgetType: Type
   environment: Environment
-  options?: ExtraOptions<Mode>
+  options?: Options
 }
 
 export type Response = {
@@ -37,14 +34,14 @@ function assert(name: string, value: string) {
   }
 }
 
-export function buildRequestParams<Mode>(
+export function buildRequestParams<Options>(
   apiKey: string,
   clientId: string,
   userGuid: string,
   environment: Environment | string,
   widgetType: Type,
-  options: ExtraOptions<Mode>,
-): RequestParams<Mode> {
+  options: Options,
+): RequestParams<Options> {
   assert("apiKey", apiKey)
   assert("clientId", clientId)
   assert("userGuid", userGuid)
@@ -60,13 +57,13 @@ export function buildRequestParams<Mode>(
   }
 }
 
-export function makeRequest<Mode>(params: RequestParams<Mode>): Promise<Response> {
+export function makeRequest<Options>(params: RequestParams<Options>): Promise<Response> {
   const req = genRequest(params)
   return fetch(req.url, req.options)
     .then((response) => response.json())
 }
 
-function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment, options }: RequestParams<Mode>): Request {
+function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, environment, options }: RequestParams<Options>): Request {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
   const authorization = base64.encode(`${clientId}:${apiKey}`)
@@ -77,7 +74,7 @@ function genRequest<Mode>({ apiKey, clientId, userGuid, widgetType, environment,
     "Content-Type": "application/json",
   }
 
-  const widgetUrl: Options<Mode> = {
+  const widgetUrl: BaseOptions = {
     widget_type: widgetType,
     is_mobile_webview: true,
     ui_message_version: 4,

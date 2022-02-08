@@ -6,7 +6,7 @@ import { WidgetLoadingProps, LoadUrlCallbacks } from "./widget_standard_props"
 import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
 import { handleConnectRequest, ConnectCallbacks } from "../post_messages"
-import { Type, ConnectWidgetMode } from "../widget/widgets"
+import { Type, ConnectWidgetOptions, ConnectWidgetMode } from "../widget/configuration"
 
 import { makeModeSpecificComponent } from "./make_mode_specific_component"
 import { makeRequestInterceptor } from "./make_request_interceptor"
@@ -28,7 +28,7 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   if (isLoadingWithUrl(props)) {
     widgetUrl = props.url
   } else if (isLoadingWithPlatformApiSso(props)) {
-    widgetUrl = usePlatformApiSso({
+    widgetUrl = usePlatformApiSso<ConnectWidgetOptions>({
       widgetType: Type.ConnectWidget,
       options: { mode: props.mode },
       ...props

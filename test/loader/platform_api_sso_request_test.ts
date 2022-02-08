@@ -1,6 +1,6 @@
 import { buildRequestParams, makeRequest } from "../../src/loader/platform_api_sso_request"
 import { Environment } from "../../src/loader/environment"
-import { Type } from "../../src/widget/widgets"
+import { Type } from "../../src/widget/configuration"
 
 const apiKey = "myapikey"
 const clientId = "myclientid"
