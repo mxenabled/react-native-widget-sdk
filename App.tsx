@@ -32,7 +32,7 @@ export default function App() {
         userGuid={userGuid}
         environment={environment}
         onMessage={(request) => {
-          console.log("Got a message")
+          console.log(`Got a message: ${request.url}`)
         }}
         onUnknownMessage={(request) => {
           console.log(`Unknown request intercepted: ${request.url}`)

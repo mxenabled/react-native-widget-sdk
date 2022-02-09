@@ -8,6 +8,7 @@ import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } 
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
 
+import loadUrlInBrowser from "./load_url_in_browser"
 import makeModeSpecificComponent from "./make_mode_specific_component"
 import makeRequestInterceptor from "./make_request_interceptor"
 import usePlatformApiSso from "./use_platform_api_sso"
@@ -25,6 +26,11 @@ export const ConnectVerificationWidget = makeModeSpecificComponent("verification
 })
 
 export default function ConnectWidget(props: ConnectWidgetProps) {
+  props = {
+    onOauthRequested: ({ url }) => loadUrlInBrowser(props, url),
+    ...props,
+  }
+
   let widgetUrl: string | null
 
   if (isLoadingWithUrl(props)) {

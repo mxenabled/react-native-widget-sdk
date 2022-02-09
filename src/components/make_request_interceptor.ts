@@ -1,10 +1,9 @@
 import { WebViewNavigation } from "react-native-webview"
-import { Linking } from "react-native"
 
+import loadUrlInBrowser from "./load_url_in_browser"
 import { Interceptor, Action } from "../post_messages/interceptor"
 import { LoadUrlCallbackProps } from "./widget_standard_props"
 import { exhaustive } from "../utils/exhaustive"
-import { asError } from "../utils/error"
 
 export default function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
@@ -24,30 +23,11 @@ export default function makeRequestInterceptor<WidgetCallbackProps>(
         return false
 
       case Action.LoadInBrowser:
-        loadUrl(callbacks, request.url)
+        loadUrlInBrowser(callbacks, request.url)
         return false
 
       default:
         exhaustive(action)
     }
-  }
-}
-
-function defaultOnLoadUrl(url: string) {
-  Linking.openURL(url)
-}
-
-function defaultOnLoadUrlError(url: string, error: Error) {
-  console.log(`Error loading ${url}: ${error}`)
-}
-
-function loadUrl(callbacks: LoadUrlCallbackProps, url: string) {
-  const onLoadUrl = callbacks.onLoadUrl || defaultOnLoadUrl
-  const onLoadUrlError = callbacks.onLoadUrlError || defaultOnLoadUrlError
-
-  try {
-    onLoadUrl(url)
-  } catch (error) {
-    onLoadUrlError(url, asError(error))
   }
 }
