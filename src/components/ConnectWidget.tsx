@@ -32,7 +32,6 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   }
 
   let widgetUrl: string | null
-
   if (isLoadingWithUrl(props)) {
     widgetUrl = props.url
   } else if (isLoadingWithPlatformApiSso(props)) {
