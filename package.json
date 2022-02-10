@@ -9,12 +9,15 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "build": "tsc",
-    "dist": "tsc --noEmit false --outDir dist",
+    "dist": "tsc --noEmit false --outDir dist --target es5",
     "test": "jest",
     "test:coverage": "npm test -- --coverage",
     "open:coverage": "open coverage/lcov-report/index.html",
     "generate:post_messages": "ts-node src/post_messages/generate_main.ts",
     "generate": "npm run generate:post_messages"
+  },
+  "bin": {
+    "mx-mobile-widget-sdk": "dist/src/cli.js"
   },
   "dependencies": {
     "expo": "~44.0.2",
