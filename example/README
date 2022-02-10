@@ -1,0 +1,13 @@
+cd ..
+npm pack
+cd -
+
+npm install
+npm install --save react-native-webview
+npx react-native link react-native-webview
+
+cd ios
+pod install
+cd ..
+
+npm run ios
