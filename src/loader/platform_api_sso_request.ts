@@ -4,16 +4,12 @@ import { Environment, Host, lookupEnvironment } from "./environment"
 import { Type, BaseWidgetOptions } from "../widget/configuration"
 
 export class RequestError extends Error {
-  #statusCode: number
+  readonly statusCode: number
 
   constructor(statusCode: number) {
     super(`Request failed: ${statusCode}`)
-    this.#statusCode = statusCode
+    this.statusCode = statusCode
     Object.setPrototypeOf(this, RequestError.prototype)
-  }
-
-  get statusCode() {
-    return this.#statusCode
   }
 }
 
