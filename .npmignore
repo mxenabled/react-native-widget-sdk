@@ -1,4 +1,9 @@
-ios
+.expo
+.idea
+.tags
 android
+build
+coverage
 example
+ios
 test
