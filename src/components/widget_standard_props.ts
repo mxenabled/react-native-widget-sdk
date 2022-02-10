@@ -1,3 +1,4 @@
+import { StyleProp, ViewStyle } from "react-native"
 import { Environment } from "../loader/environment"
 
 export type UrlLoadingProps = {
@@ -15,6 +16,10 @@ export type PlatformApiLoadingProps = {
 export type WidgetLoadingProps
   = UrlLoadingProps
   | PlatformApiLoadingProps
+
+export type WidgetStylingProps = {
+  style?: StyleProp<ViewStyle>
+}
 
 export type LoadUrlCallbackProps = {
   onLoadUrl?: (url: string) => void

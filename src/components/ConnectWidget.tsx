@@ -2,7 +2,7 @@ import React from "react"
 import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
-import { WidgetLoadingProps, LoadUrlCallbackProps } from "./widget_standard_props"
+import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./widget_standard_props"
 import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
@@ -16,6 +16,7 @@ import { useFullscreenStyles } from "./use_screen_dimensions"
 
 export type ConnectWidgetProps
   = WidgetLoadingProps
+  & WidgetStylingProps
   & LoadUrlCallbackProps
   & ConnectCallbackProps
   & ConnectOptionProps
@@ -44,14 +45,15 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
     isLoadingWithBadProps()
   }
 
-  const viewStyles = useFullscreenStyles()
+  const fullscreenStyles = useFullscreenStyles()
+  const style = props.style || fullscreenStyles
 
   if (!widgetUrl) {
-    return <SafeAreaView style={viewStyles} />
+    return <SafeAreaView style={style} />
   }
 
   return (
-    <SafeAreaView testID="connect-widget-view" style={viewStyles}>
+    <SafeAreaView testID="connect-widget-view" style={style}>
       <WebView
         testID="connect-widget-webview"
         scrollEnabled={true}
