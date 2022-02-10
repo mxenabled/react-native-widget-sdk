@@ -1,6 +1,5 @@
 {
   "name": "mx-mobile-widget-sdk",
-  "private": true,
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "scripts": {
