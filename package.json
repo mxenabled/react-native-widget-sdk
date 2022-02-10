@@ -1,5 +1,5 @@
 {
-  "name": "mx-mobile-widget-sdk",
+  "name": "mx-mobile-widget",
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "scripts": {
