@@ -1,8 +1,16 @@
-import { UrlLoadingProps, PlatformApiLoadingProps } from "./widget_standard_props"
+import { UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./widget_standard_props"
 
 const badPropsMessage = `Missing required widget props!
 
-Component needs either a 'url' prop or the following props to make an API request:
+Component needs one of the following groups of props:
+
+  - url
+
+    - or -
+
+  - proxy
+
+    - or -
 
   - apiKey
   - clientId
@@ -11,6 +19,10 @@ Component needs either a 'url' prop or the following props to make an API reques
 
 export function isLoadingWithUrl(props: Object): props is UrlLoadingProps {
   return "url" in props
+}
+
+export function isLoadingWithClientProxy(props: Object): props is ClientProxyLoadingProps {
+  return "proxy" in props
 }
 
 export function isLoadingWithPlatformApiSso(props: Object): props is PlatformApiLoadingProps {

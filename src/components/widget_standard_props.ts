@@ -13,9 +13,15 @@ export type PlatformApiLoadingProps = {
   onSsoError?: (error: Error) => void
 }
 
+export type ClientProxyLoadingProps = {
+  proxy: string
+  onProxyError?: (error: Error) => void
+}
+
 export type WidgetLoadingProps
   = UrlLoadingProps
   | PlatformApiLoadingProps
+  | ClientProxyLoadingProps
 
 export type WidgetStylingProps = {
   style?: StyleProp<ViewStyle>

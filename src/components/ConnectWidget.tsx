@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./widget_standard_props"
-import { isLoadingWithUrl, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
+import { isLoadingWithUrl, isLoadingWithClientProxy, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
 
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
@@ -11,6 +11,7 @@ import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps
 import loadUrlInBrowser from "./load_url_in_browser"
 import makeModeSpecificComponent from "./make_mode_specific_component"
 import makeRequestInterceptor from "./make_request_interceptor"
+import useClientProxy from "./use_client_proxy"
 import usePlatformApiSso from "./use_platform_api_sso"
 import { useFullscreenStyles } from "./use_screen_dimensions"
 
@@ -35,6 +36,8 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   let widgetUrl: string | null
   if (isLoadingWithUrl(props)) {
     widgetUrl = props.url
+  } else if (isLoadingWithClientProxy(props)) {
+    widgetUrl = useClientProxy(props.proxy, props.onProxyError)
   } else if (isLoadingWithPlatformApiSso(props)) {
     widgetUrl = usePlatformApiSso<ConnectWidgetOptions>({
       widgetType: Type.ConnectWidget,
