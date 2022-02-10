@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { execSync } from "child_process"
+const { execSync } = require("child_process")
 
 try {
   console.log("Installing react-native-webview")
