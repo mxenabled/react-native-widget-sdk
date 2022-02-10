@@ -2,7 +2,7 @@
   "name": "mx-mobile-widget-sdk",
   "private": true,
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
