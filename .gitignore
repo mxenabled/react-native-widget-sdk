@@ -1,5 +1,6 @@
-/config.json
-/coverage
+config.json
+coverage
+mx-mobile-widget-sdk-*.tgz
 
 # OSX
 #
@@ -55,4 +56,3 @@ buck-out/
 # Expo
 .expo/
 web-build/
-dist/
