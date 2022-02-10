@@ -17,7 +17,7 @@
     "generate": "npm run generate:post_messages"
   },
   "bin": {
-    "mx-mobile-widget-sdk": "dist/src/cli.js"
+    "mx-mobile-widget-sdk-setup": "dist/src/cli.js"
   },
   "dependencies": {
     "expo": "~44.0.2",
