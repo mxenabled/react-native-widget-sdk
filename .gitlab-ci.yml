@@ -8,20 +8,11 @@ cache:
   paths:
     - .npm/
 
-
-stages:
-  - test
-  - build
-
-Test:
-  stage: test
+"Test and run distribution build":
   script:
+    - node -v
+    - npm -v
     - ls -al
     - npm ci --cache .npm --prefer-offline
     - npm run test
-
-Build:
-  stage: build
-  script:
-    - npm ci --cache .npm --prefer-offline
     - npm run dist
