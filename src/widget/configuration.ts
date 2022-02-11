@@ -54,6 +54,7 @@ export type ConnectOptions = ExposedBaseOptions & {
   wait_for_full_aggregation?: boolean
 }
 
+export type BaseWidgetProps = Camelize<ExposedBaseOptions>
 export type ConnectWidgetOptions = Partial<BaseWidgetOptions> & ConnectOptions
 export type ConnectOptionProps = Camelize<ConnectOptions>
 

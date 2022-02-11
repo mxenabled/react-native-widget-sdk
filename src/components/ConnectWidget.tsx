@@ -3,16 +3,14 @@ import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
-import { isLoadingWithUrl, isLoadingWithClientProxy, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./loading_strategy"
 
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
-import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
+import { Type, ConnectOptionProps, connectOptionsFromProps } from "../widget/configuration"
 
 import { makeDefaultConnectOnOauthRequested } from "./oauth"
 import { makeComponent } from "./make_component"
 import { makeRequestInterceptor } from "./request_interceptor"
-import { useClientProxy } from "./loading_strategy"
-import { usePlatformApiSso } from "./loading_strategy"
+import { useWidgetUrl } from "./loading_strategy"
 import { useFullscreenStyles } from "./screen_dimensions"
 
 export type ConnectWidgetProps
@@ -35,25 +33,11 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || "mx"
   props = {
     onOauthRequested: makeDefaultConnectOnOauthRequested(props),
+    uiMessageWebviewUrlScheme,
     ...props,
   }
 
-  let widgetUrl: string | null
-  if (isLoadingWithUrl(props)) {
-    widgetUrl = props.url
-  } else if (isLoadingWithClientProxy(props)) {
-    widgetUrl = useClientProxy(props.proxy, props.onProxyError)
-  } else if (isLoadingWithPlatformApiSso(props)) {
-    widgetUrl = usePlatformApiSso<ConnectWidgetOptions>({
-      widgetType: Type.ConnectWidget,
-      uiMessageWebviewUrlScheme,
-      options: connectOptionsFromProps(props),
-      ...props
-    })
-  } else {
-    isLoadingWithBadProps()
-  }
-
+  const widgetUrl = useWidgetUrl(Type.ConnectWidget, props, connectOptionsFromProps)
   const fullscreenStyles = useFullscreenStyles()
   const style = props.style || fullscreenStyles
 

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 
-import { UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./standard_props"
+import { Type, BaseWidgetProps } from "../widget/configuration"
+
+import { WidgetLoadingProps, UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./standard_props"
 import { RequestParams, buildRequestParams, makeRequest as makePlatformApiRequest } from "../loader/platform_api"
 import { makeRequest as makeClientProxyRequest } from "../loader/client_proxy"
 
@@ -21,6 +23,14 @@ Component needs one of the following groups of props:
   - environment
   - userGuid`
 
+function defaultOnClientProxyError(error: Error) {
+  console.log(`Error making request to proxy API server: ${error}`)
+}
+
+function defaultOnPlatformApiError(error: Error) {
+  console.log(`Error making SSO request: ${error}`)
+}
+
 export function isLoadingWithUrl(props: Object): props is UrlLoadingProps {
   return "url" in props
 }
@@ -40,10 +50,6 @@ export function isLoadingWithBadProps(): never {
   throw new Error(badPropsMessage)
 }
 
-function defaultOnClientProxyError(error: Error) {
-  console.log(`Error making request to proxy API server: ${error}`)
-}
-
 export function useClientProxy<Options>(
   url: string,
   onError: (error: Error) => void = defaultOnClientProxyError,
@@ -57,10 +63,6 @@ export function useClientProxy<Options>(
   }, [])
 
   return widgetUrl
-}
-
-function defaultOnPlatformApiError(error: Error) {
-  console.log(`Error making SSO request: ${error}`)
 }
 
 export function usePlatformApiSso<Options>({
@@ -85,4 +87,25 @@ export function usePlatformApiSso<Options>({
   }, [])
 
   return widgetUrl
+}
+
+export function useWidgetUrl<Props extends WidgetLoadingProps & BaseWidgetProps, Opts>(
+  widgetType: Type,
+  props: Props,
+  optsFromProps: (ps: Props) => Opts,
+): string | null {
+  if (isLoadingWithUrl(props)) {
+    return props.url
+  } else if (isLoadingWithClientProxy(props)) {
+    return useClientProxy(props.proxy, props.onProxyError)
+  } else if (isLoadingWithPlatformApiSso(props)) {
+    return usePlatformApiSso({
+      widgetType,
+      uiMessageWebviewUrlScheme: props.uiMessageWebviewUrlScheme || "",
+      options: optsFromProps(props),
+      ...props
+    })
+  }
+
+  isLoadingWithBadProps()
 }
