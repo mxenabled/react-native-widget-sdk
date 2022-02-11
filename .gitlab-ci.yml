@@ -14,5 +14,5 @@ cache:
     - npm -v
     - ls -al
     - npm ci --cache .npm --prefer-offline
-    - npm run test
     - npm run dist
+    - npm run test
