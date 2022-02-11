@@ -1,4 +1,4 @@
-import { buildRequestParams, makeRequest } from "../../src/loader/platform_api_sso_request"
+import { buildRequestParams, makeRequest } from "../../src/loader/platform_api"
 import { Environment } from "../../src/loader/environment"
 import { Type } from "../../src/widget/configuration"
 

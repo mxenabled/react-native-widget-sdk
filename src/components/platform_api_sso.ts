@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
-import { buildRequestParams, makeRequest, RequestParams } from "../loader/platform_api_sso_request"
+import { RequestParams } from "../loader/platform_api"
+import { buildRequestParams, makeRequest } from "../loader/platform_api"
 import { PlatformApiLoadingProps } from "./standard_props"
 
 const defaultOnError = (error: Error) =>

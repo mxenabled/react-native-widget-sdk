@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 
+import { makeRequest } from "../loader/client_proxy"
+
 const defaultOnError = (error: Error) =>
   console.log(`Error making request to proxy API server: ${error}`)
 
@@ -7,15 +9,7 @@ export function useClientProxy<Options>(url: string, onError: (error: Error) => 
   const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`status code: ${response.status}`)
-        }
-
-        return response
-      })
-      .then((response) => response.json())
+    makeRequest(url)
       .then((json) => setWidgetUrl(json.widget_url.url))
       .catch(onError)
   }, [])
