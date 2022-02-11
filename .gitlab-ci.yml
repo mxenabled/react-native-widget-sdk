@@ -1,0 +1,26 @@
+image: docker.artifactory.internal.mx/node:16.11.1
+
+# https://docs.gitlab.com/ee/ci/caching/#cache-nodejs-dependencies
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+
+stages:
+  - test
+  - build
+
+Test:
+  stage: test
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run test
+
+Build:
+  stage: build
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run dist
