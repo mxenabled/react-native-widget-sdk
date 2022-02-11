@@ -8,7 +8,7 @@ import { isLoadingWithUrl, isLoadingWithClientProxy, isLoadingWithPlatformApiSso
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
 
-import { loadUrlInBrowser } from "./load_url_in_browser"
+import { makeDefaultConnectOnOauthRequested } from "./oauth"
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useClientProxy } from "./client_proxy"
@@ -30,7 +30,7 @@ export const ConnectVerificationWidget = makeModeSpecificComponent("verification
 export default function ConnectWidget(props: ConnectWidgetProps) {
   const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || "mx"
   props = {
-    onOauthRequested: ({ url }) => loadUrlInBrowser(props, url),
+    onOauthRequested: makeDefaultConnectOnOauthRequested(props),
     ...props,
   }
 
