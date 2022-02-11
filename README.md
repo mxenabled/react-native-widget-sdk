@@ -49,32 +49,36 @@ Once your environment is setup, create a config.json file that looks like the
 one below, but with the appropriate values (all of which you can get from
 Batcave):
 
-    {
-      "MX_CLIENT_ID": "...",
-      "MX_API_KEY": "...",
-      "MX_USER_GUID": "...",
-      "MX_ENVIRONMENT": "integration"
-    }
-
+```json
+{
+  "MX_CLIENT_ID": "...",
+  "MX_API_KEY": "...",
+  "MX_USER_GUID": "...",
+  "MX_ENVIRONMENT": "integration"
+}
+```
 
 Next, install dependencies, link native libraries, and then install and run the
 app in an iOS or Android emulator. Here are all of the commands you need to do
 that:
 
-    npm install             # Installs dependencies
-    npm link                # Links native libraries in iOS and Android apps
-    npm run ios             # Installs and runs app in iOS emulator
-    npm run android         # Installs and runs app in Android emulator
-
+```bash
+npm install             # Installs dependencies
+npm link                # Links native libraries in iOS and Android apps
+npm run ios             # Installs and runs app in iOS emulator
+npm run android         # Installs and runs app in Android emulator
+```
 
 Other useful commands for developers:
 
-    npm run build           # Run TypeScript compiler
-    npm run build:dist      # Compile and save output to dist directory
-    npm run test            # Run unit tests
-    npm run test:coverage   # Run unit tests and generate code coverage report
-    npm run open:coverage   # Open code coverage report
-    npm run generate        # Run code generators
+```bash
+npm run build           # Run TypeScript compiler
+npm run build:dist      # Compile and save output to dist directory
+npm run test            # Run unit tests
+npm run test:coverage   # Run unit tests and generate code coverage report
+npm run open:coverage   # Open code coverage report
+npm run generate        # Run code generators
+```
 
 
 ---
