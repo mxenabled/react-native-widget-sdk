@@ -2,8 +2,6 @@
 
 [![Pipeline Badge](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/badges/master/pipeline.svg)](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/-/pipelines)
 
----
-
 ## Using the Widget SDK on your app
 
 To get starting using the Widget SDK in your React Native app, you will first
