@@ -8,18 +8,18 @@ dashboard. Once you have that information, open a terminal and run the commands
 below at the root of your project:
 
 ```
-npm install mx-mobile-widget
+npm install @mxenabled/mobile-widget-sdk
 npx mx-mobile-widget-sdk-setup
 ```
 
 Once you have installed the package and ran the setup script, you will be able
-to import widget components from the `mx-mobile-widget` package and render them
-in your app:
+to import widget components from the `@mxenabled/mobile-widget-sdk` package and
+render them in your app:
 
 ```jsx
 import React from "react"
 
-import { ConnectWidget } from "mx-mobile-widget"
+import { ConnectWidget } from "@mxenabled/mobile-widget-sdk"
 
 export default function App() {
   return (
@@ -33,9 +33,9 @@ export default function App() {
 }
 ```
 
-The `mx-mobile-widget` package is written in TypeScript, so if you're
-developing your app in TypeScript you will be able to leverage all of the type
-definitions that are shipped with the package.
+This package is written in TypeScript, so if you're developing your app in
+TypeScript you will be able to leverage all of the type definitions that are
+shipped with the package.
 
 
 ## Development setup
