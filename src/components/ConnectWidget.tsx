@@ -29,7 +29,7 @@ export const ConnectVerificationWidget = makeComponent(ConnectWidget, {
   includeTransactions: false,
 })
 
-export default function ConnectWidget(props: ConnectWidgetProps) {
+export function ConnectWidget(props: ConnectWidgetProps) {
   const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || "mx"
   props = {
     onOauthRequested: makeDefaultConnectOnOauthRequested(props),

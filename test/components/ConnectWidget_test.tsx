@@ -2,7 +2,7 @@ import React from "react"
 import { render, waitFor } from '@testing-library/react-native';
 import { act } from "react-test-renderer"
 
-import ConnectWidget, { ConnectAggregationWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidget"
+import { ConnectWidget, ConnectAggregationWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidget"
 import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
 
 import { rest, server } from "../mocks/sso_api_server"
