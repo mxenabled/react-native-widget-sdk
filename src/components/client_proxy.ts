@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 const defaultOnError = (error: Error) =>
   console.log(`Error making request to proxy API server: ${error}`)
 
-export default function useClientProxy<Options>(url: string, onError: (error: Error) => void = defaultOnError): string | null {
+export function useClientProxy<Options>(url: string, onError: (error: Error) => void = defaultOnError): string | null {
   const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
 
   useEffect(() => {

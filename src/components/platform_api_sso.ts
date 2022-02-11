@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 
 import { buildRequestParams, makeRequest, RequestParams } from "../loader/platform_api_sso_request"
-import { PlatformApiLoadingProps } from "./widget_standard_props"
+import { PlatformApiLoadingProps } from "./standard_props"
 
 const defaultOnError = (error: Error) =>
   console.log(`Error making SSO request: ${error}`)
 
-export default function usePlatformApiSso<Options>({
+export function usePlatformApiSso<Options>({
   apiKey,
   clientId,
   userGuid,

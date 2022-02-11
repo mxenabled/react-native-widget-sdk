@@ -2,18 +2,18 @@ import React from "react"
 import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
-import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./widget_standard_props"
-import { isLoadingWithUrl, isLoadingWithClientProxy, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./widget_loading_strategy"
+import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
+import { isLoadingWithUrl, isLoadingWithClientProxy, isLoadingWithPlatformApiSso, isLoadingWithBadProps } from "./loading_strategy"
 
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
 
-import loadUrlInBrowser from "./load_url_in_browser"
-import makeModeSpecificComponent from "./make_mode_specific_component"
-import makeRequestInterceptor from "./make_request_interceptor"
-import useClientProxy from "./use_client_proxy"
-import usePlatformApiSso from "./use_platform_api_sso"
-import { useFullscreenStyles } from "./use_screen_dimensions"
+import { loadUrlInBrowser } from "./load_url_in_browser"
+import { makeModeSpecificComponent } from "./mode_specific_component"
+import { makeRequestInterceptor } from "./request_interceptor"
+import { useClientProxy } from "./client_proxy"
+import { usePlatformApiSso } from "./platform_api_sso"
+import { useFullscreenStyles } from "./screen_dimensions"
 
 export type ConnectWidgetProps
   = WidgetLoadingProps

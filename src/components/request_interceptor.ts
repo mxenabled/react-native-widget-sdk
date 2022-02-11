@@ -1,11 +1,11 @@
 import { WebViewNavigation } from "react-native-webview"
 
-import loadUrlInBrowser from "./load_url_in_browser"
+import { loadUrlInBrowser } from "./load_url_in_browser"
 import { Interceptor, Action } from "../post_messages/interceptor"
-import { LoadUrlCallbackProps } from "./widget_standard_props"
+import { LoadUrlCallbackProps } from "./standard_props"
 import { exhaustive } from "../utils/exhaustive"
 
-export default function makeRequestInterceptor<WidgetCallbackProps>(
+export function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
   uiMessageWebviewUrlScheme: string,
   callbacks: LoadUrlCallbackProps & WidgetCallbackProps,

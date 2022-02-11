@@ -1,4 +1,4 @@
-import { UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./widget_standard_props"
+import { UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./standard_props"
 
 const badPropsMessage = `Missing required widget props!
 
