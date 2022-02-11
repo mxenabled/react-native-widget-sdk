@@ -9,7 +9,7 @@ import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps } from "../widget/configuration"
 
 import { makeDefaultConnectOnOauthRequested } from "./oauth"
-import { makeModeSpecificComponent } from "./mode_specific_component"
+import { makeComponent } from "./make_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useClientProxy } from "./loading_strategy"
 import { usePlatformApiSso } from "./loading_strategy"
@@ -22,8 +22,12 @@ export type ConnectWidgetProps
   & ConnectCallbackProps
   & ConnectOptionProps
 
-export const ConnectAggregationWidget = makeModeSpecificComponent("aggregation", ConnectWidget)
-export const ConnectVerificationWidget = makeModeSpecificComponent("verification", ConnectWidget, {
+export const ConnectAggregationWidget = makeComponent(ConnectWidget, {
+  mode: "aggregation",
+})
+
+export const ConnectVerificationWidget = makeComponent(ConnectWidget, {
+  mode: "verification",
   includeTransactions: false,
 })
 
