@@ -63,7 +63,7 @@
       "./test/mocks/setup.ts"
     ],
     "testMatch": [
-      "*/**/*_test.[jt]s?(x)"
+      "**/*_test.[jt]s?(x)"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
