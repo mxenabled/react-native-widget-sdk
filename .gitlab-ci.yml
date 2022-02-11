@@ -16,6 +16,7 @@ stages:
 Test:
   stage: test
   script:
+    - ls -al
     - npm ci --cache .npm --prefer-offline
     - npm run test
 
