@@ -1,5 +1,9 @@
 # MX Mobile Widget SDK for React Native
 
+[![Pipeline Badge](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/badges/master/pipeline.svg)](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/-/pipelines)
+
+---
+
 ## Using the Widget SDK on your app
 
 To get starting using the Widget SDK in your React Native app, you will first
@@ -79,8 +83,3 @@ npm run test:coverage   # Run unit tests and generate code coverage report
 npm run open:coverage   # Open code coverage report
 npm run generate        # Run code generators
 ```
-
-
----
-
-[![Pipeline Badge](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/badges/master/pipeline.svg)](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/-/pipelines)
