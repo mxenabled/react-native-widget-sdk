@@ -13,8 +13,8 @@ import { makeRequestInterceptor } from "./request_interceptor"
 import { useWidgetUrl } from "./loading_strategy"
 import { useFullscreenStyles } from "./screen_dimensions"
 
-export type ConnectWidgetProps
-  = WidgetLoadingProps
+export type ConnectWidgetProps =
+  & WidgetLoadingProps
   & WidgetStylingProps
   & LoadUrlCallbackProps
   & ConnectCallbackProps

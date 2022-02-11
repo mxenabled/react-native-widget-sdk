@@ -18,8 +18,8 @@ export type ClientProxyLoadingProps = {
   onProxyError?: (error: Error) => void
 }
 
-export type WidgetLoadingProps
-  = UrlLoadingProps
+export type WidgetLoadingProps =
+  | UrlLoadingProps
   | PlatformApiLoadingProps
   | ClientProxyLoadingProps
 

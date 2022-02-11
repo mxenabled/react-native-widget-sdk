@@ -147,15 +147,15 @@ export type AccountCreatedPayload = {
   guid: string
 }
 
-export type GenericPayload
-  = LoadPayload
+export type GenericPayload =
+  | LoadPayload
   | PingPayload
 
-export type EntityPayload
-  = AccountCreatedPayload
+export type EntityPayload =
+  | AccountCreatedPayload
 
-export type WidgetPayload
-  = ConnectLoadedPayload
+export type WidgetPayload =
+  | ConnectLoadedPayload
   | ConnectEnterCredentialsPayload
   | ConnectInstitutionSearchPayload
   | ConnectSelectedInstitutionPayload
@@ -170,8 +170,8 @@ export type WidgetPayload
   | ConnectSubmitMFAPayload
   | ConnectUpdateCredentialsPayload
 
-export type Payload
-  = GenericPayload
+export type Payload =
+  | GenericPayload
   | EntityPayload
   | WidgetPayload
 

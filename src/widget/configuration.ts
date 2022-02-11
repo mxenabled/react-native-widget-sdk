@@ -7,12 +7,12 @@ export enum Type {
   ConnectWidget = "connect_widget",
 }
 
-type CWM
-  = "verification"
+type CWM =
+  | "verification"
   | "aggregation"
 
-export type ConnectWidgetMode
-  = `${CWM}`
+export type ConnectWidgetMode =
+  | `${CWM}`
   | `${CWM},${CWM}`
   | `${CWM},${CWM},${CWM}`
   | `${CWM},${CWM},${CWM},${CWM}`

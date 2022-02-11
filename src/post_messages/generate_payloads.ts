@@ -39,17 +39,17 @@ export class PostMessageFieldDecodeError extends Error {
 
 {payloadTypes}
 
-export type GenericPayload
-  = {payloadGenericTypesUnion}
+export type GenericPayload =
+{payloadGenericTypesUnion}
 
-export type EntityPayload
-  = {payloadEntityTypesUnion}
+export type EntityPayload =
+{payloadEntityTypesUnion}
 
-export type WidgetPayload
-  = {payloadWidgetTypesUnion}
+export type WidgetPayload =
+{payloadWidgetTypesUnion}
 
-export type Payload
-  = GenericPayload
+export type Payload =
+  | GenericPayload
   | EntityPayload
   | WidgetPayload
 
@@ -179,15 +179,15 @@ export const main = () => {
 
     switch (defType) {
       case DefinitionType.Generic:
-        payloadGenericTypeNames.push(`${name}Payload`)
+        payloadGenericTypeNames.push(`  | ${name}Payload`)
         break
 
       case DefinitionType.Widget:
-        payloadWidgetTypeNames.push(`${name}Payload`)
+        payloadWidgetTypeNames.push(`  | ${name}Payload`)
         break
 
       case DefinitionType.Entity:
-        payloadEntityTypeNames.push(`${name}Payload`)
+        payloadEntityTypeNames.push(`  | ${name}Payload`)
         break
     }
 
@@ -199,9 +199,9 @@ export const main = () => {
   const code = merge(template, {
     payloadTypes: payloadTypes.join("\n\n"),
     payloadAllTypesUnion: payloadAllTypeNames.join("\n  | "),
-    payloadGenericTypesUnion: payloadGenericTypeNames.join("\n  | "),
-    payloadEntityTypesUnion: payloadEntityTypeNames.join("\n  | "),
-    payloadWidgetTypesUnion: payloadWidgetTypeNames.join("\n  | "),
+    payloadGenericTypesUnion: payloadGenericTypeNames.join("\n"),
+    payloadEntityTypesUnion: payloadEntityTypeNames.join("\n"),
+    payloadWidgetTypesUnion: payloadWidgetTypeNames.join("\n"),
     buildPayloadCases: buildPayloadCases.join("\n\n    "),
   })
 

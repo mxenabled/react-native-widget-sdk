@@ -44,7 +44,12 @@ export type EntityCallbackProps = {
   onAccountCreated?: (payload: AccountCreatedPayload) => void
 }
 
-export type ConnectCallbackProps = BaseCallbackProps & GenericCallbackProps & EntityCallbackProps & {
+type ConnectCallbackPropsBase =
+  & BaseCallbackProps
+  & GenericCallbackProps
+  & EntityCallbackProps
+
+export type ConnectCallbackProps = ConnectCallbackPropsBase & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
   onInstitutionSearch?: (payload: ConnectInstitutionSearchPayload) => void

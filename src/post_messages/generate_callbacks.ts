@@ -66,7 +66,12 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
 `
 
 const callbackEntryTypeTemplate = `
-export type {callbackType} = BaseCallbackProps & GenericCallbackProps & EntityCallbackProps & {
+type {callbackType}Base =
+  & BaseCallbackProps
+  & GenericCallbackProps
+  & EntityCallbackProps
+
+export type {callbackType} = {callbackType}Base & {
 {functionTypes}
 }
 `
