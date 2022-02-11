@@ -1,4 +1,44 @@
-# Setup
+# MX Mobile Widget SDK for React Native
+
+## Using the Widget SDK on your app
+
+To get starting using the Widget SDK in your React Native app, you will first
+need to sign up for the MX API and get your client id and API key from the
+dashboard. Once you have that information, open a terminal and run the commands
+below at the root of your project:
+
+```
+npm install mx-mobile-widget
+npx mx-mobile-widget-sdk-setup
+```
+
+Once you have installed the package and ran the setup script, you will be able
+to import widget components from the `mx-mobile-widget` package and render them
+in your app:
+
+```jsx
+import React from "react"
+
+import { ConnectWidget } from "mx-mobile-widget"
+
+export default function App() {
+  return (
+    <ConnectWidget
+      clientId="<client id>"
+      apiKey="<api key>"
+      userGuid="<user guid>"
+      environment="<mx environment: production, integration, qa, sand>"
+    />
+  )
+}
+```
+
+The `mx-mobile-widget` package is written in TypeScript, so if you're
+developing your app in TypeScript you will be able to leverage all of the type
+definitions that are shipped with the package.
+
+
+## Development setup
 
 First, you will need to set up your environment so that you can run React
 Native apps. See https://reactnative.dev/docs/environment-setup for
@@ -37,19 +77,6 @@ Other useful commands for developers:
     npm run generate        # Run code generators
 
 
-# Installing on a new app
+---
 
-    npm pack
-    cd ..
-
-    npx react-native init MxMobileWidgetDemo --version 0.64.3
-    cd MxMobileWidgetDemo
-
-    npm install <path to mx-mobile-widget-sdk tarfile>
-    npm install --save react-native-webview
-    npx react-native link react-native-webview
-    cd ios
-    pod install
-    cd ..
-
-    npm run ios
+![Pipeline Badge](https://gitlab.mx.com/mx/mx-mobile-widget-sdk/badges/master/pipeline.svg)
