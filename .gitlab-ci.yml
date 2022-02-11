@@ -13,4 +13,4 @@ cache:
     - npm run ci:install
     - npm run ci:config
     - npm run dist
-    # - npm run test
+    - npm run test
