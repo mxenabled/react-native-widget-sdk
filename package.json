@@ -12,6 +12,8 @@
     "test": "jest",
     "test:coverage": "npm test -- --coverage",
     "open:coverage": "open coverage/lcov-report/index.html",
+    "ci:install": "npm ci --cache .npm --prefer-offline",
+    "ci:config": "echo '{}' > config.json",
     "generate:post_messages": "ts-node src/post_messages/generate_main.ts",
     "generate": "npm run generate:post_messages"
   },

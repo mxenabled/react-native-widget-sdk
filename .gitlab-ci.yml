@@ -8,10 +8,15 @@ cache:
   paths:
     - .npm/
 
-"Test and run distribution build":
+Setup:
   script:
-    - npm ci --cache .npm --prefer-offline
-    - ls -al test
-    - echo '{}' > config.json
+    - npm run ci:install
+    - npm run ci:config
+
+Build:
+  script:
     - npm run dist
+
+Test:
+  script:
     - npm run test
