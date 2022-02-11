@@ -83,4 +83,4 @@ npm run generate        # Run code generators
 
 ---
 
-![Pipeline Badge](https://gitlab.mx.com/mx/mx-mobile-widget-sdk/badges/master/pipeline.svg)
+[![Pipeline Badge](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/badges/master/pipeline.svg)](https://gitlab.mx.com/mx/mobile-widget-sdk-react-native/-/pipelines)
