@@ -62,8 +62,8 @@
     "setupFilesAfterEnv": [
       "./test/mocks/setup.ts"
     ],
-    "testMatch": [
-      "**/*_test.[tj]s?(x)"
+    "testRegex": [
+      "_test\\.[jt]sx?$"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
