@@ -4,10 +4,10 @@ import { View } from "react-native"
 import config from "./config.json"
 import { ConnectAggregationWidget } from "./src/components/ConnectWidget"
 
-const clientId = config["MX_CLIENT_ID"]
-const apiKey = config["MX_API_KEY"]
-const userGuid = config["MX_USER_GUID"]
-const environment = config["MX_ENVIRONMENT"]
+const clientId = (config as Record<string, string>)["MX_CLIENT_ID"]
+const apiKey = (config as Record<string, string>)["MX_API_KEY"]
+const userGuid = (config as Record<string, string>)["MX_USER_GUID"]
+const environment = (config as Record<string, string>)["MX_ENVIRONMENT"]
 
 if (!clientId || !apiKey || !userGuid || !environment) {
   const message = `
