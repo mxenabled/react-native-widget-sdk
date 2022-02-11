@@ -14,5 +14,6 @@ cache:
     - npm -v
     - ls -al
     - npm ci --cache .npm --prefer-offline
+    - echo '{}' > config.json
     - npm run dist
     - npm run test
