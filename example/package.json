@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "mx-mobile-widget-sdk": "file:../mx-mobile-widget-sdk-1.0.0.tgz",
+    "@mxenabled/mobile-widget-sdk": "^1.0.0",
     "react": "17.0.1",
     "react-native": "0.64.3",
     "react-native-webview": "^11.17.2"

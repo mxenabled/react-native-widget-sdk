@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "react-native"
 
 import config from "./config.json"
-import { ConnectAggregationWidget } from "mx-mobile-widget-sdk"
+import { ConnectAggregationWidget } from "@mxenabled/mobile-widget-sdk"
 
 const clientId = config["MX_CLIENT_ID"]
 const apiKey = config["MX_API_KEY"]
