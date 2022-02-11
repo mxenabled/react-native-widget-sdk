@@ -10,12 +10,8 @@ cache:
 
 "Test and run distribution build":
   script:
-    - node -v
-    - npm -v
     - npm ci --cache .npm --prefer-offline
-    - npx tsc -v
-    - npx tsc --showConfig
-    - ls -al
+    - ls -al test
     - echo '{}' > config.json
     - npm run dist
     - npm run test
