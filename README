@@ -30,7 +30,7 @@ that:
 Other useful commands for developers:
 
     npm run build           # Run TypeScript compiler
-    npm run dist            # Compile and save output to dist directory
+    npm run build:dist      # Compile and save output to dist directory
     npm run test            # Run unit tests
     npm run test:coverage   # Run unit tests and generate code coverage report
     npm run open:coverage   # Open code coverage report

@@ -12,5 +12,5 @@ cache:
   script:
     - npm run ci:install
     - npm run ci:config
-    - npm run dist
-    - npm run test -- test/components/ConnectWidget_test.tsx
+    - npm run build:dist
+    - npm run test:coverage
