@@ -8,15 +8,9 @@ cache:
   paths:
     - .npm/
 
-Setup:
+"Build and test":
   script:
     - npm run ci:install
     - npm run ci:config
-
-Build:
-  script:
     - npm run dist
-
-Test:
-  script:
     - npm run test
