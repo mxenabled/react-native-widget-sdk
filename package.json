@@ -68,12 +68,10 @@
       "_test\\.[jt]sx?$"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "dist",
-      "build",
-      "example",
-      "_setup.ts",
-      "_helper.ts"
+      "<rootDir>/node_modules",
+      "<rootDir>/dist",
+      "<rootDir>/build",
+      "<rootDir>/example"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
