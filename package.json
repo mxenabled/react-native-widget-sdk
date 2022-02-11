@@ -1,9 +1,10 @@
 {
-  "name": "mx-mobile-widget",
+  "name": "@mxenabled/mobile-widget-sdk",
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "scripts": {
     "start": "expo start --dev-client",
+    "prepack": "npm run build:dist",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",

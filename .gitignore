@@ -1,7 +1,8 @@
 config.json
 coverage
-mx-mobile-widget-sdk-*.tgz
 dist
+build
+mxenabled-mobile-widget-sdk-*.tgz
 
 # OSX
 #
