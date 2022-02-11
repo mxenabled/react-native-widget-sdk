@@ -27,6 +27,7 @@ export type RequestParams<Options> = {
   clientId: string
   userGuid: string
   widgetType: Type
+  uiMessageWebviewUrlScheme: string
   environment: Environment
   options?: Options
 }
@@ -50,6 +51,7 @@ export function buildRequestParams<Options>(
   userGuid: string,
   environment: Environment | string,
   widgetType: Type,
+  uiMessageWebviewUrlScheme: string,
   options: Options,
 ): RequestParams<Options> {
   assert("apiKey", apiKey)
@@ -63,6 +65,7 @@ export function buildRequestParams<Options>(
     apiKey,
     environment: lookupEnvironment(environment),
     widgetType,
+    uiMessageWebviewUrlScheme,
     options,
   }
 }
@@ -80,7 +83,7 @@ export function makeRequest<Options>(params: RequestParams<Options>): Promise<Re
     .then((response) => response.json())
 }
 
-function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, environment, options }: RequestParams<Options>): Request {
+function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, uiMessageWebviewUrlScheme, environment, options }: RequestParams<Options>): Request {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
   const authorization = base64.encode(`${clientId}:${apiKey}`)
@@ -95,7 +98,7 @@ function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, environme
     widget_type: widgetType,
     is_mobile_webview: true,
     ui_message_version: 4,
-    ui_message_webview_url_scheme: "mx",
+    ui_message_webview_url_scheme: uiMessageWebviewUrlScheme,
     ...options,
   }
 

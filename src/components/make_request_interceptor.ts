@@ -7,10 +7,11 @@ import { exhaustive } from "../utils/exhaustive"
 
 export default function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
+  uiMessageWebviewUrlScheme: string,
   callbacks: LoadUrlCallbackProps & WidgetCallbackProps,
   handler: (callbacks: WidgetCallbackProps, request: WebViewNavigation) => void,
 ) {
-  const interceptor = new Interceptor(widgetUrl)
+  const interceptor = new Interceptor(widgetUrl, uiMessageWebviewUrlScheme)
 
   return function (request: WebViewNavigation) {
     const action = interceptor.action(request)

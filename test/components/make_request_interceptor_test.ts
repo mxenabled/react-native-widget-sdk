@@ -23,7 +23,7 @@ const makeNavigationEvent = (url: string) =>
 
 describe("makeRequestInterceptor", () => {
   test("it returns a navigation event handler", () => {
-    const fn = makeRequestInterceptor("https://mx.com/", {}, handler)
+    const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {}, handler)
     const req = makeNavigationEvent("https://mx.com/page2")
 
     expect(() => fn(req)).not.toThrow()
@@ -31,22 +31,22 @@ describe("makeRequestInterceptor", () => {
 
   describe("actions", () => {
     test("it bubbles the widget url back up to be loaded in the webview", () => {
-      const fn = makeRequestInterceptor("https://mx.com/", {}, handler)
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {}, handler)
       const req = makeNavigationEvent("https://mx.com/")
 
       expect(fn(req)).toBe(true)
     })
 
     test("it intercepts other urls", () => {
-      const fn = makeRequestInterceptor("https://mx.com/", {}, handler)
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {}, handler)
       const req = makeNavigationEvent("https://mx.com/page2")
 
       expect(fn(req)).toBe(false)
     })
 
     test("it intercepts post message urls", () => {
-      const fn = makeRequestInterceptor("https://mx.com/", {}, handler)
-      const req = makeNavigationEvent("mx://connect/loaded")
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {}, handler)
+      const req = makeNavigationEvent("appscheme://connect/loaded")
 
       expect(fn(req)).toBe(false)
     })
@@ -61,7 +61,7 @@ describe("makeRequestInterceptor", () => {
         onLoadUrl: (url: string) => expect(url).toBe(newUrl),
       }
 
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -76,7 +76,7 @@ describe("makeRequestInterceptor", () => {
         onLoadUrlError: (url: string, error: Error) => expect(url).toBe(newUrl),
       }
 
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -90,8 +90,8 @@ describe("makeRequestInterceptor", () => {
       }
 
       const metadata = encodeURIComponent(JSON.stringify({}))
-      const newUrl = `mx://load?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://load?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -105,8 +105,8 @@ describe("makeRequestInterceptor", () => {
       }
 
       const metadata = encodeURIComponent(JSON.stringify({}))
-      const newUrl = `mx://load?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://load?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       expect(() => fn(req)).toThrow()
@@ -121,8 +121,8 @@ describe("makeRequestInterceptor", () => {
       }
 
       const metadata = encodeURIComponent(JSON.stringify({ guid }))
-      const newUrl = `mx://account/created?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://account/created?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -144,8 +144,8 @@ describe("makeRequestInterceptor", () => {
       }
 
       const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid, initial_step }))
-      const newUrl = `mx://connect/loaded?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://connect/loaded?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -164,8 +164,8 @@ describe("makeRequestInterceptor", () => {
       }
 
       const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid, initial_step }))
-      const newUrl = `mx://connect/loaded?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://connect/loaded?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -178,8 +178,8 @@ describe("makeRequestInterceptor", () => {
         onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
       }
 
-      const newUrl = `mx://connect/notarealmessage?metadata=`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://connect/notarealmessage?metadata=`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -210,8 +210,8 @@ describe("makeRequestInterceptor", () => {
         institution,
       }))
 
-      const newUrl = `mx://connect/updateCredentials?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://connect/updateCredentials?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -226,8 +226,8 @@ describe("makeRequestInterceptor", () => {
       }
 
       const metadata = encodeURIComponent(JSON.stringify({}))
-      const newUrl = `mx://load?metadata=${metadata}`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://load?metadata=${metadata}`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)
@@ -241,8 +241,8 @@ describe("makeRequestInterceptor", () => {
         onUnknownMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
       }
 
-      const newUrl = `mx://connect/notarealmessage?metadata=`
-      const fn = makeRequestInterceptor("https://mx.com/", callbacks, handler)
+      const newUrl = `appscheme://connect/notarealmessage?metadata=`
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
       fn(req)

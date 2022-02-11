@@ -28,6 +28,7 @@ export const ConnectVerificationWidget = makeModeSpecificComponent("verification
 })
 
 export default function ConnectWidget(props: ConnectWidgetProps) {
+  const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || "mx"
   props = {
     onOauthRequested: ({ url }) => loadUrlInBrowser(props, url),
     ...props,
@@ -41,6 +42,7 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
   } else if (isLoadingWithPlatformApiSso(props)) {
     widgetUrl = usePlatformApiSso<ConnectWidgetOptions>({
       widgetType: Type.ConnectWidget,
+      uiMessageWebviewUrlScheme,
       options: connectOptionsFromProps(props),
       ...props
     })
@@ -55,6 +57,7 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
     return <SafeAreaView style={style} />
   }
 
+  const handler = makeRequestInterceptor(widgetUrl, uiMessageWebviewUrlScheme, props, handleConnectRequest)
   return (
     <SafeAreaView testID="connect-widget-view" style={style}>
       <WebView
@@ -66,7 +69,7 @@ export default function ConnectWidget(props: ConnectWidgetProps) {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         incognito={true}
-        onShouldStartLoadWithRequest={makeRequestInterceptor(widgetUrl, props, handleConnectRequest)}
+        onShouldStartLoadWithRequest={handler}
       />
     </SafeAreaView>
   )

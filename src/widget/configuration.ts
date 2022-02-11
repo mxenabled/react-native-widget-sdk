@@ -30,17 +30,19 @@ type CamelizeString<T extends PropertyKey, C extends string = ""> =
     T extends `${infer F}_${infer R}` ?
       CamelizeString<Capitalize<R>, `${C}${F}`> : `${C}${T}` : T;
 
-export type BaseWidgetOptions = {
-  widget_type: Type
-  is_mobile_webview?: boolean
-  ui_message_version?: number
+type ExposedBaseOptions = {
   ui_message_webview_url_scheme?: string
   color_scheme?: "dark" | "light"
 }
 
-export type ConnectOptions = {
+export type BaseWidgetOptions = ExposedBaseOptions & {
+  widget_type: Type
+  is_mobile_webview?: boolean
+  ui_message_version?: number
+}
+
+export type ConnectOptions = ExposedBaseOptions & {
   client_redirect_url?: string
-  color_scheme?: BaseWidgetOptions["color_scheme"],
   current_institution_code?: string
   current_institution_guid?: string
   current_member_guid?: string
