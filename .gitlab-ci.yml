@@ -12,6 +12,8 @@ cache:
   script:
     - node -v
     - npm -v
+    - npx tsc -v
+    - npx tsc --showConfig
     - ls -al
     - npm ci --cache .npm --prefer-offline
     - echo '{}' > config.json
