@@ -11,8 +11,8 @@ import { Type, ConnectOptionProps, ConnectWidgetOptions, connectOptionsFromProps
 import { makeDefaultConnectOnOauthRequested } from "./oauth"
 import { makeModeSpecificComponent } from "./mode_specific_component"
 import { makeRequestInterceptor } from "./request_interceptor"
-import { useClientProxy } from "./client_proxy"
-import { usePlatformApiSso } from "./platform_api_sso"
+import { useClientProxy } from "./loading_strategy"
+import { usePlatformApiSso } from "./loading_strategy"
 import { useFullscreenStyles } from "./screen_dimensions"
 
 export type ConnectWidgetProps
