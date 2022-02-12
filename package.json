@@ -2,6 +2,7 @@
   "name": "@mxenabled/mobile-widget-sdk",
   "version": "1.0.0",
   "main": "dist/src/index.js",
+  "source": "src/index.ts",
   "scripts": {
     "start": "expo start --dev-client",
     "prepack": "npm run build:dist",
