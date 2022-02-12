@@ -1,4 +1,4 @@
-# MX Mobile Widget SDK example React Native application
+# MX Mobile Widget SDK example application
 
 This is a React Native app created with this command:
 
