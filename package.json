@@ -4,11 +4,7 @@
   "main": "dist/src/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "start": "expo start --dev-client",
     "prepack": "npm run build:dist",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "web": "expo start --web",
     "build": "tsc",
     "build:dist": "[ -d dist ] && rm -r dist; npm run build -- --declaration --noEmit false --outDir dist",
     "test": "jest",
@@ -23,9 +19,6 @@
     "mx-mobile-widget-sdk-setup": "dist/src/cli/setup.js"
   },
   "dependencies": {
-    "expo": "~44.0.2",
-    "expo-splash-screen": "~0.14.1",
-    "expo-status-bar": "~1.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
