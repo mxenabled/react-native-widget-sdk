@@ -1,6 +1,6 @@
 import { Response, RequestError } from "./platform_api"
 
-export function makeRequest<Options>(url: string): Promise<Response> {
+export function makeRequest(url: string): Promise<Response> {
   return fetch(url)
     .then((response) => {
       if (!response.ok) {

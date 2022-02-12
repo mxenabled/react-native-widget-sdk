@@ -8,7 +8,7 @@ export function useScreenDimensions() {
   const [screenHeight, setScreenHeight] = useState(getScreenHeight())
 
   useEffect(() => {
-    return onDimensionChange((orientation) => {
+    return onDimensionChange((_orientation) => {
       setScreenWidth(getScreenWidth())
       setScreenHeight(getScreenHeight())
     })

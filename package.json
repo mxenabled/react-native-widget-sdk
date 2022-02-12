@@ -8,6 +8,7 @@
     "prepack": "npm run build:dist",
     "build": "tsc",
     "build:dist": "[ -d dist ] && rm -r dist; npm run build -- --declaration --noEmit false --outDir dist",
+    "lint": "eslint src test",
     "test": "jest",
     "test:coverage": "npm test -- --verbose --coverage",
     "open:coverage": "open coverage/lcov-report/index.html",
@@ -40,6 +41,9 @@
     "@types/react-native-base64": "^0.2.0",
     "@types/react-test-renderer": "^17.0.1",
     "@types/yaml": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "eslint": "^8.9.0",
     "jest": "^27.5.0",
     "msw": "^0.36.8",
     "node-fetch": "^2.6.7",
@@ -72,5 +76,24 @@
     "transformIgnorePatterns": [
       "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
     ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ]
+    }
   }
 }

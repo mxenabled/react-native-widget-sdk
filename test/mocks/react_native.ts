@@ -1,8 +1,8 @@
 import * as ReactNative from "react-native"
 
-var callbacks: Record<string, Function[]> = {}
-var width = 200
-var height = 600
+const callbacks: Record<string, (() => void)[]> = {}
+let width = 200
+let height = 600
 
 export function rotateOrientation() {
   [width, height] = [height, width]

@@ -37,7 +37,7 @@ describe("ConnectWidget", () => {
           apiKey="myveryownapikey"
           userGuid="USR-777"
           environment="integration"
-          onSsoError={(error) => { onSsoErrorCalled = true }}
+          onSsoError={(_error) => { onSsoErrorCalled = true }}
         />
       )
 
@@ -59,7 +59,7 @@ describe("ConnectWidget", () => {
     describe("missing props", () => {
       test("it throws when no loading props are included", () => {
         const spy = jest.spyOn(console, "error")
-        spy.mockImplementation(() => {})
+        spy.mockImplementation(() => { /* do nothing */ })
 
         expect.assertions(1)
 
@@ -70,6 +70,7 @@ describe("ConnectWidget", () => {
          */
         render(
           <TestingErrorBoundary onError={(error) => expect(error).toBeDefined()}>
+            {/* eslint @typescript-eslint/ban-ts-comment: "off" */}
             {/* @ts-ignore: see [1] for details */}
             <ConnectWidget />
           </TestingErrorBoundary>

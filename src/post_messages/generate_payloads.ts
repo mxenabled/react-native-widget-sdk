@@ -128,7 +128,7 @@ const buildEmptyPayloadCaseTemplate = `
       }
 `
 
-const stringifyType = (type: FieldType, asCode: boolean = false): string => {
+const stringifyType = (type: FieldType, asCode = false): string => {
   if (typeof type === "string" && asCode) {
     return `"${type}"`
   } else if (typeof type === "string") {
@@ -139,7 +139,7 @@ const stringifyType = (type: FieldType, asCode: boolean = false): string => {
     return type.map((v) => `"${v}"`).join(" | ")
   }
 
-  let fields: string[] = []
+  const fields: string[] = []
   for (const field in type) {
     fields.push(`${field}: ${stringifyType(type[field], asCode)}`)
   }

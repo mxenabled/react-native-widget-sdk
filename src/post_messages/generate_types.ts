@@ -26,7 +26,7 @@ export const main = () => {
   const typeDefLines: string[] = []
   const typeMapLines: string[] = []
 
-  withEachMessageDefinition((namespace, action, defn) => {
+  withEachMessageDefinition((namespace, action, _defn) => {
     const key = genMessageKey(namespace, action)
     const type = genMessageType(namespace, action)
     typeDefLines.push(`  ${key} = "${type}",`)

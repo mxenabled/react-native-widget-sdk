@@ -14,11 +14,11 @@ export default class TestingErrorBoundary extends Component<Props, State> {
     this.state = { errored: false }
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(_error: Error) {
     return { errored: true }
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
+  componentDidCatch(error: Error, _info: ErrorInfo) {
     this.props.onError?.(error)
   }
 

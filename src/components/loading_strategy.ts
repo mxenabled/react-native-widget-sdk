@@ -31,15 +31,15 @@ function defaultOnPlatformApiError(error: Error) {
   console.log(`Error making SSO request: ${error}`)
 }
 
-export function isLoadingWithUrl(props: Object): props is UrlLoadingProps {
+export function isLoadingWithUrl(props: WidgetLoadingProps): props is UrlLoadingProps {
   return "url" in props
 }
 
-export function isLoadingWithClientProxy(props: Object): props is ClientProxyLoadingProps {
+export function isLoadingWithClientProxy(props: WidgetLoadingProps): props is ClientProxyLoadingProps {
   return "proxy" in props
 }
 
-export function isLoadingWithPlatformApiSso(props: Object): props is PlatformApiLoadingProps {
+export function isLoadingWithPlatformApiSso(props: WidgetLoadingProps): props is PlatformApiLoadingProps {
   return "clientId" in props &&
     "apiKey" in props &&
     "userGuid" in props &&
@@ -50,7 +50,7 @@ export function isLoadingWithBadProps(): never {
   throw new Error(badPropsMessage)
 }
 
-export function useClientProxy<Options>(
+export function useClientProxy(
   url: string,
   onError: (error: Error) => void = defaultOnClientProxyError,
 ): string | null {

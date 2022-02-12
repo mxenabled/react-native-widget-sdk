@@ -37,12 +37,11 @@ export class Message {
   }
 
   get payload(): Payload {
-    let rawMetadata
     if (typeof this.url.query !== "object") {
       throw new Error("unable to parse paylod: invalid request query")
     }
 
-    rawMetadata = this.url.query?.["metadata"]
+    const rawMetadata = this.url.query?.["metadata"]
     if (rawMetadata && typeof rawMetadata !== "string") {
       throw new Error("unable to parse paylod: invalid metadata parameter")
     }

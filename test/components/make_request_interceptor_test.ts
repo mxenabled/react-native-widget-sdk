@@ -72,8 +72,8 @@ describe("makeRequestInterceptor", () => {
 
       const newUrl = "https://mx.com/page2"
       const callbacks = {
-        onLoadUrl: (url: string) => { throw new Error("not today") },
-        onLoadUrlError: (url: string, error: Error) => expect(url).toBe(newUrl),
+        onLoadUrl: (_url: string) => { throw new Error("not today") },
+        onLoadUrlError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
@@ -101,7 +101,7 @@ describe("makeRequestInterceptor", () => {
       expect.assertions(1)
 
       const callbacks = {
-        onLoad: (payload: LoadPayload) => { throw new Error(":-(") }
+        onLoad: (_payload: LoadPayload) => { throw new Error(":-(") }
       }
 
       const metadata = encodeURIComponent(JSON.stringify({}))
@@ -159,7 +159,7 @@ describe("makeRequestInterceptor", () => {
       const initial_step = ""
 
       const callbacks = {
-        onLoaded: (payload: ConnectLoadedPayload) => expect(false).toBe(true),
+        onLoaded: (_payload: ConnectLoadedPayload) => expect(false).toBe(true),
         onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
       }
 

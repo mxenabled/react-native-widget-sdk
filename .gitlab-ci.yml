@@ -12,5 +12,6 @@ cache:
   script:
     - npm run ci:install
     - npm run ci:config
+    - npm run lint
     - npm run build:dist
     - npm run test:coverage
