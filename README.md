@@ -40,14 +40,30 @@ shipped with the package.
 
 ## Development setup
 
+The only dependency to _develop_ this application is Node v16. Once Node is
+installed, you can install all other dependencies with npm. Below are commands
+you will find useful while developing this app:
+
+```bash
+npm install             # Install depedencies
+npm run build           # Run TypeScript compiler
+npm run build:dist      # Compile and save output to dist directory
+npm run test            # Run unit tests
+npm run test:coverage   # Run unit tests and generate code coverage report
+npm run open:coverage   # Open code coverage report
+npm run generate        # Run code generators
+```
+
+## Running the example app
+
 First, you will need to set up your environment so that you can run React
 Native apps. See https://reactnative.dev/docs/environment-setup for
 instructions on how to do that. In addition, you'll need to download and
-install Android Studio, Xcode, and Node v17.
+install Android Studio, Xcode, and Node v16.
 
-Once your environment is setup, create a config.json file that looks like the
-one below, but with the appropriate values (all of which you can get from
-Batcave):
+Once your environment is setup, cd into the `example` directory and create a
+`config.json` file that looks like the one below, but with the appropriate
+values (all of which you can get from Batcave):
 
 ```json
 {
@@ -58,24 +74,11 @@ Batcave):
 }
 ```
 
-Next, install dependencies, link native libraries, and then install and run the
-app in an iOS or Android emulator. Here are all of the commands you need to do
-that:
+Next, install dependencies and run the app in an iOS or Android emulator. Here
+are all of the commands you need to do that:
 
 ```bash
 npm install             # Installs dependencies
-npm link                # Links native libraries in iOS and Android apps
 npm run ios             # Installs and runs app in iOS emulator
 npm run android         # Installs and runs app in Android emulator
-```
-
-Other useful commands for developers:
-
-```bash
-npm run build           # Run TypeScript compiler
-npm run build:dist      # Compile and save output to dist directory
-npm run test            # Run unit tests
-npm run test:coverage   # Run unit tests and generate code coverage report
-npm run open:coverage   # Open code coverage report
-npm run generate        # Run code generators
 ```
