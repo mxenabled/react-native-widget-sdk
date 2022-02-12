@@ -1,4 +1,5 @@
 *.tgz
+.DS_Store
 .gitlab-ci.yml
 .tags
 babel.config.js
