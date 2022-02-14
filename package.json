@@ -1,7 +1,7 @@
 {
   "name": "@mxenabled/mobile-widget-sdk",
   "description": "MX Mobile Widget SDK for React Native",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/src/index.js",
   "source": "src/index.ts",
   "scripts": {
