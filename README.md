@@ -23,22 +23,22 @@ import { ConnectWidget } from "@mxenabled/mobile-widget-sdk"
 
 export default function App() {
   return (
-    <ConnectWidget
-      clientId="<client id>"
-      apiKey="<api key>"
-      userGuid="<user guid>"
-      environment="<mx environment: production, integration, qa, sand>"
-    />
+    <ConnectWidget proxy="https://myserver.com/generate-sso-url" />
   )
 }
 ```
 
-### Component options
+### Getting an SSO URL
 
 _TODO_
 
 
-### Getting an SSO URL
+### Components
+
+_TODO_
+
+
+### Component options
 
 _TODO_
 
@@ -55,6 +55,10 @@ your app, you will need to do three things:
   https://www.npmjs.com/package/uri-scheme to manage your app's schemes.
 - Provde your app's scheme to the widget component with the
   `uiMessageWebviewUrlScheme` prop.
+
+```jsx
+<ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
+```
 
 
 ### Development
@@ -87,7 +91,7 @@ values (all of which you can get from Batcave):
 Next, install dependencies and run the app in an iOS or Android emulator. Here
 are all of the commands you need to do that:
 
-```bash
+```
 npm install             # Installs dependencies
 npm run ios             # Installs and runs app in iOS emulator
 npm run android         # Installs and runs app in Android emulator
@@ -100,7 +104,7 @@ Besides a React Native app, the only dependency to develop this application is
 Node v16. Once Node is installed, you can install all other dependencies with
 npm. Below are commands you will find useful while developing this app:
 
-```bash
+```
 npm install             # Install depedencies
 npm run build           # Run TypeScript compiler
 npm run build:dist      # Compile and save output to dist directory
