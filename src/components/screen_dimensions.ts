@@ -12,7 +12,7 @@ export function useScreenDimensions() {
       setScreenWidth(getScreenWidth())
       setScreenHeight(getScreenHeight())
     })
-  })
+  }, [])
 
   return [screenWidth, screenHeight]
 }

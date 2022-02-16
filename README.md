@@ -8,7 +8,7 @@ dashboard. Once you have that information, open a terminal and run the commands
 below at the root of your project:
 
 ```
-npm install @mxenabled/mobile-widget-sdk
+npm install --save @mxenabled/mobile-widget-sdk
 npx mx-mobile-widget-sdk-setup
 ```
 
@@ -33,28 +33,38 @@ export default function App() {
 }
 ```
 
+### Component options
+
+_TODO_
+
+
+### Getting an SSO URL
+
+_TODO_
+
+
+### OAuth redirects and deeplinks
+
+In order to properly handle OAuth redirects from the Connect widget back to
+your app, you will need to do three things:
+
+- Update your application and enable deeplinking from native code into the
+  React Native layer. See https://reactnative.dev/docs/linking for instructions
+  on how to do that.
+- Ensure you app has a scheme. You can install and use
+  https://www.npmjs.com/package/uri-scheme to manage your app's schemes.
+- Provde your app's scheme to the widget component with the
+  `uiMessageWebviewUrlScheme` prop.
+
+
+### Development
+
 This package is written in TypeScript, so if you're developing your app in
 TypeScript you will be able to leverage all of the type definitions that are
 shipped with the package.
 
 
-## Development setup
-
-The only dependency to _develop_ this application is Node v16. Once Node is
-installed, you can install all other dependencies with npm. Below are commands
-you will find useful while developing this app:
-
-```bash
-npm install             # Install depedencies
-npm run build           # Run TypeScript compiler
-npm run build:dist      # Compile and save output to dist directory
-npm run test            # Run unit tests
-npm run test:coverage   # Run unit tests and generate code coverage report
-npm run open:coverage   # Open code coverage report
-npm run generate        # Run code generators
-```
-
-## Running the example app
+### Running the example app
 
 First, you will need to set up your environment so that you can run React
 Native apps. See https://reactnative.dev/docs/environment-setup for
@@ -81,4 +91,21 @@ are all of the commands you need to do that:
 npm install             # Installs dependencies
 npm run ios             # Installs and runs app in iOS emulator
 npm run android         # Installs and runs app in Android emulator
+```
+
+
+## Development setup
+
+Besides a React Native app, the only dependency to develop this application is
+Node v16. Once Node is installed, you can install all other dependencies with
+npm. Below are commands you will find useful while developing this app:
+
+```bash
+npm install             # Install depedencies
+npm run build           # Run TypeScript compiler
+npm run build:dist      # Compile and save output to dist directory
+npm run test            # Run unit tests
+npm run test:coverage   # Run unit tests and generate code coverage report
+npm run open:coverage   # Open code coverage report
+npm run generate        # Run code generators
 ```

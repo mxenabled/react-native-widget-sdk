@@ -31,6 +31,7 @@ export default function App() {
         apiKey={apiKey}
         userGuid={userGuid}
         environment={environment}
+        uiMessageWebviewUrlScheme="mxwidgetsdkdemo"
         onMessage={(request) => {
           console.log(`Got a message: ${request.url}`)
         }}

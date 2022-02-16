@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { SafeAreaView } from "react-native"
 import { WebView } from "react-native-webview"
 
@@ -12,6 +12,7 @@ import { makeComponent } from "./make_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useWidgetUrl } from "./loading_strategy"
 import { useFullscreenStyles } from "./screen_dimensions"
+import { useOauthDeeplink } from "./oauth"
 
 export type ConnectWidgetProps =
   & WidgetLoadingProps
@@ -41,6 +42,9 @@ export function ConnectWidget(props: ConnectWidgetProps) {
   const fullscreenStyles = useFullscreenStyles()
   const style = props.style || fullscreenStyles
 
+  const webViewRef = useRef<WebView>(null)
+  useOauthDeeplink(webViewRef)
+
   if (!widgetUrl) {
     return <SafeAreaView style={style} />
   }
@@ -50,6 +54,7 @@ export function ConnectWidget(props: ConnectWidgetProps) {
     <SafeAreaView testID="connect-widget-view" style={style}>
       <WebView
         testID="connect-widget-webview"
+        ref={webViewRef}
         scrollEnabled={true}
         source={{ uri: widgetUrl }}
         originWhitelist={["*"]}
