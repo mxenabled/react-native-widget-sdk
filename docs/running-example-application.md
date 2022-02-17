@@ -40,7 +40,7 @@ Next, install dependencies for iOS and React Native:
 npm install
 ```
 
-Finally, you can run the app on an iOS or Android simulator.
+Finally, you can run the application on an iOS or Android simulator.
 
 ```
 npm run ios
