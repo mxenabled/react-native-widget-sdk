@@ -1,11 +1,27 @@
 # MX Mobile Widget SDK for React Native
 
-## Using the Widget SDK on your application
+## About this project
 
-To get starting using the Widget SDK in your React Native application, you will
-first need to sign up for the MX API and get your client id and API key from
-the dashboard. Once you have that information, open a terminal and run the
-commands below at the root of your project to install and setup the SDK:
+The purpose of this project is to enable you to quickly load and configure MX
+widgets for your intended purpose. After installing this project via npm, you
+will be able to import and load MX widgets in your React Native application,
+and configure them to your needs.
+
+The rest of this document outlines how you can install and setup the SDK, as
+well as how you can use each component and configure it for a given flow.
+
+
+## Signing up for the MX API
+
+Before getting started, you will need to have your MX client id and API key. Go
+to https://dashboard.mx.com/sign_in if you don't have that information or you
+would like to sign up.
+
+
+## Installing and setting up the Widget SDK
+
+Open a terminal and run the commands below at the root of your project to
+install and setup the SDK:
 
 ```
 npm install --save @mxenabled/mobile-widget-sdk
