@@ -14,11 +14,11 @@ well as how you can use each component and configure it for a given flow.
 ## Signing up for the MX API
 
 Before getting started, you will need to have your MX client id and API key. Go
-to https://dashboard.mx.com/sign_in if you don't have that information or you
+to https://dashboard.mx.com if you don't have that information or you
 would like to sign up.
 
 
-## Installing and setting up the Widget SDK
+## Installing and setting up the SDK
 
 Open a terminal and run the commands below at the root of your project to
 install and setup the SDK:
@@ -33,9 +33,9 @@ Setup the SDK and link its dependencies:
 npx mx-mobile-widget-sdk-setup
 ```
 
-Once the steps above have been completed, you will be able to import widget
-components from the `@mxenabled/mobile-widget-sdk` package and render them in
-your application:
+Once the steps above have been completed, you will be able to import components
+from the `@mxenabled/mobile-widget-sdk` package and render them in your
+application:
 
 ```jsx
 import React from "react"
@@ -54,12 +54,7 @@ export default function App() {
 _TODO_
 
 
-### Components
-
-_TODO_
-
-
-### Component props
+### Components and props
 
 _TODO_
 
@@ -87,4 +82,4 @@ your application, you will need to do three things:
 
 This package is written in TypeScript, so if you're developing your application
 in TypeScript you will be able to leverage all of the type definitions that are
-shipped with the package.
+included in the npm package.
