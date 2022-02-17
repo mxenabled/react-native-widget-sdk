@@ -1,4 +1,4 @@
-### Running the example application
+# Running the example application
 
 First, you will need to set up your environment so that you can run React
 Native apps. See [`./environment-setup.md`](./environment-setup.md) or
