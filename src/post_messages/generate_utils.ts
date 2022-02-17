@@ -122,9 +122,14 @@ export const isParentDefn = (action: string) =>
   action === "_"
 
 export const normalizeCasing = (str: string) =>
-  str
+  normalizeKeywordCasing(str)
     .replace(/(^[a-z])/i, (match) => match.toUpperCase())
     .replace(/([-_/][a-z])/ig, (match) => match.toUpperCase())
     .replace("-", "")
     .replace("_", "")
     .replace("/", "")
+
+const normalizeKeywordCasing = (str: string) =>
+  str
+    .replace("oauth", "OAuth")
+    .replace("Oauth", "OAuth")

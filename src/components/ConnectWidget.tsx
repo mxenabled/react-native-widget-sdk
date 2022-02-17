@@ -7,12 +7,12 @@ import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./
 import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, connectOptionsFromProps } from "../widget/configuration"
 
-import { makeDefaultConnectOnOauthRequested } from "./oauth"
+import { makeDefaultConnectOnOAuthRequested } from "./oauth"
 import { makeComponent } from "./make_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useWidgetUrl } from "./loading_strategy"
 import { useFullscreenStyles } from "./screen_dimensions"
-import { useOauthDeeplink } from "./oauth"
+import { useOAuthDeeplink } from "./oauth"
 
 export type ConnectWidgetProps =
   & WidgetLoadingProps
@@ -33,7 +33,7 @@ export const ConnectVerificationWidget = makeComponent(ConnectWidget, {
 export function ConnectWidget(props: ConnectWidgetProps) {
   const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || "mx"
   props = {
-    onOauthRequested: makeDefaultConnectOnOauthRequested(props),
+    onOAuthRequested: makeDefaultConnectOnOAuthRequested(props),
     uiMessageWebviewUrlScheme,
     ...props,
   }
@@ -43,7 +43,7 @@ export function ConnectWidget(props: ConnectWidgetProps) {
   const style = props.style || fullscreenStyles
 
   const webViewRef = useRef<WebView>(null)
-  useOauthDeeplink(webViewRef)
+  useOAuthDeeplink(webViewRef)
 
   if (!widgetUrl) {
     return <SafeAreaView style={style} />

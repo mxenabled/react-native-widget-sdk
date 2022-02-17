@@ -105,15 +105,15 @@ export type ConnectMemberStatusUpdatePayload = {
   connection_status: number
 }
 
-export type ConnectOauthErrorPayload = {
-  type: Type.ConnectOauthError
+export type ConnectOAuthErrorPayload = {
+  type: Type.ConnectOAuthError
   user_guid: string
   session_guid: string
   member_guid: string
 }
 
-export type ConnectOauthRequestedPayload = {
-  type: Type.ConnectOauthRequested
+export type ConnectOAuthRequestedPayload = {
+  type: Type.ConnectOAuthRequested
   user_guid: string
   session_guid: string
   url: string
@@ -164,8 +164,8 @@ export type WidgetPayload =
   | ConnectMemberDeletedPayload
   | ConnectCreateMemberErrorPayload
   | ConnectMemberStatusUpdatePayload
-  | ConnectOauthErrorPayload
-  | ConnectOauthRequestedPayload
+  | ConnectOAuthErrorPayload
+  | ConnectOAuthRequestedPayload
   | ConnectStepChangePayload
   | ConnectSubmitMFAPayload
   | ConnectUpdateCredentialsPayload
@@ -343,7 +343,7 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
         connection_status: metadata.connection_status as number,
       }
 
-    case Type.ConnectOauthError:
+    case Type.ConnectOAuthError:
       assertMessageProp(metadata, "mx/connect/oauthError", "user_guid", "string")
       assertMessageProp(metadata, "mx/connect/oauthError", "session_guid", "string")
       assertMessageProp(metadata, "mx/connect/oauthError", "member_guid", "string")
@@ -355,7 +355,7 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
         member_guid: metadata.member_guid as string,
       }
 
-    case Type.ConnectOauthRequested:
+    case Type.ConnectOAuthRequested:
       assertMessageProp(metadata, "mx/connect/oauthRequested", "user_guid", "string")
       assertMessageProp(metadata, "mx/connect/oauthRequested", "session_guid", "string")
       assertMessageProp(metadata, "mx/connect/oauthRequested", "url", "string")

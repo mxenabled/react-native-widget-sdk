@@ -21,8 +21,8 @@ import {
   ConnectMemberDeletedPayload,
   ConnectCreateMemberErrorPayload,
   ConnectMemberStatusUpdatePayload,
-  ConnectOauthErrorPayload,
-  ConnectOauthRequestedPayload,
+  ConnectOAuthErrorPayload,
+  ConnectOAuthRequestedPayload,
   ConnectStepChangePayload,
   ConnectSubmitMFAPayload,
   ConnectUpdateCredentialsPayload,
@@ -59,8 +59,8 @@ export type ConnectCallbackProps = ConnectCallbackPropsBase & {
   onMemberDeleted?: (payload: ConnectMemberDeletedPayload) => void
   onCreateMemberError?: (payload: ConnectCreateMemberErrorPayload) => void
   onMemberStatusUpdate?: (payload: ConnectMemberStatusUpdatePayload) => void
-  onOauthError?: (payload: ConnectOauthErrorPayload) => void
-  onOauthRequested?: (payload: ConnectOauthRequestedPayload) => void
+  onOAuthError?: (payload: ConnectOAuthErrorPayload) => void
+  onOAuthRequested?: (payload: ConnectOAuthRequestedPayload) => void
   onStepChange?: (payload: ConnectStepChangePayload) => void
   onSubmitMFA?: (payload: ConnectSubmitMFAPayload) => void
   onUpdateCredentials?: (payload: ConnectUpdateCredentialsPayload) => void
@@ -206,12 +206,12 @@ export function dispatchConnectCallback(callbacks: ConnectCallbackProps, message
       safeCall([payload], callbacks.onMemberStatusUpdate)
       break
 
-    case Type.ConnectOauthError:
-      safeCall([payload], callbacks.onOauthError)
+    case Type.ConnectOAuthError:
+      safeCall([payload], callbacks.onOAuthError)
       break
 
-    case Type.ConnectOauthRequested:
-      safeCall([payload], callbacks.onOauthRequested)
+    case Type.ConnectOAuthRequested:
+      safeCall([payload], callbacks.onOAuthRequested)
       break
 
     case Type.ConnectStepChange:

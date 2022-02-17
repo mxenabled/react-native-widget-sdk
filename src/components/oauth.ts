@@ -4,13 +4,13 @@ import { parse as parseUrl, UrlWithParsedQuery } from "url"
 
 import { onUrlChange } from "../platform/deeplink"
 
-import { ConnectOauthRequestedPayload } from "../post_messages"
+import { ConnectOAuthRequestedPayload } from "../post_messages"
 import { LoadUrlCallbackProps } from "./standard_props"
 
 import { loadUrlInBrowser } from "./load_url_in_browser"
 
-export function makeDefaultConnectOnOauthRequested(props: LoadUrlCallbackProps) {
-  return function ({ url }: ConnectOauthRequestedPayload) {
+export function makeDefaultConnectOnOAuthRequested(props: LoadUrlCallbackProps) {
+  return function ({ url }: ConnectOAuthRequestedPayload) {
     loadUrlInBrowser(props, url)
   }
 }
@@ -45,7 +45,7 @@ export type OAuthRedirectEvent =
   | OAuthSuccessRedirectEvent
   | OAuthErrorRedirectEvent
 
-export function useOauthDeeplink(webViewRef: WebViewRef): OAuthRedirectEvent | null {
+export function useOAuthDeeplink(webViewRef: WebViewRef): OAuthRedirectEvent | null {
   const [ev, setEvent] = useState<OAuthRedirectEvent | null>(null)
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export function useOauthDeeplink(webViewRef: WebViewRef): OAuthRedirectEvent | n
 
       const event = buildOAuthRedirectEvent(url)
       setEvent(event)
-      postOauthMessage(event, webViewRef)
+      postOAuthMessage(event, webViewRef)
     })
   }, [])
 
@@ -74,7 +74,7 @@ function buildOAuthRedirectEvent(url: UrlWithParsedQuery): OAuthRedirectEvent {
   return { type: "error", success: false }
 }
 
-function postOauthMessage(ev: OAuthRedirectEvent, webViewRef: WebViewRef) {
+function postOAuthMessage(ev: OAuthRedirectEvent, webViewRef: WebViewRef) {
   if (!webViewRef.current) {
     return
   }
