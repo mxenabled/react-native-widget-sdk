@@ -92,6 +92,7 @@ Next, install dependencies and run the app in an iOS or Android emulator. Here
 are all of the commands you need to do that:
 
 ```
+cd ios && pod install && cd ..
 npm install             # Installs dependencies
 npm run ios             # Installs and runs app in iOS emulator
 npm run android         # Installs and runs app in Android emulator
