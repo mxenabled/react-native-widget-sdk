@@ -3,8 +3,6 @@
 This document will walk you though how to set up your environment so that you
 can run the example React Native application in your computer.
 
-<span style="color: red; font-weight: bold">TODO</span> document setup for Android.
-
 
 ## Installing dependencies
 
