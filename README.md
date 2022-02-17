@@ -43,12 +43,12 @@ _TODO_
 _TODO_
 
 
-### Component options
+### Component props
 
 _TODO_
 
 
-### OAuth redirects and deeplinks
+### OAuth redirects
 
 In order to properly handle OAuth redirects from the Connect widget back to
 your application, you will need to do three things:
