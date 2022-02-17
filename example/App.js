@@ -1,22 +1,19 @@
 import React from "react"
 import { View } from "react-native"
 
-import config from "./config.json"
 import { ConnectAggregationWidget } from "@mxenabled/mobile-widget-sdk"
+import { clientId, apiKey, userGuid, environment } from "./config.json"
 
-const clientId = config["MX_CLIENT_ID"]
-const apiKey = config["MX_API_KEY"]
-const userGuid = config["MX_USER_GUID"]
-const environment = config["MX_ENVIRONMENT"]
+const platformApiProps = clientId && apiKey && userGuid && environment
 
-if (!clientId || !apiKey || !userGuid || !environment) {
+if (!platformApiProps) {
   const message = `
     Missing configuration. I need the following values defined in config.json:
 
-      - MX_CLIENT_ID
-      - MX_API_KEY
-      - MX_USER_GUID
-      - MX_ENVIRONMENT
+      - clientId
+      - apiKey
+      - userGuid
+      - environment
 
     See README for instructions.`
 

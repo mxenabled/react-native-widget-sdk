@@ -22,8 +22,8 @@ open -a TextEdit config.json
 ```
 
 And copy and paste the JSON below into your `config.json` file and save after
-filling in the appropriate values for MX_CLIENT_ID, MX_API_KEY, MX_USER_GUID,
-and MX_ENVIRONMENT (MX_ENVIRONMENT should be "integration" or "production").
+filling in the appropriate values for `clientId`, `apiKey`, `userGuid`, and
+`environment` (`environment` should be `"integration"` or `"production"`).
 
 ```json
 {
