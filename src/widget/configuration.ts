@@ -54,14 +54,25 @@ export type ConnectOptions = ExposedBaseOptions & {
   wait_for_full_aggregation?: boolean
 }
 
+// TODO Remove this
 export type BaseWidgetProps = Camelize<ExposedBaseOptions>
+export type WidgetOptions = Partial<BaseWidgetOptions>
+export type WidgetOptionProps = Camelize<WidgetOptions>
+
 export type ConnectWidgetOptions = Partial<BaseWidgetOptions> & ConnectOptions
+// TODO Rename to x-widget-x
 export type ConnectOptionProps = Camelize<ConnectOptions>
+
+export function widgetOptionsFromProps(props: WidgetOptionProps): WidgetOptions {
+  return {
+    color_scheme: props.colorScheme,
+  }
+}
 
 export function connectOptionsFromProps(props: ConnectOptionProps): ConnectOptions {
   return {
+    ...widgetOptionsFromProps(props),
     client_redirect_url: props.clientRedirectUrl,
-    color_scheme: props.colorScheme,
     current_institution_code: props.currentInstitutionCode,
     current_institution_guid: props.currentInstitutionGuid,
     current_member_guid: props.currentMemberGuid,

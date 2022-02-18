@@ -125,9 +125,9 @@ export const normalizeCasing = (str: string) =>
   normalizeKeywordCasing(str)
     .replace(/(^[a-z])/i, (match) => match.toUpperCase())
     .replace(/([-_/][a-z])/ig, (match) => match.toUpperCase())
-    .replace("-", "")
-    .replace("_", "")
-    .replace("/", "")
+    .replace(/-/g, "")
+    .replace(/_/g, "")
+    .replace(/\//g, "")
 
 const normalizeKeywordCasing = (str: string) =>
   str

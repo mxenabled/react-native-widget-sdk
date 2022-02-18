@@ -142,6 +142,12 @@ export type ConnectUpdateCredentialsPayload = {
   institution: { code: string, guid: string }
 }
 
+export type PulseOverdraftWarningCtaTransferFundsPayload = {
+  type: Type.PulseOverdraftWarningCtaTransferFunds
+  account_guid: string
+  amount: number
+}
+
 export type AccountCreatedPayload = {
   type: Type.AccountCreated
   guid: string
@@ -169,6 +175,7 @@ export type WidgetPayload =
   | ConnectStepChangePayload
   | ConnectSubmitMFAPayload
   | ConnectUpdateCredentialsPayload
+  | PulseOverdraftWarningCtaTransferFundsPayload
 
 export type Payload =
   | GenericPayload
@@ -405,6 +412,16 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
         session_guid: metadata.session_guid as string,
         member_guid: metadata.member_guid as string,
         institution: metadata.institution as { code: string, guid: string },
+      }
+
+    case Type.PulseOverdraftWarningCtaTransferFunds:
+      assertMessageProp(metadata, "mx/pulse/overdraftWarning/cta/transferFunds", "account_guid", "string")
+      assertMessageProp(metadata, "mx/pulse/overdraftWarning/cta/transferFunds", "amount", "number")
+
+      return {
+        type,
+        account_guid: metadata.account_guid as string,
+        amount: metadata.amount as number,
       }
 
     case Type.AccountCreated:

@@ -77,3 +77,7 @@ post_messages:
         institution:
           code: string
           guid: string
+    pulse:
+      overdraftWarning/cta/transferFunds:
+        account_guid: string
+        amount: number

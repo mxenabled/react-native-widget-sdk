@@ -26,6 +26,7 @@ import {
   ConnectStepChangePayload,
   ConnectSubmitMFAPayload,
   ConnectUpdateCredentialsPayload,
+  PulseOverdraftWarningCtaTransferFundsPayload,
   AccountCreatedPayload,
 } from "./generated_payloads"
 
@@ -64,6 +65,15 @@ export type ConnectCallbackProps = ConnectCallbackPropsBase & {
   onStepChange?: (payload: ConnectStepChangePayload) => void
   onSubmitMFA?: (payload: ConnectSubmitMFAPayload) => void
   onUpdateCredentials?: (payload: ConnectUpdateCredentialsPayload) => void
+}
+
+type PulseCallbackPropsBase =
+  & BaseCallbackProps
+  & GenericCallbackProps
+  & EntityCallbackProps
+
+export type PulseCallbackProps = PulseCallbackPropsBase & {
+  onOverdraftWarningCtaTransferFunds?: (payload: PulseOverdraftWarningCtaTransferFundsPayload) => void
 }
 
 // Thrown when we are unable to process an otherwise valid post message
@@ -224,6 +234,50 @@ export function dispatchConnectCallback(callbacks: ConnectCallbackProps, message
 
     case Type.ConnectUpdateCredentials:
       safeCall([payload], callbacks.onUpdateCredentials)
+      break
+
+    default:
+      throw new CallbackDispatchError(`"unable to dispatch post message with unknown type: ${payload.type}"`)
+  }
+}
+
+export function handlePulseRequest(callbacks: PulseCallbackProps, request: WebViewNavigation) {
+  safeCall([request], callbacks.onMessage)
+
+  const message = new Message(request.url)
+  if (!message.valid) {
+    safeCall([request], callbacks.onUnknownMessage)
+    return
+  }
+
+  try {
+    dispatchPulseCallback(callbacks, message)
+  } catch (error) {
+    // `CallbackDispatchError` is an internal error so pass that back to the
+    // host via the `onMessageDispatchError` callback. Any other errors are
+    // from user space and should bubble back up to the host.
+    if (error instanceof CallbackDispatchError) {
+      safeCall([request, error], callbacks.onMessageDispatchError)
+    } else {
+      throw error
+    }
+  }
+}
+
+export function dispatchPulseCallback(callbacks: PulseCallbackProps, message: Message) {
+  const payload = message.payload
+
+  if (isGenericMessage(message)) {
+    dispatchGenericCallback(callbacks, message)
+    return
+  } else if (isEntityMessage(message)) {
+    dispatchEntityCallback(callbacks, message)
+    return
+  }
+
+  switch (payload.type) {
+    case Type.PulseOverdraftWarningCtaTransferFunds:
+      safeCall([payload], callbacks.onOverdraftWarningCtaTransferFunds)
       break
 
     default:
