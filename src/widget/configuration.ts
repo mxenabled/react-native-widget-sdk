@@ -4,9 +4,9 @@
  */
 
 export enum Type {
+  BudgetsWidget = "budgets_widget",
   ConnectWidget = "connect_widget",
   PulseWidget = "pulse_widget",
-  BudgetsWidget = "budgets_widget",
 }
 
 type CWM =

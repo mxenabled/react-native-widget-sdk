@@ -3,7 +3,7 @@ import { handleConnectRequest as handleRequest, ConnectCallbackProps } from "../
 import { Type, ConnectWidgetOptionProps, connectWidgetOptionsFromProps as optsFromProps } from "../widget/configuration"
 
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
-import { makeComponentWithDefaults } from "./make_component"
+import { makeWidgetComponentWithDefaults } from "./make_component"
 import { useOAuthDeeplink } from "./oauth"
 import { useWidgetRendererWithRef } from "./renderer"
 
@@ -14,11 +14,11 @@ export type ConnectWidgetProps =
   & ConnectCallbackProps
   & ConnectWidgetOptionProps
 
-export const ConnectAggregationWidget = makeComponentWithDefaults(ConnectWidget, {
+export const ConnectAggregationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
   mode: "aggregation",
 })
 
-export const ConnectVerificationWidget = makeComponentWithDefaults(ConnectWidget, {
+export const ConnectVerificationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
   mode: "verification",
   includeTransactions: false,
 })

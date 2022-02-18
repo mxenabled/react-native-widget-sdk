@@ -1,6 +1,25 @@
-import React, { FunctionComponent } from "react"
+import React, { FC } from "react"
 
-export function makeComponentWithDefaults<Props>(Component: FunctionComponent<Props>, defaultProps?: Partial<Props>): FunctionComponent<Props> {
+import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
+import { handleBaseRequest as handleRequest, BaseCallbackProps } from "../post_messages"
+import { Type, WidgetOptionProps, widgetOptionsFromProps as optsFromProps } from "../widget/configuration"
+
+import { useWidgetRenderer } from "./renderer"
+
+type Props =
+  & WidgetLoadingProps
+  & WidgetStylingProps
+  & WidgetLoadUrlCallbackProps
+  & WidgetOptionProps
+  & BaseCallbackProps
+
+export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
+  return function Widget(props: Props) {
+    return useWidgetRenderer(widgetType, props, optsFromProps, handleRequest)
+  }
+}
+
+export function makeWidgetComponentWithDefaults<Props>(Component: FC<Props>, defaultProps?: Partial<Props>): FC<Props> {
   return function Widget(props: Props) {
     return <Component {...defaultProps} {...props} />
   }
