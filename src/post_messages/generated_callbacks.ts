@@ -115,6 +115,16 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   }
 }
 
+export function handleBaseRequest(callbacks: BaseCallbackProps, request: WebViewNavigation) {
+  safeCall([request], callbacks.onMessage)
+
+  const message = new Message(request.url)
+  if (!message.valid) {
+    safeCall([request], callbacks.onUnknownMessage)
+    return
+  }
+}
+
 export function dispatchGenericCallback(callbacks: GenericCallbackProps, message: Message) {
   const payload = message.payload
 
