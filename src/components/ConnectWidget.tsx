@@ -8,7 +8,7 @@ import { handleConnectRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, connectOptionsFromProps } from "../widget/configuration"
 
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
-import { makeComponent } from "./make_component"
+import { makeComponentWithDefaults } from "./make_component"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useWidgetUrl } from "./loading_strategy"
 import { useFullscreenStyles } from "./screen_dimensions"
@@ -21,11 +21,11 @@ export type ConnectWidgetProps =
   & ConnectCallbackProps
   & ConnectOptionProps
 
-export const ConnectAggregationWidget = makeComponent(ConnectWidget, {
+export const ConnectAggregationWidget = makeComponentWithDefaults(ConnectWidget, {
   mode: "aggregation",
 })
 
-export const ConnectVerificationWidget = makeComponent(ConnectWidget, {
+export const ConnectVerificationWidget = makeComponentWithDefaults(ConnectWidget, {
   mode: "verification",
   includeTransactions: false,
 })
