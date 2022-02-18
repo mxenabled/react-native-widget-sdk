@@ -1,7 +1,7 @@
 import base64 from "react-native-base64"
 
 import { Environment, Host, lookupEnvironment } from "./environment"
-import { Type, BaseWidgetOptions } from "../widget/configuration"
+import { Type, InternalWidgetOptions } from "../widget/configuration"
 
 export class RequestError extends Error {
   readonly statusCode: number
@@ -94,7 +94,7 @@ function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, uiMessage
     "Content-Type": "application/json",
   }
 
-  const widgetUrl: BaseWidgetOptions = {
+  const widgetUrl: InternalWidgetOptions = {
     widget_type: widgetType,
     is_mobile_webview: true,
     ui_message_version: 4,

@@ -2,7 +2,7 @@ import React, { useRef, MutableRefObject, ReactElement } from "react"
 import { SafeAreaView } from "react-native"
 import { WebView, WebViewNavigation } from "react-native-webview"
 
-import { Type, BaseWidgetProps } from "../widget/configuration"
+import { Type, WidgetOptionProps } from "../widget/configuration"
 import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
 
 import { makeRequestInterceptor } from "./request_interceptor"
@@ -13,7 +13,7 @@ type MaybeWebViewRef = MutableRefObject<WebView | null>
 type BaseProps =
   & WidgetLoadingProps
   & WidgetStylingProps
-  & BaseWidgetProps
+  & WidgetOptionProps
   & LoadUrlCallbackProps
 
 export function useWidgetRenderer<Props extends BaseProps, Opts>(

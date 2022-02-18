@@ -31,18 +31,20 @@ type CamelizeString<T extends PropertyKey, C extends string = ""> =
     T extends `${infer F}_${infer R}` ?
       CamelizeString<Capitalize<R>, `${C}${F}`> : `${C}${T}` : T;
 
-type ExposedBaseOptions = {
-  ui_message_webview_url_scheme?: string
-  color_scheme?: "dark" | "light"
-}
-
-export type BaseWidgetOptions = ExposedBaseOptions & {
+export type InternalWidgetOptions = WidgetOptions & {
   widget_type: Type
   is_mobile_webview?: boolean
   ui_message_version?: number
 }
 
-export type ConnectOptions = ExposedBaseOptions & {
+export type WidgetOptionProps = Camelize<WidgetOptions>
+export type WidgetOptions = {
+  ui_message_webview_url_scheme?: string
+  color_scheme?: "dark" | "light"
+}
+
+export type ConnectWidgetOptionProps = Camelize<ConnectWidgetOptions>
+export type ConnectWidgetOptions = WidgetOptions & {
   client_redirect_url?: string
   current_institution_code?: string
   current_institution_guid?: string
@@ -55,22 +57,13 @@ export type ConnectOptions = ExposedBaseOptions & {
   wait_for_full_aggregation?: boolean
 }
 
-// TODO Remove this
-export type BaseWidgetProps = Camelize<ExposedBaseOptions>
-export type WidgetOptions = Partial<BaseWidgetOptions>
-export type WidgetOptionProps = Camelize<WidgetOptions>
-
-export type ConnectWidgetOptions = Partial<BaseWidgetOptions> & ConnectOptions
-// TODO Rename to x-widget-x
-export type ConnectOptionProps = Camelize<ConnectOptions>
-
 export function widgetOptionsFromProps(props: WidgetOptionProps): WidgetOptions {
   return {
     color_scheme: props.colorScheme,
   }
 }
 
-export function connectOptionsFromProps(props: ConnectOptionProps): ConnectOptions {
+export function connectWidgetOptionsFromProps(props: ConnectWidgetOptionProps): ConnectWidgetOptions {
   return {
     ...widgetOptionsFromProps(props),
     client_redirect_url: props.clientRedirectUrl,

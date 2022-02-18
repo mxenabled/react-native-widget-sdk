@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { Type, BaseWidgetProps } from "../widget/configuration"
+import { Type, WidgetOptionProps } from "../widget/configuration"
 
 import { WidgetLoadingProps, UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./standard_props"
 import { RequestParams, buildRequestParams, makeRequest as makePlatformApiRequest } from "../loader/platform_api"
@@ -89,7 +89,7 @@ export function usePlatformApiSso<Options>({
   return widgetUrl
 }
 
-export function useWidgetUrl<Props extends WidgetLoadingProps & BaseWidgetProps, Opts>(
+export function useWidgetUrl<Props extends WidgetLoadingProps & WidgetOptionProps, Opts>(
   widgetType: Type,
   props: Props,
   optsFromProps: (ps: Props) => Opts,

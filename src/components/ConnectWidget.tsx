@@ -1,6 +1,6 @@
 import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
 import { handleConnectRequest as handleRequest, ConnectCallbackProps } from "../post_messages"
-import { Type, ConnectOptionProps, connectOptionsFromProps as optsFromProps } from "../widget/configuration"
+import { Type, ConnectWidgetOptionProps, connectWidgetOptionsFromProps as optsFromProps } from "../widget/configuration"
 
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
 import { makeComponentWithDefaults } from "./make_component"
@@ -12,7 +12,7 @@ export type ConnectWidgetProps =
   & WidgetStylingProps
   & LoadUrlCallbackProps
   & ConnectCallbackProps
-  & ConnectOptionProps
+  & ConnectWidgetOptionProps
 
 export const ConnectAggregationWidget = makeComponentWithDefaults(ConnectWidget, {
   mode: "aggregation",
