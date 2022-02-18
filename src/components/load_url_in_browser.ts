@@ -1,6 +1,6 @@
 import { Linking } from "react-native"
 
-import { LoadUrlCallbackProps } from "./standard_props"
+import { WidgetLoadUrlCallbackProps } from "./standard_props"
 import { asError } from "../utils/error"
 
 function defaultOnLoadUrl(url: string) {
@@ -11,7 +11,7 @@ function defaultOnLoadUrlError(url: string, error: Error) {
   console.log(`Error loading ${url}: ${error}`)
 }
 
-export function loadUrlInBrowser(callbacks: LoadUrlCallbackProps, url: string) {
+export function loadUrlInBrowser(callbacks: WidgetLoadUrlCallbackProps, url: string) {
   const onLoadUrl = callbacks.onLoadUrl || defaultOnLoadUrl
   const onLoadUrlError = callbacks.onLoadUrlError || defaultOnLoadUrlError
 

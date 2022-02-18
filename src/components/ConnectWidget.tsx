@@ -1,4 +1,4 @@
-import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
+import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
 import { handleConnectRequest as handleRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectWidgetOptionProps, connectWidgetOptionsFromProps as optsFromProps } from "../widget/configuration"
 
@@ -10,7 +10,7 @@ import { useWidgetRenderer } from "./renderer"
 export type ConnectWidgetProps =
   & WidgetLoadingProps
   & WidgetStylingProps
-  & LoadUrlCallbackProps
+  & WidgetLoadUrlCallbackProps
   & ConnectCallbackProps
   & ConnectWidgetOptionProps
 

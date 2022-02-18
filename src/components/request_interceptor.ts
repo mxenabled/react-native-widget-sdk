@@ -2,13 +2,13 @@ import { WebViewNavigation } from "react-native-webview"
 
 import { loadUrlInBrowser } from "./load_url_in_browser"
 import { Interceptor, Action } from "../post_messages/interceptor"
-import { LoadUrlCallbackProps } from "./standard_props"
+import { WidgetLoadUrlCallbackProps } from "./standard_props"
 import { exhaustive } from "../utils/exhaustive"
 
 export function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
   uiMessageWebviewUrlScheme: string,
-  callbacks: LoadUrlCallbackProps & WidgetCallbackProps,
+  callbacks: WidgetLoadUrlCallbackProps & WidgetCallbackProps,
   handler: (callbacks: WidgetCallbackProps, request: WebViewNavigation) => void,
 ) {
   const interceptor = new Interceptor(widgetUrl, uiMessageWebviewUrlScheme)

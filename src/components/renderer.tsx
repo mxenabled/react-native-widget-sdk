@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native"
 import { WebView, WebViewNavigation } from "react-native-webview"
 
 import { Type, WidgetOptionProps } from "../widget/configuration"
-import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
+import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
 
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useWidgetUrl } from "./loading_strategy"
@@ -14,7 +14,7 @@ type BaseProps =
   & WidgetLoadingProps
   & WidgetStylingProps
   & WidgetOptionProps
-  & LoadUrlCallbackProps
+  & WidgetLoadUrlCallbackProps
 
 export function useWidgetRenderer<Props extends BaseProps, Opts>(
   widgetType: Type,

@@ -5,11 +5,11 @@ import { parse as parseUrl, UrlWithParsedQuery } from "url"
 import { onUrlChange } from "../platform/deeplink"
 
 import { ConnectOAuthRequestedPayload } from "../post_messages"
-import { LoadUrlCallbackProps } from "./standard_props"
+import { WidgetLoadUrlCallbackProps } from "./standard_props"
 
 import { loadUrlInBrowser } from "./load_url_in_browser"
 
-export function makeDefaultConnectOnOAuthRequested(props: LoadUrlCallbackProps) {
+export function makeDefaultConnectOnOAuthRequested(props: WidgetLoadUrlCallbackProps) {
   return function ({ url }: ConnectOAuthRequestedPayload) {
     loadUrlInBrowser(props, url)
   }

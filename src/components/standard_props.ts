@@ -27,7 +27,7 @@ export type WidgetStylingProps = {
   style?: StyleProp<ViewStyle>
 }
 
-export type LoadUrlCallbackProps = {
+export type WidgetLoadUrlCallbackProps = {
   onLoadUrl?: (url: string) => void
   onLoadUrlError?: (url: string, error: Error) => void
 }
