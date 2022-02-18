@@ -8,8 +8,8 @@ export type PulseWidgetProps =
   & WidgetLoadingProps
   & WidgetStylingProps
   & WidgetLoadUrlCallbackProps
-  & PulseCallbackProps
   & WidgetOptionProps
+  & PulseCallbackProps
 
 export function PulseWidget(props: PulseWidgetProps) {
   const [_ref, elem] = useWidgetRenderer(
