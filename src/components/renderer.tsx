@@ -21,6 +21,22 @@ export function useWidgetRenderer<Props extends BaseProps, Opts>(
   props: Props,
   optsFromProps: (ps: Props) => Opts,
   handleRequest: (callbacks: Props, request: WebViewNavigation) => void,
+): ReactElement {
+  const [_ref, elem] = useWidgetRendererWithRef(
+    widgetType,
+    props,
+    optsFromProps,
+    handleRequest,
+  )
+
+  return elem
+}
+
+export function useWidgetRendererWithRef<Props extends BaseProps, Opts>(
+  widgetType: Type,
+  props: Props,
+  optsFromProps: (ps: Props) => Opts,
+  handleRequest: (callbacks: Props, request: WebViewNavigation) => void,
 ): [MaybeWebViewRef, ReactElement] {
   const ref = useRef<WebView>(null)
   const widgetUrl = useWidgetUrl(widgetType, props, optsFromProps)

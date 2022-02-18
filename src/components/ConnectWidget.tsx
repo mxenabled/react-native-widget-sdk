@@ -5,7 +5,7 @@ import { Type, ConnectWidgetOptionProps, connectWidgetOptionsFromProps as optsFr
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
 import { makeComponentWithDefaults } from "./make_component"
 import { useOAuthDeeplink } from "./oauth"
-import { useWidgetRenderer } from "./renderer"
+import { useWidgetRendererWithRef } from "./renderer"
 
 export type ConnectWidgetProps =
   & WidgetLoadingProps
@@ -29,7 +29,7 @@ export function ConnectWidget(props: ConnectWidgetProps) {
     ...props,
   }
 
-  const [ref, elem] = useWidgetRenderer(
+  const [ref, elem] = useWidgetRendererWithRef(
     Type.ConnectWidget,
     props,
     optsFromProps,

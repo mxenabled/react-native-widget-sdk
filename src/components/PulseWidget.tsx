@@ -12,12 +12,10 @@ export type PulseWidgetProps =
   & PulseCallbackProps
 
 export function PulseWidget(props: PulseWidgetProps) {
-  const [_ref, elem] = useWidgetRenderer(
+  return useWidgetRenderer(
     Type.PulseWidget,
     props,
     optsFromProps,
     handleRequest,
   )
-
-  return elem
 }
