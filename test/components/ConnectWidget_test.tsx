@@ -20,7 +20,7 @@ describe("ConnectWidget", () => {
         />
       )
 
-      const webView = await waitFor(() => component.findByTestId("connect-widget-webview"))
+      const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
       expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
     })
 
@@ -52,7 +52,7 @@ describe("ConnectWidget", () => {
         />
       )
 
-      const webView = await waitFor(() => component.findByTestId("connect-widget-webview"))
+      const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
       expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
     })
 
@@ -96,7 +96,7 @@ describe("ConnectWidget", () => {
       const { width, height } = Dimensions.get("screen")
 
       const component = render(<ConnectWidget url="https://int-widgets.moneydesktop.com/md/connect/tototoken" />)
-      const view = await waitFor(() => component.findByTestId("connect-widget-view"))
+      const view = await waitFor(() => component.findByTestId("connect_widget_view"))
 
       expect(view.props.style.width).toBe(width)
       expect(view.props.style.height).toBe(height)
@@ -106,7 +106,7 @@ describe("ConnectWidget", () => {
       const { width, height } = Dimensions.get("screen")
 
       const component = render(<ConnectWidget url="https://int-widgets.moneydesktop.com/md/connect/tototoken" />)
-      const view = await waitFor(() => component.findByTestId("connect-widget-view"))
+      const view = await waitFor(() => component.findByTestId("connect_widget_view"))
 
       await act(() => rotateOrientation())
 
