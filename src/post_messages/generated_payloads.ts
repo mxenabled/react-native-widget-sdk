@@ -144,7 +144,6 @@ export type ConnectUpdateCredentialsPayload = {
 
 export type PulseLoadPayload = {
   type: Type.PulseLoad
-  user_guid: string
 }
 
 export type PulseOverdraftWarningCtaTransferFundsPayload = {
@@ -421,11 +420,8 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
       }
 
     case Type.PulseLoad:
-      assertMessageProp(metadata, "mx/pulse/load", "user_guid", "string")
-
       return {
         type,
-        user_guid: metadata.user_guid as string,
       }
 
     case Type.PulseOverdraftWarningCtaTransferFunds:
