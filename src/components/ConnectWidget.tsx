@@ -1,5 +1,4 @@
 import { WidgetLoadingProps, WidgetStylingProps, LoadUrlCallbackProps } from "./standard_props"
-
 import { handleConnectRequest as handleRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectOptionProps, connectOptionsFromProps as optsFromProps } from "../widget/configuration"
 

@@ -23,7 +23,7 @@ export function useWidgetRenderer<Props extends BaseProps, Opts>(
   handleRequest: (callbacks: Props, request: WebViewNavigation) => void,
 ): [MaybeWebViewRef, ReactElement] {
   const ref = useRef<WebView>(null)
-  const widgetUrl = useWidgetUrl(Type.ConnectWidget, props, optsFromProps)
+  const widgetUrl = useWidgetUrl(widgetType, props, optsFromProps)
   const fullscreenStyles = useFullscreenStyles()
   const style = props.style || fullscreenStyles
 
