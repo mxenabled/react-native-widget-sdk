@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 
 import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
-import { handleWidgetRequest as handleRequest, BaseCallbackProps } from "../post_messages"
+import { handleWidgetRequest as handleRequest, WidgetPostMessageCallbackProps } from "../post_messages"
 import { Type, WidgetOptionProps, widgetOptionsFromProps as optsFromProps } from "../widget/configuration"
 
 import { useWidgetRenderer } from "./renderer"
@@ -11,7 +11,7 @@ type Props =
   & WidgetStylingProps
   & WidgetLoadUrlCallbackProps
   & WidgetOptionProps
-  & BaseCallbackProps
+  & WidgetPostMessageCallbackProps
 
 export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
   return function Widget(props: Props) {

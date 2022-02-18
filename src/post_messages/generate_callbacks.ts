@@ -62,12 +62,12 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   }
 }
 
-type WidgetCallbackPropsBase =
+export type WidgetPostMessageCallbackProps =
   & BaseCallbackProps
   & GenericCallbackProps
   & EntityCallbackProps
 
-export function handleWidgetRequest(callbacks: WidgetCallbackPropsBase, request: WebViewNavigation) {
+export function handleWidgetRequest(callbacks: WidgetPostMessageCallbackProps, request: WebViewNavigation) {
   safeCall([request], callbacks.onMessage)
 
   const message = new Message(request.url)
@@ -90,7 +90,7 @@ export function handleWidgetRequest(callbacks: WidgetCallbackPropsBase, request:
   }
 }
 
-export function dispatchWidgetCallback(callbacks: WidgetCallbackPropsBase, message: Message) {
+export function dispatchWidgetCallback(callbacks: WidgetPostMessageCallbackProps, message: Message) {
   const payload = message.payload
 
   if (isGenericMessage(message)) {
@@ -108,12 +108,7 @@ export function dispatchWidgetCallback(callbacks: WidgetCallbackPropsBase, messa
 `
 
 const callbackEntryTypeTemplate = `
-type {callbackType}Base =
-  & BaseCallbackProps
-  & GenericCallbackProps
-  & EntityCallbackProps
-
-export type {callbackType} = {callbackType}Base & {
+export type {callbackType} = WidgetPostMessageCallbackProps & {
 {functionTypes}
 }
 `

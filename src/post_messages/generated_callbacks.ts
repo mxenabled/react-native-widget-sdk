@@ -46,12 +46,7 @@ export type EntityCallbackProps = {
   onAccountCreated?: (payload: AccountCreatedPayload) => void
 }
 
-type ConnectCallbackPropsBase =
-  & BaseCallbackProps
-  & GenericCallbackProps
-  & EntityCallbackProps
-
-export type ConnectCallbackProps = ConnectCallbackPropsBase & {
+export type ConnectCallbackProps = WidgetPostMessageCallbackProps & {
   onLoaded?: (payload: ConnectLoadedPayload) => void
   onEnterCredentials?: (payload: ConnectEnterCredentialsPayload) => void
   onInstitutionSearch?: (payload: ConnectInstitutionSearchPayload) => void
@@ -68,12 +63,7 @@ export type ConnectCallbackProps = ConnectCallbackPropsBase & {
   onUpdateCredentials?: (payload: ConnectUpdateCredentialsPayload) => void
 }
 
-type PulseCallbackPropsBase =
-  & BaseCallbackProps
-  & GenericCallbackProps
-  & EntityCallbackProps
-
-export type PulseCallbackProps = PulseCallbackPropsBase & {
+export type PulseCallbackProps = WidgetPostMessageCallbackProps & {
   onLoad?: (payload: PulseLoadPayload) => void
   onOverdraftWarningCtaTransferFunds?: (payload: PulseOverdraftWarningCtaTransferFundsPayload) => void
 }
@@ -117,12 +107,12 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   }
 }
 
-type WidgetCallbackPropsBase =
+export type WidgetPostMessageCallbackProps =
   & BaseCallbackProps
   & GenericCallbackProps
   & EntityCallbackProps
 
-export function handleWidgetRequest(callbacks: WidgetCallbackPropsBase, request: WebViewNavigation) {
+export function handleWidgetRequest(callbacks: WidgetPostMessageCallbackProps, request: WebViewNavigation) {
   safeCall([request], callbacks.onMessage)
 
   const message = new Message(request.url)
@@ -145,7 +135,7 @@ export function handleWidgetRequest(callbacks: WidgetCallbackPropsBase, request:
   }
 }
 
-export function dispatchWidgetCallback(callbacks: WidgetCallbackPropsBase, message: Message) {
+export function dispatchWidgetCallback(callbacks: WidgetPostMessageCallbackProps, message: Message) {
   const payload = message.payload
 
   if (isGenericMessage(message)) {
