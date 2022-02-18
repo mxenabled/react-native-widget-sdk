@@ -26,6 +26,7 @@ import {
   ConnectStepChangePayload,
   ConnectSubmitMFAPayload,
   ConnectUpdateCredentialsPayload,
+  PulseLoadPayload,
   PulseOverdraftWarningCtaTransferFundsPayload,
   AccountCreatedPayload,
 } from "./generated_payloads"
@@ -73,6 +74,7 @@ type PulseCallbackPropsBase =
   & EntityCallbackProps
 
 export type PulseCallbackProps = PulseCallbackPropsBase & {
+  onLoad?: (payload: PulseLoadPayload) => void
   onOverdraftWarningCtaTransferFunds?: (payload: PulseOverdraftWarningCtaTransferFundsPayload) => void
 }
 
@@ -115,7 +117,12 @@ function safeCall<Ps>(args: Ps[], fn?: (...args: Ps[]) => void): void {
   }
 }
 
-export function handleBaseRequest(callbacks: BaseCallbackProps, request: WebViewNavigation) {
+type WidgetCallbackPropsBase =
+  & BaseCallbackProps
+  & GenericCallbackProps
+  & EntityCallbackProps
+
+export function handleWidgetRequest(callbacks: WidgetCallbackPropsBase, request: WebViewNavigation) {
   safeCall([request], callbacks.onMessage)
 
   const message = new Message(request.url)
@@ -123,6 +130,33 @@ export function handleBaseRequest(callbacks: BaseCallbackProps, request: WebView
     safeCall([request], callbacks.onUnknownMessage)
     return
   }
+
+  try {
+    dispatchWidgetCallback(callbacks, message)
+  } catch (error) {
+    // `CallbackDispatchError` is an internal error so pass that back to the
+    // host via the `onMessageDispatchError` callback. Any other errors are
+    // from user space and should bubble back up to the host.
+    if (error instanceof CallbackDispatchError) {
+      safeCall([request, error], callbacks.onMessageDispatchError)
+    } else {
+      throw error
+    }
+  }
+}
+
+export function dispatchWidgetCallback(callbacks: WidgetCallbackPropsBase, message: Message) {
+  const payload = message.payload
+
+  if (isGenericMessage(message)) {
+    dispatchGenericCallback(callbacks, message)
+    return
+  } else if (isEntityMessage(message)) {
+    dispatchEntityCallback(callbacks, message)
+    return
+  }
+
+  throw new CallbackDispatchError(`"unable to dispatch post message with unknown type: ${payload.type}"`)
 }
 
 export function dispatchGenericCallback(callbacks: GenericCallbackProps, message: Message) {
@@ -286,6 +320,10 @@ export function dispatchPulseCallback(callbacks: PulseCallbackProps, message: Me
   }
 
   switch (payload.type) {
+    case Type.PulseLoad:
+      safeCall([payload], callbacks.onLoad)
+      break
+
     case Type.PulseOverdraftWarningCtaTransferFunds:
       safeCall([payload], callbacks.onOverdraftWarningCtaTransferFunds)
       break

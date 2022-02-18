@@ -22,6 +22,7 @@ export enum Type {
   ConnectUpdateCredentials = "mx/connect/updateCredentials",
   Load = "mx/load",
   Ping = "mx/ping",
+  PulseLoad = "mx/pulse/load",
   PulseOverdraftWarningCtaTransferFunds = "mx/pulse/overdraftWarning/cta/transferFunds",
 }
 
@@ -43,5 +44,6 @@ export const typeLookup: Record<string, Type> = {
   [Type.ConnectUpdateCredentials]: Type.ConnectUpdateCredentials,
   [Type.Load]: Type.Load,
   [Type.Ping]: Type.Ping,
+  [Type.PulseLoad]: Type.PulseLoad,
   [Type.PulseOverdraftWarningCtaTransferFunds]: Type.PulseOverdraftWarningCtaTransferFunds,
 }
