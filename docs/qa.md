@@ -13,8 +13,8 @@ You will need to [setup your local environment](./setup.md) and the
 
 ## Full test suite
 
-These tests should be ran in an iOS (`npm run ios`) and an Android emulator
-(`npm run android`).
+Tests should be ran in an iOS (`npm run ios`) and an Android emulator (`npm run
+android`).
 
 - **Loading Connect**: ensure the Connect Widget loads after the example
   application starts.
