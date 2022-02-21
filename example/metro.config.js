@@ -1,7 +1,7 @@
 const { resolve } = require("path")
 
 const siblings = {
-  "@mxenabled/mobile-widget-sdk": resolve(__dirname, "..", "src")
+  "@mxenabled/react-native-widget-sdk": resolve(__dirname, "..", "src")
 }
 
 module.exports = {

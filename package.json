@@ -1,5 +1,5 @@
 {
-  "name": "@mxenabled/mobile-widget-sdk",
+  "name": "@mxenabled/react-native-widget-sdk",
   "description": "MX React Native Widget SDK",
   "version": "1.0.1",
   "main": "dist/src/index.js",
@@ -17,7 +17,7 @@
     "generate": "npm run generate:post_messages"
   },
   "bin": {
-    "mx-mobile-widget-sdk-setup": "dist/src/cli/setup.js"
+    "mx-widget-sdk-setup": "dist/src/cli/setup.js"
   },
   "dependencies": {
     "react": "17.0.1",

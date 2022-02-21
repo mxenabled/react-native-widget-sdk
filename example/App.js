@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 
-import { ConnectAggregationWidget } from "@mxenabled/mobile-widget-sdk"
+import { ConnectAggregationWidget } from "@mxenabled/react-native-widget-sdk"
 import { clientId, apiKey, userGuid, environment } from "./config.json"
 
 const platformApiProps = clientId && apiKey && userGuid && environment

@@ -10,7 +10,7 @@ directory within it:
 
 ```
 git clone https://gitlab.mx.com/mx/react-native-widget-sdk.git
-cd mobile-widget-sdk-react-native
+cd react-native-widget-sdk
 cd example
 ```
 

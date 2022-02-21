@@ -24,23 +24,23 @@ Open a terminal and run the commands below at the root of your project to
 install and setup the SDK:
 
 ```
-npm install --save @mxenabled/mobile-widget-sdk
+npm install --save @mxenabled/react-native-widget-sdk
 ```
 
 Setup the SDK and link its dependencies:
 
 ```
-npx mx-mobile-widget-sdk-setup
+npx mx-widget-sdk-setup
 ```
 
 Once the steps above have been completed, you will be able to import components
-from the `@mxenabled/mobile-widget-sdk` package and render them in your
+from the `@mxenabled/react-native-widget-sdk` package and render them in your
 application:
 
 ```jsx
 import React from "react"
 
-import { ConnectWidget } from "@mxenabled/mobile-widget-sdk"
+import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 
 export default function App() {
   return (
