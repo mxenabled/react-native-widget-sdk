@@ -66,7 +66,7 @@ android`).
 We should run through the following tests (which are outlined in the section
 above) When doing no-harm testing:
 
-- Loading Connect, see section above for instructions.
-- Post message integration, see section above for instructions.
-- OAuth new member authorize flow _or_ OAuth existing member authorize flow,
-  see section above for instructions.
+- **Loading Connect**: see section above for instructions.
+- **Post message integration**: see section above for instructions.
+- **OAuth new member authorize flow** *or* **OAuth existing member authorize
+  flow**: see section above for instructions.
