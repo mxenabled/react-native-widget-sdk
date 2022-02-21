@@ -27,10 +27,10 @@ filling in the appropriate values for `clientId`, `apiKey`, `userGuid`, and
 
 ```json
 {
-  "MX_CLIENT_ID": "...",
-  "MX_API_KEY": "...",
-  "MX_USER_GUID": "...",
-  "MX_ENVIRONMENT": "integration"
+  "clientId": "...",
+  "apiKey": "...",
+  "userGuid": "...",
+  "environment": "integration"
 }
 ```
 
