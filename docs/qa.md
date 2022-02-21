@@ -7,5 +7,5 @@ no-harm test suite.
 
 # Prerequisites
 
-You will need to [setup your local environment](./environment-setup.md) and the
+You will need to [setup your local environment](./setup.md) and the
 [example application](./../example/README.md).
