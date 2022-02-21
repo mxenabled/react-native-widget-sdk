@@ -9,7 +9,7 @@ Once your environment is setup, clone the repo and cd into the example
 directory within it:
 
 ```
-git clone https://gitlab.mx.com/mx/mobile-widget-sdk-react-native.git
+git clone https://gitlab.mx.com/mx/react-native-widget-sdk.git
 cd mobile-widget-sdk-react-native
 cd example
 ```

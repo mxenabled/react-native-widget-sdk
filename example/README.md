@@ -1,4 +1,4 @@
-# MX Mobile Widget SDK example application
+# MX React Native Widget SDK example application
 
 This is a React Native application created with `npx react-native init
 MxMobileWidgetDemo --version 0.64.3`. The application's scheme is

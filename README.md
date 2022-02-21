@@ -1,4 +1,4 @@
-# MX Mobile Widget SDK for React Native
+# MX React Native Widget SDK
 
 ## About this project
 

@@ -10,7 +10,7 @@ try {
   execSync("npx react-native link react-native-webview")
   console.log("\nInstalling native depedencies")
   execSync("cd ios && pod install")
-  console.log("\nDone, you're now ready to use the MX Mobile Widget SDK in your application")
+  console.log("\nDone, you're now ready to use the MX Widget SDK in your application")
 } catch (error) {
   console.error(`Error: ${error}`)
 }
