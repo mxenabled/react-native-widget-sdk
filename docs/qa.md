@@ -34,18 +34,17 @@ android`).
             - After you click the Sing In button in Connect, ensure a new
             browser window opens and you are prompted to authorize or deny
             access.
-            - When you click authorize, ensure you are prompted with a request
-            to open the demo application and that clicking Open takes you back
-            to the application.
+            - When you click authorize, ensure you are to the application. On
+            iOS you will have to click "Open" before you are taken back to the
+            app.
             - After landing back in the demo application, ensure that Connect
             is able to successfully connect the new member.
         - **Deny flow**
             - After you click the Sing In button in Connect, ensure a new
             browser window opens and you are prompted to authorize or deny
             access.
-            - When you click deny, ensure you are prompted with a request
-            to open the demo application and that clicking Open takes you back
-            to the application.
+            - When you click deny, ensure you are to the application. On iOS
+            you will have to click "Open" before you are taken back to the app.
             - After landing back in the demo application, ensure that Connect
             [TODO].
     - **Existing member flow**: for this test you will need a user that has
