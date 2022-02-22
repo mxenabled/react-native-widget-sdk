@@ -12,18 +12,18 @@ well as how you can use each component and configure it for a given flow.
 
 ## Requirements
 
+TODO: add requirements
 ## Getting Started
 
+TODO: general flow overview
 
+### Signing up for the MX API
 
-## Signing up for the MX API
-
-Before getting started, you will need to have your MX client id and API key. Go
+You will need to have your MX client id and API key. Go
 to https://dashboard.mx.com if you don't have that information or you
 would like to sign up.
 
-
-## Installing and setting up the SDK
+### Installing the SDK
 
 Open a terminal and run the commands below at the root of your project to
 install and setup the SDK:
@@ -31,12 +31,18 @@ install and setup the SDK:
 ```
 npm install --save @mxenabled/react-native-widget-sdk
 ```
+### Setting up the SDK
 
-Setup the SDK and link its dependencies:
+Initializing the SDK and link its dependencies:
 
 ```
 npx mx-widget-sdk-setup
 ```
+### Generating your Widget SSO URL
+
+TODO: add description and link to offical documentation
+
+### Including the SDK in your project  
 
 Once the steps above have been completed, you will be able to import components
 from the `@mxenabled/react-native-widget-sdk` package and render them in your
@@ -53,11 +59,6 @@ export default function App() {
   )
 }
 ```
-
-### Getting an SSO URL
-
-_TODO_
-
 
 ### Components and props
 
@@ -88,3 +89,27 @@ your application, you will need to do three things:
 This package is written in TypeScript, so if you're developing your application
 in TypeScript you will be able to leverage all of the type definitions that are
 included in the npm package.
+
+## License
+
+MIT License
+
+Copyright (c) [year] [fullname]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
