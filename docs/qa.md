@@ -16,8 +16,10 @@ You will need to [setup your local environment](./setup.md) and the
 Tests should be ran in an iOS (`npm run ios`) and an Android emulator (`npm run
 android`).
 
-- **Loading Connect**: ensure the Connect Widget loads after the example
-  application starts.
+- **Loading Connect**
+    - **Using SSO API**: [TODO]
+    - **Using URL**: [TODO]
+    - **Using proxy**: [TODO]
 - **Post message integration**: when you first load the application, ensure
   that you see "Connect has loaded" in the terminal opened when you start up
   the application. This message is logged via a callback that is triggered by
@@ -65,7 +67,8 @@ android`).
 We should run through the following tests (which are outlined in the section
 above) When doing no-harm testing:
 
-- **Loading Connect**: see section above for instructions.
+- **Loading Connect** using any loading method: see section above for
+  instructions.
 - **Post message integration**: see section above for instructions.
 - **OAuth new member authorize flow** *or* **OAuth existing member authorize
   flow**: see section above for instructions.
