@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "source": "src/index.ts",
+  "license": "MIT",
   "scripts": {
     "prepack": "npm run build:dist",
     "build": "tsc",
