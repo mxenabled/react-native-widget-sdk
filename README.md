@@ -1,6 +1,6 @@
 # MX React Native Widget SDK
 
-## About this project
+## Introduction 
 
 The purpose of this project is to enable you to quickly load and configure MX
 widgets for your intended purpose. After installing this project via npm, you
@@ -9,6 +9,11 @@ and configure them to your needs.
 
 The rest of this document outlines how you can install and setup the SDK, as
 well as how you can use each component and configure it for a given flow.
+
+## Requirements
+
+## Getting Started
+
 
 
 ## Signing up for the MX API
