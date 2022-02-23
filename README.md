@@ -11,6 +11,8 @@ After following the Getting Started instructions below, you will be able to impo
 TODO: add requirements
 ## Getting Started
 
+Please refer to the offical [MX Docs](https://docs.mx.com/) for an indepth explanation of our system.   
+
 The general outline for incorportating the `react-native-widget-sdk` into your project is as follow:
 
 * Acquire your platform `client_id` and `api_key`.
@@ -22,7 +24,7 @@ The general outline for incorportating the `react-native-widget-sdk` into your p
 ### Acquiring Platform keys
 
 You will need to have your MX `client_id` and `api_key` to setup the widget.  
-Those can be obtained after signing up on the https://dashboard.mx.com site.  
+Those can be obtained after signing up on our [Client Portal](https://dashboard.mx.com) site.  
 You'll find them under the "API keys and whitelisting" section.
 
 ### Installing the SDK
@@ -30,9 +32,16 @@ You'll find them under the "API keys and whitelisting" section.
 Open a terminal and run the commands below at the root of your project to
 install and setup the SDK:
 
+Using yarn
+```
+yarn add @mxenabled/react-native-widget-sdk
+```
+
+Using npm
 ```
 npm install --save @mxenabled/react-native-widget-sdk
 ```
+
 ### Setting up the SDK
 
 Installing the SDK's dependencies and setting up required linking:
@@ -75,11 +84,8 @@ In order to properly handle OAuth redirects from the Connect widget back to
 your application, you will need to do three things:
 
 - Update your application and enable deeplinking from native code into the
-  React Native layer. See https://reactnative.dev/docs/linking for instructions
-  on how to do that.
-- Ensure you application has a scheme. You can install and use
-  https://www.npmjs.com/package/uri-scheme to manage your application's
-  schemes.
+  React Native layer. See [Linking](https://reactnative.dev/docs/linking) for instructions on how to do that.
+- Ensure you application has a scheme. You can install and use the [uri scheme](https://www.npmjs.com/package/uri-scheme) package to manage your application'sschemes.
 - Provde your application's scheme to the widget component with the
   `uiMessageWebviewUrlScheme` prop.
 
