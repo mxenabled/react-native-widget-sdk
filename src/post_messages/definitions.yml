@@ -64,6 +64,7 @@ post_messages:
       oauthRequested:
         <<: *user_session_properties
         url: string
+        member_guid: string
       stepChange:
         <<: *user_session_properties
         previous: string

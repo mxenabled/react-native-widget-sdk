@@ -117,6 +117,7 @@ export type ConnectOAuthRequestedPayload = {
   user_guid: string
   session_guid: string
   url: string
+  member_guid: string
 }
 
 export type ConnectStepChangePayload = {
@@ -371,12 +372,14 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
       assertMessageProp(metadata, "mx/connect/oauthRequested", "user_guid", "string")
       assertMessageProp(metadata, "mx/connect/oauthRequested", "session_guid", "string")
       assertMessageProp(metadata, "mx/connect/oauthRequested", "url", "string")
+      assertMessageProp(metadata, "mx/connect/oauthRequested", "member_guid", "string")
 
       return {
         type,
         user_guid: metadata.user_guid as string,
         session_guid: metadata.session_guid as string,
         url: metadata.url as string,
+        member_guid: metadata.member_guid as string,
       }
 
     case Type.ConnectStepChange:
