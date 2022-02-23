@@ -4,7 +4,7 @@
 
 The purpose of this project is to help simplify your integration experience. Giving you as few steps as possible to get up and running with an authenticated MX React Native widget.
 
-After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them to your needs.
+After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them to your needs.  
 The rest of this document outlines how to install and setup the SDK, as well as how you can use each component and configure it for a given flow.
 
 ## Requirements
@@ -14,16 +14,17 @@ TODO: add requirements
 
 The general overview for incorportating the `react-native-widget-sdk` into your project is as follow:
 
-* Aquire your platform client id and API key.
-* Install the SDK via npm.
+* [Aquire your playform `client_id` and `api_key`](#aquiring-platform-keys)
+* [Install the SDK via npm](#installing-the-sdk)
 * Generate an authenticated SSO widget url.
 * Import the widget into your project providing it with the needed configuration including the SSO URL.
 * Interact with the widget via `postMessages` and callback function props.
 
 ### Aquiring Platform keys
 
-You will need to have your MX client id and API key to setup the widget.
-Those can be obtained after signing up on the https://dashboard.mx.com site.
+You will need to have your MX `client_id` and `api_key` to setup the widget.  
+Those can be obtained after signing up on the https://dashboard.mx.com site.  
+You'll find them under the "API keys and whitelisting" section.
 
 ### Installing the SDK
 
@@ -35,7 +36,7 @@ npm install --save @mxenabled/react-native-widget-sdk
 ```
 ### Setting up the SDK
 
-Installing the SDK's dependancies and linking webview linking:
+Installing the SDK's dependencies and setting up required linking:
 
 ```
 npx mx-widget-sdk-setup
