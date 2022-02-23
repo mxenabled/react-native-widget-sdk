@@ -2,26 +2,28 @@
 
 ## Introduction 
 
-The purpose of this project is to enable you to quickly load and configure MX
-widgets for your intended purpose. After installing this project via npm, you
-will be able to import and load MX widgets in your React Native application,
-and configure them to your needs.
+The purpose of this project is to help simplify your integration experience. Giving you as few steps as possible to get up and running with an authenticated MX React Native widget.
 
-The rest of this document outlines how you can install and setup the SDK, as
-well as how you can use each component and configure it for a given flow.
+After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them to your needs.
+The rest of this document outlines how to install and setup the SDK, as well as how you can use each component and configure it for a given flow.
 
 ## Requirements
 
 TODO: add requirements
 ## Getting Started
 
-TODO: general flow overview
+The general overview for incorportating the `react-native-widget-sdk` into your project is as follow:
 
-### Signing up for the MX API
+* Aquire your platform client id and API key.
+* Install the SDK via npm.
+* Generate an authenticated SSO widget url.
+* Import the widget into your project providing it with the needed configuration including the SSO URL.
+* Interact with the widget via `postMessages` and callback function props.
 
-You will need to have your MX client id and API key. Go
-to https://dashboard.mx.com if you don't have that information or you
-would like to sign up.
+### Aquiring Platform keys
+
+You will need to have your MX client id and API key to setup the widget.
+Those can be obtained after signing up on the https://dashboard.mx.com site.
 
 ### Installing the SDK
 
@@ -33,7 +35,7 @@ npm install --save @mxenabled/react-native-widget-sdk
 ```
 ### Setting up the SDK
 
-Initializing the SDK and link its dependencies:
+Installing the SDK's dependancies and linking webview linking:
 
 ```
 npx mx-widget-sdk-setup
@@ -60,10 +62,12 @@ export default function App() {
 }
 ```
 
+### Interacting with the Widget
+
+TODO: add how to postmessage/function callbacks
 ### Components and props
 
-_TODO_
-
+TODO
 
 ### OAuth redirects
 
@@ -82,7 +86,6 @@ your application, you will need to do three things:
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
-
 
 ### Development
 
