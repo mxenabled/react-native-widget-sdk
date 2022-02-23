@@ -14,13 +14,13 @@ TODO: add requirements
 
 The general overview for incorportating the `react-native-widget-sdk` into your project is as follow:
 
-* Aquire your platform `client_id` and `api_key`.
+* Acquire your platform `client_id` and `api_key`.
 * Install the SDK via npm.
 * Generate an authenticated SSO widget url.
 * Import the widget into your project providing it with the needed configuration including the SSO URL.
 * Interact with the widget via `postMessages` and callback function props.
 
-### Aquiring Platform keys
+### Acquiring Platform keys
 
 You will need to have your MX `client_id` and `api_key` to setup the widget.  
 Those can be obtained after signing up on the https://dashboard.mx.com site.  
