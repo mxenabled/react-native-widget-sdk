@@ -12,22 +12,14 @@ The rest of this document outlines how to install and setup the SDK, as well as 
 TODO: add requirements
 ## Getting Started
 
-The general overview for incorportating the `react-native-widget-sdk` into your project.
+The general overview for incorportating the `react-native-widget-sdk` into your project is as follow:
 
-- [MX React Native Widget SDK](#mx-react-native-widget-sdk)
-  - [Introduction](#introduction)
-  - [Requirements](#requirements)
-  - [Getting Started](#getting-started)
-    - [Aquiring Platform keys](#aquiring-platform-keys)
-    - [Installing the SDK](#installing-the-sdk)
-    - [Setting up the SDK](#setting-up-the-sdk)
-    - [Generating your Widget SSO URL](#generating-your-widget-sso-url)
-    - [Including the SDK in your project](#including-the-sdk-in-your-project)
-    - [Interacting with the Widget](#interacting-with-the-widget)
-    - [Components and props](#components-and-props)
-    - [OAuth redirects](#oauth-redirects)
-    - [Development](#development)
-  - [License](#license)
+* Aquire your platform `client_id` and `api_key`.
+* Install the SDK via npm.
+* Generate an authenticated SSO widget url.
+* Import the widget into your project providing it with the needed configuration including the SSO URL.
+* Interact with the widget via `postMessages` and callback function props.
+
 ### Aquiring Platform keys
 
 You will need to have your MX `client_id` and `api_key` to setup the widget.  
