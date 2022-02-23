@@ -4,7 +4,7 @@
 
 The purpose of this project is to help simplify your integration experience. Giving you as few steps as possible to get up and running with an authenticated MX React Native widget.
 
-After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them to your needs.  
+After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them for your specific needs.  
 
 ## Requirements
 
