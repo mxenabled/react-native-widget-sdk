@@ -5,14 +5,13 @@
 The purpose of this project is to help simplify your integration experience. Giving you as few steps as possible to get up and running with an authenticated MX React Native widget.
 
 After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them to your needs.  
-The rest of this document outlines how to install and setup the SDK, as well as how you can use each component and configure it for a given flow.
 
 ## Requirements
 
 TODO: add requirements
 ## Getting Started
 
-The general overview for incorportating the `react-native-widget-sdk` into your project is as follow:
+The general outline for incorportating the `react-native-widget-sdk` into your project is as follow:
 
 * Acquire your platform `client_id` and `api_key`.
 * Install the SDK via npm.
