@@ -11,7 +11,7 @@ After following the Getting Started instructions below, you will be able to impo
 TODO: add requirements
 ## Getting Started
 
-Please refer to the offical [MX Docs](https://docs.mx.com/) for an indepth explanation of our system.   
+Please refer to the offical [MX Docs](https://docs.mx.com/) for an indepth explanation of the MX platform.   
 
 The general outline for incorportating the `react-native-widget-sdk` into your project is as follow:
 
