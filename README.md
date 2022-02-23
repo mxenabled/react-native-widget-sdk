@@ -19,7 +19,7 @@ The general outline for incorportating the `react-native-widget-sdk` into your p
 * Install the SDK via npm.
 * Generate an authenticated SSO widget url.
 * Import the widget into your project providing it with the needed configuration including the SSO URL.
-* Interact with the widget via `postMessages` and callback function props.
+* Interact with the widget via `window.postMessage` and callback function props.
 
 ### Acquiring Platform keys
 
