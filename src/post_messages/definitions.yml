@@ -9,6 +9,7 @@ post_messages:
   generic:
     load: { _: {} }
     ping: { _: *user_session_properties }
+    focusTrap: { _: *user_session_properties }
 
   entities:
     account:
