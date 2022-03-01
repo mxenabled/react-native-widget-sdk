@@ -9,6 +9,7 @@ post_messages:
   generic:
     load: { _: {} }
     ping: { _: *user_session_properties }
+    focusTrap: { _: *user_session_properties }
 
   entities:
     account:
@@ -64,6 +65,7 @@ post_messages:
       oauthRequested:
         <<: *user_session_properties
         url: string
+        member_guid: string
       stepChange:
         <<: *user_session_properties
         previous: string

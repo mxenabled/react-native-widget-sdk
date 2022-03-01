@@ -5,55 +5,89 @@ import { act } from "react-test-renderer"
 import { ConnectWidget, ConnectAggregationWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidget"
 import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
 
-import { rest, server } from "../mocks/sso_api_server"
+import { rest, server } from "../mocks/server"
 import { Dimensions, rotateOrientation } from "../mocks/react_native"
 
 describe("ConnectWidget", () => {
   describe("widget loading", () => {
-    test("it is able to load widget when Platform API props are passed in", async () => {
-      const component = render(
-        <ConnectWidget
-          clientId="myveryownclientid"
-          apiKey="myveryownapikey"
-          userGuid="USR-777"
-          environment="integration"
-        />
-      )
+    describe("Platform API", () => {
+      test("it is able to load widget when Platform API props are passed in", async () => {
+        const component = render(
+          <ConnectWidget
+            clientId="myveryownclientid"
+            apiKey="myveryownapikey"
+            userGuid="USR-777"
+            environment="integration"
+          />
+        )
 
-      const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
-      expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
+        const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
+      })
+
+      test("an error from the Platform API results in the onSsoError callback being triggered", async () => {
+        let onSsoErrorCalled = false
+
+        server.use(
+          rest.post("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
+            res(ctx.status(500), ctx.json({ message: "NO!" }))))
+
+        render(
+          <ConnectWidget
+            clientId="myveryownclientid"
+            apiKey="myveryownapikey"
+            userGuid="USR-777"
+            environment="integration"
+            onSsoError={(_error) => { onSsoErrorCalled = true }}
+          />
+        )
+
+        await waitFor(() => { if (!onSsoErrorCalled) throw new Error })
+        expect(onSsoErrorCalled).toBe(true)
+      })
     })
 
-    test("an error from the Platform API results in the onSsoError callback being triggered", async () => {
-      let onSsoErrorCalled = false
+    describe("Proxy server", () => {
+      test("it is able to load widget when proxy props are passed in", async () => {
+        const component = render(
+          <ConnectWidget
+            proxy="https://client.com/mx-sso-proxy"
+          />
+        )
 
-      server.use(
-        rest.post("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
-          res(ctx.status(500), ctx.json({ message: "NO!" }))))
+        const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
+      })
 
-      render(
-        <ConnectWidget
-          clientId="myveryownclientid"
-          apiKey="myveryownapikey"
-          userGuid="USR-777"
-          environment="integration"
-          onSsoError={(_error) => { onSsoErrorCalled = true }}
-        />
-      )
+      test("it passes the request back to the host before execution", async () => {
+        const component = render(
+          <ConnectWidget
+            proxy="https://client.com/mx-sso-proxy"
+            buildProxyRequest={(req) => {
+              const body = JSON.parse(req.options.body)
+              body.widget_url.widget_type = "something_else"
+              req.options.body = JSON.stringify(body)
+              return req
+            }}
+          />
+        )
 
-      await waitFor(() => { if (!onSsoErrorCalled) throw new Error })
-      expect(onSsoErrorCalled).toBe(true)
+        const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/something_else/")
+      })
     })
 
-    test("it is able to load widget when a URL prop is passed in", async () => {
-      const component = render(
-        <ConnectWidget
-          url="https://int-widgets.moneydesktop.com/md/connect/tototoken"
-        />
-      )
+    describe("Widget URL", () => {
+      test("it is able to load widget when a URL prop is passed in", async () => {
+        const component = render(
+          <ConnectWidget
+            url="https://int-widgets.moneydesktop.com/md/connect/tototoken"
+          />
+        )
 
-      const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
-      expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
+        const webView = await waitFor(() => component.findByTestId("connect_widget_webview"))
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/connect/")
+      })
     })
 
     describe("missing props", () => {

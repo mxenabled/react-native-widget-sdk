@@ -7,8 +7,8 @@ test suite.
 
 ## Prerequisites
 
-You will need to [setup your local environment](./setup.md) and the
-[example application](./../example/README.md).
+You will need to [setup your local environment](./setup.md) and the [example
+application](./../example/README.md).
 
 
 ## Full test suite
@@ -16,10 +16,28 @@ You will need to [setup your local environment](./setup.md) and the
 Tests should be ran in an iOS (`npm run ios`) and an Android emulator (`npm run
 android`).
 
-- **Loading Connect**
-    - **Using SSO API**: [TODO]
-    - **Using URL**: [TODO]
-    - **Using proxy**: [TODO]
+- **Loading Connect**: there are three ways of loading a widget in the SDK:
+  through the Platform API, using a proxy server, and using a hard-coded URL.
+  All of these methods can be used in the example application, they simply
+  require that you modify the `config.json` file with the appropriate fields
+  and values and load the application. The items below list the various loading
+  methods and the fields that are required in the `config.json` file in order
+  to use them. For each of these methods, you will need to open the
+  `config.json` file, remove (or rename) existing fields, and defined the ones
+  required by the method. Once that is done, you should run the application and
+  ensure the widget loads.
+    - **Using the Platform API**: you will need to define `clientId`, `apiKey`,
+    `userGuid`, and `environment` (`environment` should be `"integration"` or
+    `"production"`) in `config.json`. You can get all of these values in the
+    client portal or in Batcave.
+    - **Using a hard-coded URL**: you will need to define a `url` in
+    `config.json`. This is an SSO widget URL that you can get the URL through
+    curl or postman.
+    - **Using a proxy server**: you will need to define `proxy` in
+    `config.json`. See https://gitlab.mx.com/mx/widget-sso-api-proxy for
+    instructions on how to set up a proxy server for the Platform API. Once the
+    server is up and running set `proxy` to
+    `"http://localhost:8089/connect_widget/<user guid>"`.
 - **Post message integration**: when you first load the application, ensure
   that you see "Connect has loaded" in the terminal opened when you start up
   the application. This message is logged via a callback that is triggered by

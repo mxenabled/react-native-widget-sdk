@@ -70,6 +70,20 @@ export function buildRequestParams<Options>(
   }
 }
 
+export function buildWidgetOptions<Options>(
+  widgetType: Type,
+  uiMessageWebviewUrlScheme: string,
+  options: Options,
+): InternalWidgetOptions {
+  return {
+    widget_type: widgetType,
+    is_mobile_webview: true,
+    ui_message_version: 4,
+    ui_message_webview_url_scheme: uiMessageWebviewUrlScheme,
+    ...options,
+  }
+}
+
 export function makeRequest<Options>(params: RequestParams<Options>): Promise<Response> {
   const req = genRequest(params)
   return fetch(req.url, req.options)
@@ -94,16 +108,8 @@ function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, uiMessage
     "Content-Type": "application/json",
   }
 
-  const widgetUrl: InternalWidgetOptions = {
-    widget_type: widgetType,
-    is_mobile_webview: true,
-    ui_message_version: 4,
-    ui_message_webview_url_scheme: uiMessageWebviewUrlScheme,
-    ...options,
-  }
-
   const body = JSON.stringify({
-    widget_url: widgetUrl,
+    widget_url: buildWidgetOptions(widgetType, uiMessageWebviewUrlScheme, options),
   })
 
   return {

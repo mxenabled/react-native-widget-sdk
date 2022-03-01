@@ -1,5 +1,6 @@
 import { StyleProp, ViewStyle } from "react-native"
 import { Environment } from "../loader/environment"
+import { Request } from "../loader/client_proxy"
 
 export type UrlLoadingProps = {
   url: string
@@ -15,7 +16,8 @@ export type PlatformApiLoadingProps = {
 
 export type ClientProxyLoadingProps = {
   proxy: string
-  onProxyError?: (error: Error) => void
+  buildProxyRequest?: (req: Request) => Request
+  onProxyRequestError?: (error: Error) => void
 }
 
 export type WidgetLoadingProps =
