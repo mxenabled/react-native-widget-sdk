@@ -93,38 +93,11 @@ your application, you will need to do three things:
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
 
-<<<<<<< HEAD
 ### Development
 
 This package is written in TypeScript, so if you're developing your application
 in TypeScript you will be able to leverage all of the type definitions that are
 included in the npm package.
-
-## License
-
-MIT License
-
-Copyright (c) 2022 MX 
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-=======
-
 ## Development
 
 Once you have [Node v16](https://nodejs.org/en/download/) installed, you can
@@ -147,4 +120,3 @@ can publish this package.
 Once you are able to publish, log into npm with `npm login` then run `npm
 publish` to publish. Running `npm publish` will automatically execute `npm run
 build:dist` for you, so there is no need to do that manually.
->>>>>>> master
