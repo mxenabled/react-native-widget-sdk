@@ -8,6 +8,8 @@ After following the Getting Started instructions below, you will be able to impo
 
 ## Requirements
 
+* [Node v16](https://nodejs.org/en/download/)
+
 TODO: add requirements
 ## Getting Started
 
@@ -99,8 +101,7 @@ This package is written in TypeScript, so if you're developing your application
 in TypeScript you will be able to leverage all of the type definitions that are
 included in the npm package.
 
-Once you have [Node v16](https://nodejs.org/en/download/) installed, you can
-use the commands listed below to perform various tasks:
+You can use the commands listed below to perform various tasks:
 
 - `npm install`, install depedencies.
 - `npm run build`, run compiler, does not generate assets in `dist` directory.
