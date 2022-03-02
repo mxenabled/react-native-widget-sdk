@@ -155,9 +155,6 @@ export function dispatchWidgetCallback(callbacks: WidgetPostMessageCallbackProps
 export function dispatchGenericCallback(callbacks: GenericCallbackProps, message: Message) {
   const payload = message.payload
 
-  console.log("!!!!!!")
-  console.log(payload)
-  console.log(payload.type)
   switch (payload.type) {
     case Type.Load:
       safeCall([payload], callbacks.onLoad)
@@ -168,7 +165,6 @@ export function dispatchGenericCallback(callbacks: GenericCallbackProps, message
       break
 
     case Type.FocusTrap:
-      console.log("CALL")
       safeCall([payload], callbacks.onFocusTrap)
       break
 
