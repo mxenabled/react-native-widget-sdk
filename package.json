@@ -92,6 +92,8 @@
       "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
+      "semi": ["error", "never"],
+      "quotes": ["error", "double"],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

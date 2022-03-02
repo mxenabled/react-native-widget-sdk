@@ -1,5 +1,5 @@
 import React from "react"
-import { render, waitFor } from '@testing-library/react-native';
+import { render, waitFor } from "@testing-library/react-native"
 
 import { BudgetsWidget } from "../../src/components/MoneyMapWidgets"
 
