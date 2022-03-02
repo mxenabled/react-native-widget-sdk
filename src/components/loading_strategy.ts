@@ -3,10 +3,13 @@ import { useEffect, useState } from "react"
 import { Type, WidgetOptionProps } from "../widget/configuration"
 
 import { WidgetLoadingProps, UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./standard_props"
-import { RequestParams, buildRequestParams as buildPlatformApiRequestParams, makeRequest as makePlatformApiRequest } from "../loader/platform_api"
+import { BaseRequestParams, buildRequestParams as buildPlatformApiRequestParams, makeRequest as makePlatformApiRequest } from "../loader/platform_api"
 import { genRequest as genClientProxyRequest, makeRequest as makeClientProxyRequest } from "../loader/client_proxy"
 
-type LoadingParams<T, Options> = T & Required<Pick<RequestParams<Options>, "widgetType" | "options" | "uiMessageWebviewUrlScheme">>
+type LoadingParams<T, Options> =
+  & T
+  & Partial<Pick<BaseRequestParams<Options>, "language">>
+  & Required<Pick<BaseRequestParams<Options>, "widgetType" | "options" | "uiMessageWebviewUrlScheme">>
 
 const badPropsMessage = `Missing required widget props!
 
@@ -57,11 +60,12 @@ export function useClientProxy<Options>({
   widgetType,
   options,
   uiMessageWebviewUrlScheme,
+  language,
   buildProxyRequest = (req) => req,
   onProxyRequestError = defaultOnClientProxyRequestError,
 }: LoadingParams<ClientProxyLoadingProps, Options>) {
   const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
-  const req = genClientProxyRequest({ proxy, uiMessageWebviewUrlScheme, widgetType, options })
+  const req = genClientProxyRequest({ proxy, uiMessageWebviewUrlScheme, language, widgetType, options })
 
   useEffect(() => {
     makeClientProxyRequest(buildProxyRequest(req))
@@ -80,12 +84,13 @@ export function usePlatformApiSso<Options>({
   widgetType,
   options,
   uiMessageWebviewUrlScheme,
+  language,
   onSsoError = defaultOnPlatformApiError,
 }: LoadingParams<PlatformApiLoadingProps, Options>) {
   const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
 
   const params = buildPlatformApiRequestParams<Options>(apiKey, clientId, userGuid,
-    environment, widgetType, uiMessageWebviewUrlScheme, options)
+    environment, widgetType, uiMessageWebviewUrlScheme, language, options)
 
   useEffect(() => {
     makePlatformApiRequest(params)

@@ -24,11 +24,13 @@ export type Request = {
 
 export type RequestHeaderOptions = {
   authorization?: string
+  language?: string
 }
 
 export type BaseRequestParams<Options> = {
   widgetType: Type
   uiMessageWebviewUrlScheme: string
+  language?: string
   options?: Options
 }
 
@@ -59,6 +61,7 @@ export function buildRequestParams<Options>(
   environment: Environment | string,
   widgetType: Type,
   uiMessageWebviewUrlScheme: string,
+  language: string | undefined,
   options: Options,
 ): RequestParams<Options> {
   assert("apiKey", apiKey)
@@ -73,11 +76,12 @@ export function buildRequestParams<Options>(
     environment: lookupEnvironment(environment),
     widgetType,
     uiMessageWebviewUrlScheme,
+    language,
     options,
   }
 }
 
-export function buildRequestHeaders({ authorization }: RequestHeaderOptions = {}) {
+export function buildRequestHeaders({ authorization, language }: RequestHeaderOptions = {}) {
   const headers: Record<string, string> = {
     Accept: "application/vnd.mx.api.v1+json",
     "Content-Type": "application/json",
@@ -85,6 +89,10 @@ export function buildRequestHeaders({ authorization }: RequestHeaderOptions = {}
 
   if (authorization) {
     headers["Authorization"] = `Basic ${authorization}`
+  }
+
+  if (language) {
+    headers["Accept-Language"] = language
   }
 
   return headers
@@ -119,12 +127,12 @@ export function makeRequest<Options>(params: RequestParams<Options>): Promise<Re
     .then((response) => response.json())
 }
 
-function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, uiMessageWebviewUrlScheme, environment, options }: RequestParams<Options>): Request {
+function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, uiMessageWebviewUrlScheme, language, environment, options }: RequestParams<Options>): Request {
   const url = `${Host[environment]}/users/${userGuid}/widget_urls`
   const method = "POST"
   const authorization = base64.encode(`${clientId}:${apiKey}`)
 
-  const headers = buildRequestHeaders({ authorization })
+  const headers = buildRequestHeaders({ authorization, language })
   const body = JSON.stringify(buildRequestBody(widgetType, uiMessageWebviewUrlScheme, options))
 
   return {

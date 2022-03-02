@@ -42,6 +42,7 @@ export type WidgetOptionProps = Camelize<WidgetOptions>
 export type WidgetOptions = {
   ui_message_webview_url_scheme?: string
   color_scheme?: "dark" | "light"
+  language?: string
 }
 
 export type ConnectWidgetOptionProps = Camelize<ConnectWidgetOptions>

@@ -25,9 +25,9 @@ export function makeRequest(req: Request): Promise<Response> {
     .then((response) => response.json())
 }
 
-export function genRequest<Options>({ proxy, uiMessageWebviewUrlScheme, widgetType, options }: RequestParams<Options>): Request {
+export function genRequest<Options>({ proxy, uiMessageWebviewUrlScheme, language, widgetType, options }: RequestParams<Options>): Request {
   const method = "POST"
-  const headers = buildRequestHeaders()
+  const headers = buildRequestHeaders({ language })
   const body = JSON.stringify(buildRequestBody(widgetType, uiMessageWebviewUrlScheme, options))
 
   return {
