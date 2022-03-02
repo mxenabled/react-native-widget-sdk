@@ -75,7 +75,7 @@ export function buildRequestParams<Options>(
 }
 
 export function buildRequestHeaders({ authorization }: RequestHeaderOptions = {}) {
-  let headers: Record<string, string> = {
+  const headers: Record<string, string> = {
     Accept: "application/vnd.mx.api.v1+json",
     "Content-Type": "application/json",
   }
