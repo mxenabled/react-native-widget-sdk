@@ -76,27 +76,3 @@ your application, you will need to do three things:
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
-
-
-## Development
-
-Once you have [Node v16](https://nodejs.org/en/download/) installed, you can
-use the commands listed below to perform various tasks:
-
-- `npm install`, install depedencies.
-- `npm run build`, run compiler, does not generate assets in `dist` directory.
-- `npm run build:dist`, run compile and save assets to `dist` directory.
-- `npm run test`, run unit tests.
-- `npm run test:coverage`, run unit tests and generate code coverage report.
-- `npm run open:coverage`, open code coverage report.
-- `npm run generate`, run code generators.
-
-### Publishing to npm
-
-You will need permission to publish to the
-[mxenabled](https://www.npmjs.com/org/mxenabled) organization in npm before you
-can publish this package.
-
-Once you are able to publish, log into npm with `npm login` then run `npm
-publish` to publish. Running `npm publish` will automatically execute `npm run
-build:dist` for you, so there is no need to do that manually.
