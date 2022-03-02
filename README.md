@@ -69,13 +69,13 @@ export default function App() {
 ### Interacting with the Widget
 
 You can listen to post message events by passing callback props in the widget component. The prop names follow this naming scheme: 
-* For widget events: `on<event name>`, 
+* For widget events: `on<event name>` 
 * For entity events: `on<entity><action>`
 
 For example, the `mx/connect/selectInstitution` event is made available via `onSelectInstitution` in the ConnectWidget component. See [handing events](https://docs.mx.com/api#connect_postmessage_events) for a list of events and their payloads.
 
 ```jsx
-<ConnectAggregationWidget
+<ConnectWidget
   onMessage={(request) => {
     console.log(`Message: ${request.url}`)
   })
