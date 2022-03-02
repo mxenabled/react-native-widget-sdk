@@ -1,7 +1,7 @@
 import base64 from "react-native-base64"
 
 import { Environment, Host, lookupEnvironment } from "./environment"
-import { Type, InternalWidgetOptions } from "../widget/configuration"
+import { Type } from "../widget/configuration"
 
 export class RequestError extends Error {
   readonly statusCode: number
@@ -20,6 +20,10 @@ export type Request = {
     headers: Record<string, string>
     body: string
   }
+}
+
+export type RequestHeaderOptions = {
+  authorization?: string
 }
 
 export type RequestParams<Options> = {
@@ -70,17 +74,32 @@ export function buildRequestParams<Options>(
   }
 }
 
-export function buildWidgetOptions<Options>(
+export function buildRequestHeaders({ authorization }: RequestHeaderOptions = {}) {
+  let headers: Record<string, string> = {
+    Accept: "application/vnd.mx.api.v1+json",
+    "Content-Type": "application/json",
+  }
+
+  if (authorization) {
+    headers["Authorization"] = `Basic ${authorization}`
+  }
+
+  return headers
+}
+
+export function buildRequestBody<Options>(
   widgetType: Type,
   uiMessageWebviewUrlScheme: string,
   options: Options,
-): InternalWidgetOptions {
+) {
   return {
-    widget_type: widgetType,
-    is_mobile_webview: true,
-    ui_message_version: 4,
-    ui_message_webview_url_scheme: uiMessageWebviewUrlScheme,
-    ...options,
+    widget_url: {
+      widget_type: widgetType,
+      is_mobile_webview: true,
+      ui_message_version: 4,
+      ui_message_webview_url_scheme: uiMessageWebviewUrlScheme,
+      ...options,
+    }
   }
 }
 
@@ -102,15 +121,8 @@ function genRequest<Options>({ apiKey, clientId, userGuid, widgetType, uiMessage
   const method = "POST"
   const authorization = base64.encode(`${clientId}:${apiKey}`)
 
-  const headers = {
-    Accept: "application/vnd.mx.api.v1+json",
-    Authorization: `Basic ${authorization}`,
-    "Content-Type": "application/json",
-  }
-
-  const body = JSON.stringify({
-    widget_url: buildWidgetOptions(widgetType, uiMessageWebviewUrlScheme, options),
-  })
+  const headers = buildRequestHeaders({ authorization })
+  const body = JSON.stringify(buildRequestBody(widgetType, uiMessageWebviewUrlScheme, options))
 
   return {
     url,

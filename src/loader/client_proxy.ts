@@ -1,4 +1,4 @@
-import { Response, RequestError, buildWidgetOptions } from "./platform_api"
+import { Response, RequestError, buildRequestHeaders, buildRequestBody } from "./platform_api"
 import { Type } from "../widget/configuration"
 
 export type Request = {
@@ -31,14 +31,8 @@ export function makeRequest(req: Request): Promise<Response> {
 
 export function genRequest<Options>({ proxy, uiMessageWebviewUrlScheme, widgetType, options }: RequestParams<Options>): Request {
   const method = "POST"
-  const headers = {
-    Accept: "application/vnd.mx.api.v1+json",
-    "Content-Type": "application/json",
-  }
-
-  const body = JSON.stringify({
-    widget_url: buildWidgetOptions(widgetType, uiMessageWebviewUrlScheme, options),
-  })
+  const headers = buildRequestHeaders()
+  const body = JSON.stringify(buildRequestBody(widgetType, uiMessageWebviewUrlScheme, options))
 
   return {
     proxy,
