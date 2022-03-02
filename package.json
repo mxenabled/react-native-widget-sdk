@@ -4,6 +4,11 @@
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "source": "src/index.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mxenabled/react-native-widget-sdk.git"
+  },
   "scripts": {
     "prepack": "npm run build:dist",
     "build": "tsc",

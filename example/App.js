@@ -32,6 +32,9 @@ export default function App() {
         onSelectedInstitution={(payload) => {
           console.log(`Selecting ${payload.name}`)
         }}
+        onFocusTrap={(req) => {
+          console.log(`Focus trap ${payload}`)
+        }}
       />
     </View>
   )
