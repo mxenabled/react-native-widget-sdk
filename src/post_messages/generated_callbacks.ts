@@ -12,6 +12,7 @@ import { Message } from "./message"
 import {
   LoadPayload,
   PingPayload,
+  FocusTrapPayload,
   ConnectLoadedPayload,
   ConnectEnterCredentialsPayload,
   ConnectInstitutionSearchPayload,
@@ -40,6 +41,7 @@ export type BaseCallbackProps = {
 export type GenericCallbackProps = {
   onLoad?: (payload: LoadPayload) => void
   onPing?: (payload: PingPayload) => void
+  onFocusTrap?: (payload: FocusTrapPayload) => void
 }
 
 export type EntityCallbackProps = {
@@ -81,6 +83,7 @@ const namespaces = {
   generic: [
     "load",
     "ping",
+    "focusTrap",
   ],
   entities: [
     "account",
@@ -159,6 +162,10 @@ export function dispatchGenericCallback(callbacks: GenericCallbackProps, message
 
     case Type.Ping:
       safeCall([payload], callbacks.onPing)
+      break
+
+    case Type.FocusTrap:
+      safeCall([payload], callbacks.onFocusTrap)
       break
 
     default:

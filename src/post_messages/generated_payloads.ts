@@ -38,6 +38,12 @@ export type PingPayload = {
   session_guid: string
 }
 
+export type FocusTrapPayload = {
+  type: Type.FocusTrap
+  user_guid: string
+  session_guid: string
+}
+
 export type ConnectLoadedPayload = {
   type: Type.ConnectLoaded
   user_guid: string
@@ -161,6 +167,7 @@ export type AccountCreatedPayload = {
 export type GenericPayload =
   | LoadPayload
   | PingPayload
+  | FocusTrapPayload
 
 export type EntityPayload =
   | AccountCreatedPayload
@@ -233,6 +240,16 @@ export function buildPayload(type: Type, metadata: Metadata): Payload {
     case Type.Ping:
       assertMessageProp(metadata, "mx/ping", "user_guid", "string")
       assertMessageProp(metadata, "mx/ping", "session_guid", "string")
+
+      return {
+        type,
+        user_guid: metadata.user_guid as string,
+        session_guid: metadata.session_guid as string,
+      }
+
+    case Type.FocusTrap:
+      assertMessageProp(metadata, "mx/focusTrap", "user_guid", "string")
+      assertMessageProp(metadata, "mx/focusTrap", "session_guid", "string")
 
       return {
         type,
