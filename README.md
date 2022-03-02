@@ -1,61 +1,50 @@
 # MX React Native Widget SDK
 
-## Introduction 
+## Introduction
 
-The purpose of this project is to help simplify your integration experience. Giving you as few steps as possible to get up and running with an authenticated MX React Native widget.
+The purpose of this project is to help simplify your integration experience.
+Giving you as few steps as possible to get up and running with an MX React
+Native widget.
 
 After following the Getting Started instructions below, you will be able to import and load MX widgets in your React Native application, and configure them for your specific needs.  
-
-## Requirements
-
-* [Node v16](https://nodejs.org/en/download/)
-
-TODO: add requirements
 ## Getting Started
 
 Please refer to the offical [MX Docs](https://docs.mx.com/) for an in-depth explanation of the MX platform.   
 
 The general outline for incorportating the `react-native-widget-sdk` into your project is as follow:
 
-* Acquire your platform `client_id` and `api_key`.
-* Install the SDK via npm.
+* Signup for a developer account at the developer portal.
+* Install and setup the SDK via `npm` or `yarn`.
 * Generate an authenticated SSO widget url.
-* Import the widget into your project providing it with the needed configuration including the SSO URL.
-* Interact with the widget via `window.postMessage` and callback function props.
+* Import the widget into your project providing it with the needed configuration object. 
+###  Aquire your developer account
 
-### Acquiring Platform keys
-
-You will need to have your MX `client_id` and `api_key` to setup the widget.  
-Those can be obtained after signing up on our [Client Portal](https://dashboard.mx.com) site.  
-You'll find them under the "API keys and whitelisting" section.
-
+A developer account can be obtained by signing up on our [Client Portal](https://dashboard.mx.com) site.  
 ### Installing the SDK
 
-Open a terminal and run the commands below at the root of your project to
-install and setup the SDK:
-
-Using yarn
-```
-yarn add @mxenabled/react-native-widget-sdk
-```
+Open a terminal and run the commands below at the root of your project to install and setup the SDK:
 
 Using npm
 ```
 npm install --save @mxenabled/react-native-widget-sdk
 ```
 
-### Setting up the SDK
+Using yarn
+```
+yarn add @mxenabled/react-native-widget-sdk
+```
 
-Installing the SDK's dependencies and setting up required linking:
-
+Once installed, run the command below to finish setting up the SDK's required dependencies.
 ```
 npx mx-widget-sdk-setup
 ```
+
 ### Generating your Widget SSO URL
 
-TODO: add description and link to offical documentation
+See [SSO Widget URL documentation](https://docs.mx.com/api#widgets_mx_widgets_request_widget_url) for instructions.   
+If loading the Connect Widget, follow the instructions located the [Connect SSO Widget URL documentation](https://docs.mx.com/api#connect_request_a_url).
 
-### Including the SDK in your project  
+### Importing the SDK into your project 
 
 Once the steps above have been completed, you will be able to import components
 from the `@mxenabled/react-native-widget-sdk` package and render them in your
@@ -68,18 +57,32 @@ import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 
 export default function App() {
   return (
-    <ConnectWidget proxy="https://myserver.com/generate-sso-url?userId=123" />
+    <ConnectWidget 
+      onLoaded={() => console.log("Connect Widget Loaded")}
+      url="https://widgets.moneydesktop.com/md/connect/..."
+    />
   )
 }
 ```
 
 ### Interacting with the Widget
 
-TODO: add how to postmessage/function callbacks
-### Components and props
+You can listen to post message events by passing callback props in the widget component. The prop names follow this naming scheme: 
+* For widget events: `on<event name>`, 
+* For entity events: `on<entity><action>`
 
-TODO
+For example, the `mx/connect/selectInstitution` event is made available via `onSelectInstitution` in the ConnectWidget component. See [handing events](https://docs.mx.com/api#connect_postmessage_events) for a list of events and their payloads.
 
+```jsx
+<ConnectAggregationWidget
+  onMessage={(request) => {
+    console.log(`Message: ${request.url}`)
+  })
+  onSelectedInstitution={(payload) => {
+    console.log(`Selecting ${payload.name}`)
+  }}
+/>
+```
 ### OAuth redirects
 
 In order to properly handle OAuth redirects from the Connect widget back to
@@ -94,29 +97,3 @@ your application, you will need to do three things:
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
-
-### Development
-
-This package is written in TypeScript, so if you're developing your application
-in TypeScript you will be able to leverage all of the type definitions that are
-included in the npm package.
-
-You can use the commands listed below to perform various tasks:
-
-- `npm install`, install depedencies.
-- `npm run build`, run compiler, does not generate assets in `dist` directory.
-- `npm run build:dist`, run compile and save assets to `dist` directory.
-- `npm run test`, run unit tests.
-- `npm run test:coverage`, run unit tests and generate code coverage report.
-- `npm run open:coverage`, open code coverage report.
-- `npm run generate`, run code generators.
-
-### Publishing to npm
-
-You will need permission to publish to the
-[mxenabled](https://www.npmjs.com/org/mxenabled) organization in npm before you
-can publish this package.
-
-Once you are able to publish, log into npm with `npm login` then run `npm
-publish` to publish. Running `npm publish` will automatically execute `npm run
-build:dist` for you, so there is no need to do that manually.
