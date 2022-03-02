@@ -13,7 +13,7 @@ instructions on how to do that. Once your environment is setup, clone the repo
 and cd into the example directory within it:
 
 ```
-git clone https://gitlab.mx.com/mx/react-native-widget-sdk.git
+git clone https://github.com/mxenabled/react-native-widget-sdk.git
 cd react-native-widget-sdk
 cd example
 ```
