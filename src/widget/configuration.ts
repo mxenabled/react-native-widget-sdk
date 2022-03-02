@@ -4,9 +4,24 @@
  */
 
 export enum Type {
+  AccountsWidget = "accounts_widget",
   BudgetsWidget = "budgets_widget",
   ConnectWidget = "connect_widget",
+  ConnectionsWidget = "connections_widget",
+  DebtsWidget = "debts_widget",
+  FinstrongWidget = "finstrong_widget",
+  GoalsWidget = "goals_widget",
+  HelpWidget = "help_widget",
+  MasterWidget = "master_widget",
+  MiniBudgetsWidget = "mini_budgets_widget",
+  MiniFinstrongWidget = "mini_finstrong_widget",
+  MiniPulseCarouselWidget = "mini_pulse_carousel_widget",
+  MiniSpendingWidget = "mini_spending_widget",
   PulseWidget = "pulse_widget",
+  SettingsWidget = "settings_widget",
+  SpendingWidget = "spending_widget",
+  TransactionsWidget = "transactions_widget",
+  TrendsWidget = "trends_widget",
 }
 
 type CWM =

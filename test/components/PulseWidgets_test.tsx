@@ -1,7 +1,7 @@
 import React from "react"
-import { render, waitFor } from '@testing-library/react-native';
+import { render, waitFor } from "@testing-library/react-native"
 
-import { PulseWidget } from "../../src/components/PulseWidget"
+import { PulseWidget } from "../../src/components/PulseWidgets"
 
 describe("PulseWidget", () => {
   describe("widget loading", () => {

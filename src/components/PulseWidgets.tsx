@@ -19,3 +19,12 @@ export function PulseWidget(props: PulseWidgetProps) {
     handlePulseRequest,
   )
 }
+
+export function MiniPulseCarouselWidget(props: PulseWidgetProps) {
+  return useWidgetRenderer(
+    Type.MiniPulseCarouselWidget,
+    props,
+    widgetOptionsFromProps,
+    handlePulseRequest,
+  )
+}
