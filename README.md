@@ -41,8 +41,9 @@ npx mx-widget-sdk-setup
 
 ### Generating your Widget SSO URL
 
-See [SSO Widget URL documentation](https://docs.mx.com/api#widgets_mx_widgets_request_widget_url) for instructions.   
-If loading the Connect Widget, follow the instructions located the [Connect SSO Widget URL documentation](https://docs.mx.com/api#connect_request_a_url).
+See [SSO Widget URL documentation](https://docs.mx.com/api#widgets_mx_widgets_request_widget_url)
+for instructions. If loading the Connect Widget, follow the instructions
+located the [Connect SSO Widget URL documentation](https://docs.mx.com/api#connect_request_a_url).
 
 ### Importing the SDK into your project 
 
