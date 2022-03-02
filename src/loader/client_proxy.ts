@@ -1,5 +1,4 @@
-import { Response, RequestError, buildRequestHeaders, buildRequestBody } from "./platform_api"
-import { Type } from "../widget/configuration"
+import { Response, RequestError, BaseRequestParams, buildRequestHeaders, buildRequestBody } from "./platform_api"
 
 export type Request = {
   proxy: string
@@ -10,11 +9,8 @@ export type Request = {
   }
 }
 
-export type RequestParams<Options> = {
+export type RequestParams<Options> = BaseRequestParams<Options> & {
   proxy: string
-  widgetType: Type
-  uiMessageWebviewUrlScheme: string
-  options?: Options
 }
 
 export function makeRequest(req: Request): Promise<Response> {

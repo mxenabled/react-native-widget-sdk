@@ -26,14 +26,17 @@ export type RequestHeaderOptions = {
   authorization?: string
 }
 
-export type RequestParams<Options> = {
+export type BaseRequestParams<Options> = {
+  widgetType: Type
+  uiMessageWebviewUrlScheme: string
+  options?: Options
+}
+
+export type RequestParams<Options> = BaseRequestParams<Options> & {
   apiKey: string
   clientId: string
   userGuid: string
-  widgetType: Type
-  uiMessageWebviewUrlScheme: string
   environment: Environment
-  options?: Options
 }
 
 export type Response = {
