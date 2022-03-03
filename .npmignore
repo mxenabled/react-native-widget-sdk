@@ -1,9 +1,12 @@
 *.tgz
 .DS_Store
+.github
 .gitlab-ci.yml
 .tags
+CONTRIBUTING.md
 babel.config.js
 coverage
+docs
 example
 test
 tsconfig.json
