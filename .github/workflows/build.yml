@@ -13,14 +13,7 @@ jobs:
         node-version: 16
         cache: npm
 
-    - name: Install dependencies
-      run: npm run ci:install
-
-    - name: Lint
-      run: npm run lint
-
-    - name: Build
-      run: npm run build:dist
-
-    - name: Test
-      run: npm run test:coverage
+    - run: npm run ci:install
+    - run: npm run lint
+    - run: npm run build:dist
+    - run: npm run test:coverage
