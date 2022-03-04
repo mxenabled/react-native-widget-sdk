@@ -1,0 +1,26 @@
+name: CI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '17'
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+
+    - name: Install dependencies
+      run: npm run ci:install
+
+    - name: Run linter
+      run: npm run lint
+
+    - name: Run build
+      run: npm run build:dist
+
+    - name: Run tests
+    - run: npm run test:coverage
