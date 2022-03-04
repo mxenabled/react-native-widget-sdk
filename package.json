@@ -47,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^8.9.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.5.0",
     "msw": "^0.36.8",
     "node-fetch": "^2.6.7",
@@ -94,9 +95,11 @@
     ],
     "extends": [
       "eslint:recommended",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react-hooks/recommended"
     ],
     "rules": {
+      "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
