@@ -3,13 +3,8 @@ import { useEffect, useState } from "react"
 import { Type, WidgetOptionProps } from "../widget/configuration"
 
 import { WidgetLoadingProps, UrlLoadingProps, ClientProxyLoadingProps, PlatformApiLoadingProps } from "./standard_props"
-import { BaseRequestParams, buildRequestParams as buildPlatformApiRequestParams, makeRequest as makePlatformApiRequest } from "../loader/platform_api"
+import { buildRequestParams as buildPlatformApiRequestParams, makeRequest as makePlatformApiRequest } from "../loader/platform_api"
 import { genRequest as genClientProxyRequest, makeRequest as makeClientProxyRequest } from "../loader/client_proxy"
-
-type LoadingParams<T, Options> =
-  & T
-  & Partial<Pick<BaseRequestParams<Options>, "language">>
-  & Required<Pick<BaseRequestParams<Options>, "widgetType" | "options" | "uiMessageWebviewUrlScheme">>
 
 const badPropsMessage = `Missing required widget props!
 
@@ -36,69 +31,23 @@ function defaultOnPlatformApiError(error: Error) {
   console.log(`Error making SSO request: ${error}`)
 }
 
-export function isLoadingWithUrl(props: WidgetLoadingProps): props is UrlLoadingProps {
+function isLoadingWithUrl(props: WidgetLoadingProps): props is UrlLoadingProps {
   return "url" in props
 }
 
-export function isLoadingWithClientProxy(props: WidgetLoadingProps): props is ClientProxyLoadingProps {
+function isLoadingWithClientProxy(props: WidgetLoadingProps): props is ClientProxyLoadingProps {
   return "proxy" in props
 }
 
-export function isLoadingWithPlatformApiSso(props: WidgetLoadingProps): props is PlatformApiLoadingProps {
+function isLoadingWithPlatformApiSso(props: WidgetLoadingProps): props is PlatformApiLoadingProps {
   return "clientId" in props &&
     "apiKey" in props &&
     "userGuid" in props &&
     "environment" in props
 }
 
-export function isLoadingWithBadProps(): never {
+function isLoadingWithBadProps(): never {
   throw new Error(badPropsMessage)
-}
-
-export function useClientProxy<Options>({
-  proxy,
-  widgetType,
-  options,
-  uiMessageWebviewUrlScheme,
-  language,
-  buildProxyRequest = (req) => req,
-  onProxyRequestError = defaultOnClientProxyRequestError,
-}: LoadingParams<ClientProxyLoadingProps, Options>) {
-  const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
-  const req = genClientProxyRequest({ proxy, uiMessageWebviewUrlScheme, language, widgetType, options })
-
-  useEffect(() => {
-    makeClientProxyRequest(buildProxyRequest(req))
-      .then((json) => setWidgetUrl(json.widget_url.url))
-      .catch(onProxyRequestError)
-  }, [])
-
-  return widgetUrl
-}
-
-export function usePlatformApiSso<Options>({
-  apiKey,
-  clientId,
-  userGuid,
-  environment,
-  widgetType,
-  options,
-  uiMessageWebviewUrlScheme,
-  language,
-  onSsoError = defaultOnPlatformApiError,
-}: LoadingParams<PlatformApiLoadingProps, Options>) {
-  const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
-
-  const params = buildPlatformApiRequestParams<Options>(apiKey, clientId, userGuid,
-    environment, widgetType, uiMessageWebviewUrlScheme, language, options)
-
-  useEffect(() => {
-    makePlatformApiRequest(params)
-      .then((response) => setWidgetUrl(response.widget_url.url))
-      .catch((error) => onSsoError(error))
-  }, [])
-
-  return widgetUrl
 }
 
 export function useWidgetUrl<Props extends WidgetLoadingProps & WidgetOptionProps, Opts>(
@@ -106,23 +55,39 @@ export function useWidgetUrl<Props extends WidgetLoadingProps & WidgetOptionProp
   props: Props,
   optsFromProps: (ps: Props) => Opts,
 ): string | null {
-  if (isLoadingWithUrl(props)) {
-    return props.url
-  } else if (isLoadingWithClientProxy(props)) {
-    return useClientProxy({
-      widgetType,
-      uiMessageWebviewUrlScheme: props.uiMessageWebviewUrlScheme || "",
-      options: optsFromProps(props),
-      ...props
-    })
-  } else if (isLoadingWithPlatformApiSso(props)) {
-    return usePlatformApiSso({
-      widgetType,
-      uiMessageWebviewUrlScheme: props.uiMessageWebviewUrlScheme || "",
-      options: optsFromProps(props),
-      ...props
-    })
-  }
+  const [widgetUrl, setWidgetUrl] = useState<string | null>(null)
 
-  isLoadingWithBadProps()
+  useEffect(() => {
+    if (isLoadingWithUrl(props)) {
+      setWidgetUrl(props.url)
+    } else if (isLoadingWithClientProxy(props)) {
+      const { proxy, language } = props
+      const buildProxyRequest = props.buildProxyRequest || ((req) => req)
+      const onProxyRequestError = props.onProxyRequestError || defaultOnClientProxyRequestError
+      const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || ""
+      const options = optsFromProps(props)
+
+      const req = genClientProxyRequest({ proxy, uiMessageWebviewUrlScheme, language, widgetType, options })
+
+      makeClientProxyRequest(buildProxyRequest(req))
+        .then((json) => setWidgetUrl(json.widget_url.url))
+        .catch(onProxyRequestError)
+    } else if (isLoadingWithPlatformApiSso(props)) {
+      const { apiKey, clientId, userGuid, environment, language } = props
+      const onSsoError = props.onSsoError || defaultOnPlatformApiError
+      const uiMessageWebviewUrlScheme = props.uiMessageWebviewUrlScheme || ""
+      const options = optsFromProps(props)
+
+      const params = buildPlatformApiRequestParams<Opts>(apiKey, clientId, userGuid,
+        environment, widgetType, uiMessageWebviewUrlScheme, language, options)
+
+      makePlatformApiRequest(params)
+        .then((response) => setWidgetUrl(response.widget_url.url))
+        .catch((error) => onSsoError(error))
+    } else {
+      isLoadingWithBadProps()
+    }
+  }, [])
+
+  return widgetUrl
 }
