@@ -1,7 +1,7 @@
 {
   "name": "@mxenabled/react-native-widget-sdk",
   "description": "MX React Native Widget SDK",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "main": "dist/src/index.js",
   "source": "src/index.ts",
   "license": "MIT",
@@ -25,14 +25,13 @@
     "mx-widget-sdk-setup": "dist/src/cli/setup.js"
   },
   "dependencies": {
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.3",
     "react-native-base64": "^0.2.1",
-    "react-native-config": "^1.4.5",
-    "react-native-web": "0.17.1",
-    "react-native-webview": "11.15.0",
+    "react-native-webview": "^11.15.0",
     "url": "^0.11.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -48,10 +47,17 @@
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^8.9.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.5.0",
     "msw": "^0.36.8",
     "node-fetch": "^2.6.7",
-    "react-test-renderer": "^17.0.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-base64": "^0.2.1",
+    "react-native-web": "0.17.1",
+    "react-native-webview": "11.15.0",
+    "react-test-renderer": "17.0.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
     "uri-scheme": "^1.0.112",
@@ -89,11 +95,13 @@
     ],
     "extends": [
       "eslint:recommended",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react-hooks/recommended"
     ],
     "rules": {
       "semi": ["error", "never"],
       "quotes": ["error", "double"],
+      "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
