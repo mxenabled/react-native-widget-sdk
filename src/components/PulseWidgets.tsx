@@ -1,5 +1,6 @@
+import { dispatchPulseLocationChangeEvent, PulsePostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
+
 import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
-import { handlePulseRequest, PulseCallbackProps } from "../post_messages"
 import { Type, WidgetOptionProps, widgetOptionsFromProps } from "../widget/configuration"
 
 import { useWidgetRenderer } from "./renderer"
@@ -9,14 +10,14 @@ export type PulseWidgetProps =
   & WidgetStylingProps
   & WidgetLoadUrlCallbackProps
   & WidgetOptionProps
-  & PulseCallbackProps
+  & PulsePostMessageCallbackProps
 
 export function PulseWidget(props: PulseWidgetProps) {
   return useWidgetRenderer(
     Type.PulseWidget,
     props,
     widgetOptionsFromProps,
-    handlePulseRequest,
+    dispatchPulseLocationChangeEvent,
   )
 }
 
@@ -25,6 +26,6 @@ export function MiniPulseCarouselWidget(props: PulseWidgetProps) {
     Type.MiniPulseCarouselWidget,
     props,
     widgetOptionsFromProps,
-    handlePulseRequest,
+    dispatchPulseLocationChangeEvent,
   )
 }

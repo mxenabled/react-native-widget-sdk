@@ -1,14 +1,12 @@
-import { WebViewNavigation } from "react-native-webview"
-
-import { makeRequestInterceptor } from "../../src/components/request_interceptor"
-import { handleConnectRequest as handler } from "../../src/post_messages"
-
 import {
   AccountCreatedPayload,
   ConnectLoadedPayload,
   ConnectUpdateCredentialsPayload,
   LoadPayload,
-} from "../../src/post_messages"
+  dispatchConnectLocationChangeEvent as handler,
+} from "@mxenabled/widget-post-message-definitions"
+
+import { makeRequestInterceptor } from "../../src/components/request_interceptor"
 
 const makeNavigationEvent = (url: string) =>
   ({
@@ -151,7 +149,7 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("mx/connect/loaded message with missing field value calls onUnknownMessage", () => {
+    test("mx/connect/loaded message with missing field value calls onMessageUnknownError", () => {
       expect.assertions(1)
 
       const user_guid = "USR-123"
@@ -160,7 +158,7 @@ describe("makeRequestInterceptor", () => {
 
       const callbacks = {
         onLoaded: (_payload: ConnectLoadedPayload) => expect(false).toBe(true),
-        onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
+        onMessageUnknownError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
       const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid, initial_step }))
@@ -171,11 +169,11 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("an unknown message calls onUnknownMessage", () => {
+    test("an unknown message calls onMessageUnknownError", () => {
       expect.assertions(1)
 
       const callbacks = {
-        onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
+        onMessageUnknownError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
       const newUrl = "appscheme://connect/notarealmessage?metadata="
@@ -221,7 +219,7 @@ describe("makeRequestInterceptor", () => {
       expect.assertions(2)
 
       const callbacks = {
-        onMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
+        onMessage: (url: string) => expect(url).toBeDefined(),
         onLoad: (payload: LoadPayload) => expect(payload).toBeDefined(),
       }
 
@@ -237,8 +235,8 @@ describe("makeRequestInterceptor", () => {
       expect.assertions(2)
 
       const callbacks = {
-        onMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
-        onUnknownMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
+        onMessage: (url: string) => expect(url).toBeDefined(),
+        onMessageUnknownError: (url: string, _error: Error) => expect(url).toBeDefined(),
       }
 
       const newUrl = "appscheme://connect/notarealmessage?metadata="

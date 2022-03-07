@@ -1,6 +1,6 @@
 import React, { useRef, MutableRefObject, ReactElement } from "react"
 import { SafeAreaView } from "react-native"
-import { WebView, WebViewNavigation } from "react-native-webview"
+import { WebView } from "react-native-webview"
 
 import { Type, WidgetOptionProps } from "../widget/configuration"
 import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
@@ -20,7 +20,7 @@ export function useWidgetRenderer<Props extends BaseProps, Opts>(
   widgetType: Type,
   props: Props,
   optsFromProps: (ps: Props) => Opts,
-  handleRequest: (callbacks: Props, request: WebViewNavigation) => void,
+  handleRequest: (url: string, callbacks: Props) => void,
 ): ReactElement {
   const [_ref, elem] = useWidgetRendererWithRef(
     widgetType,
@@ -36,7 +36,7 @@ export function useWidgetRendererWithRef<Props extends BaseProps, Opts>(
   widgetType: Type,
   props: Props,
   optsFromProps: (ps: Props) => Opts,
-  handleRequest: (callbacks: Props, request: WebViewNavigation) => void,
+  handleRequest: (url: string, callbacks: Props) => void,
 ): [MaybeWebViewRef, ReactElement] {
   const ref = useRef<WebView>(null)
   const widgetUrl = useWidgetUrl(widgetType, props, optsFromProps)

@@ -1,7 +1,7 @@
 import React, { FC } from "react"
+import { dispatchWidgetLocationChangeEvent, WidgetPostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
 
 import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
-import { handleWidgetRequest as handleRequest, WidgetPostMessageCallbackProps } from "../post_messages"
 import { Type, WidgetOptionProps, widgetOptionsFromProps as optsFromProps } from "../widget/configuration"
 
 import { useWidgetRenderer } from "./renderer"
@@ -15,7 +15,7 @@ type Props =
 
 export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
   return function Widget(props: Props) {
-    return useWidgetRenderer(widgetType, props, optsFromProps, handleRequest)
+    return useWidgetRenderer(widgetType, props, optsFromProps, dispatchWidgetLocationChangeEvent)
   }
 }
 

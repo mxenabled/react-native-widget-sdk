@@ -11,7 +11,7 @@ function defaultOnLoadUrlError(url: string, error: Error) {
   console.log(`Error loading ${url}: ${error}`)
 }
 
-export function loadUrlInBrowser(callbacks: WidgetLoadUrlCallbackProps, url: string) {
+export function loadUrlInBrowser(url: string, callbacks: WidgetLoadUrlCallbackProps) {
   const onLoadUrl = callbacks.onLoadUrl || defaultOnLoadUrl
   const onLoadUrlError = callbacks.onLoadUrlError || defaultOnLoadUrlError
 

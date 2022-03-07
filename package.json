@@ -15,14 +15,13 @@
     "build:dist": "[ -d dist ] && rm -r dist; npm run build -- --declaration --noEmit false --outDir dist",
     "lint": "eslint src test",
     "test": "jest --verbose --coverage",
-    "open:coverage": "open coverage/lcov-report/index.html",
-    "generate:post_messages": "ts-node src/post_messages/generate_main.ts",
-    "generate": "npm run generate:post_messages"
+    "open:coverage": "open coverage/lcov-report/index.html"
   },
   "bin": {
     "mx-widget-sdk-setup": "dist/src/cli/setup.js"
   },
   "dependencies": {
+    "@mxenabled/widget-post-message-definitions": "^1.0.0",
     "react-native-base64": "^0.2.1",
     "react-native-webview": "^11.15.0",
     "url": "^0.11.0"
@@ -41,7 +40,6 @@
     "@types/react-native": "^0.66.15",
     "@types/react-native-base64": "^0.2.0",
     "@types/react-test-renderer": "^17.0.1",
-    "@types/yaml": "^1.9.7",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^8.9.0",
@@ -58,8 +56,7 @@
     "react-test-renderer": "17.0.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
-    "uri-scheme": "^1.0.112",
-    "yaml": "^1.10.2"
+    "uri-scheme": "^1.0.112"
   },
   "jest": {
     "preset": "react-native",
@@ -97,8 +94,14 @@
       "plugin:react-hooks/recommended"
     ],
     "rules": {
-      "semi": ["error", "never"],
-      "quotes": ["error", "double"],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "quotes": [
+        "error",
+        "double"
+      ],
       "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",

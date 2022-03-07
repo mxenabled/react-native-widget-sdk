@@ -1,17 +1,15 @@
 import { MutableRefObject, useEffect, useState } from "react"
 import { WebView } from "react-native-webview"
 import { parse as parseUrl, UrlWithParsedQuery } from "url"
+import { ConnectOAuthRequestedPayload } from "@mxenabled/widget-post-message-definitions"
 
 import { onUrlChange } from "../platform/deeplink"
-
-import { ConnectOAuthRequestedPayload } from "../post_messages"
 import { WidgetLoadUrlCallbackProps } from "./standard_props"
-
 import { loadUrlInBrowser } from "./load_url_in_browser"
 
 export function makeDefaultConnectOnOAuthRequested(props: WidgetLoadUrlCallbackProps) {
   return function ({ url }: ConnectOAuthRequestedPayload) {
-    loadUrlInBrowser(props, url)
+    loadUrlInBrowser(url, props)
   }
 }
 
