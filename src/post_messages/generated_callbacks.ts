@@ -74,8 +74,8 @@ export type PulseCallbackProps = WidgetPostMessageCallbackProps & {
 // request. Used to trigger the `onMessageDispatchError` callback.
 class CallbackDispatchError extends Error {
   constructor(msg: string) {
-    super(msg);
-    Object.setPrototypeOf(this, CallbackDispatchError.prototype);
+    super(msg)
+    Object.setPrototypeOf(this, CallbackDispatchError.prototype)
   }
 }
 

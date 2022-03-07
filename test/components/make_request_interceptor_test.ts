@@ -178,7 +178,7 @@ describe("makeRequestInterceptor", () => {
         onUnknownMessage: (request: WebViewNavigation) => expect(request.url).toBe(newUrl),
       }
 
-      const newUrl = `appscheme://connect/notarealmessage?metadata=`
+      const newUrl = "appscheme://connect/notarealmessage?metadata="
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
@@ -241,7 +241,7 @@ describe("makeRequestInterceptor", () => {
         onUnknownMessage: (request: WebViewNavigation) => expect(request).toBeDefined(),
       }
 
-      const newUrl = `appscheme://connect/notarealmessage?metadata=`
+      const newUrl = "appscheme://connect/notarealmessage?metadata="
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
