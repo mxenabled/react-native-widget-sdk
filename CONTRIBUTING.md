@@ -22,7 +22,6 @@ are commands we use to perform various tasks:
 - `npm run build`, run compiler, does not generate assets in `dist` directory.
 - `npm run build:dist`, run compile and save assets to `dist` directory.
 - `npm run test`, run unit tests.
-- `npm run test:coverage`, run unit tests and generate code coverage report.
 - `npm run open:coverage`, open code coverage report.
 - `npm run generate`, run code generators.
 

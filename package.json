@@ -14,8 +14,7 @@
     "build": "tsc",
     "build:dist": "[ -d dist ] && rm -r dist; npm run build -- --declaration --noEmit false --outDir dist",
     "lint": "eslint src test",
-    "test": "jest",
-    "test:coverage": "npm test -- --verbose --coverage",
+    "test": "jest --verbose --coverage",
     "open:coverage": "open coverage/lcov-report/index.html",
     "generate:post_messages": "ts-node src/post_messages/generate_main.ts",
     "generate": "npm run generate:post_messages"
