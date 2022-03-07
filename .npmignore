@@ -1,7 +1,6 @@
 *.tgz
 .DS_Store
 .github
-.gitlab-ci.yml
 .tags
 CONTRIBUTING.md
 babel.config.js
