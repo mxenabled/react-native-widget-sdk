@@ -1,7 +1,7 @@
 import React from "react"
 import { render, waitFor } from '@testing-library/react-native';
 
-import { BudgetsWidget } from "../../src/components/BudgetsWidget"
+import { BudgetsWidget } from "../../src/components/MoneyMapWidgets"
 
 describe("BudgetsWidget", () => {
   describe("widget loading", () => {
