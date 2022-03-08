@@ -32,7 +32,7 @@ export default function App() {
         onSelectedInstitution={(payload) => {
           console.log(`Selecting ${payload.name}`)
         }}
-        onFocusTrap={(req) => {
+        onFocusTrap={(payload) => {
           console.log(`Focus trap ${payload}`)
         }}
       />
