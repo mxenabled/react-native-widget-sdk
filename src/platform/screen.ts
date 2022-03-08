@@ -24,8 +24,13 @@ export const onDimensionChange = (fn: (orientation: Orientation) => void) => {
   const callback = () =>
     fn(isPortrait() ? Orientation.Portrait : Orientation.Landscape)
 
-  Dimensions.addEventListener("change", callback)
+  const sub = Dimensions.addEventListener("change", callback)
 
+  /* removeEventListener is deprecated but addEventListener does not return a
+   * subscription object in versions of React Native v0.64 or below. We can
+   * remove this condition when v64 (or below) is no longer supported.
+   */
   return () =>
-    Dimensions.removeEventListener("change", callback)
+    sub ? sub.remove() :
+      Dimensions.removeEventListener("change", callback)
 }
