@@ -15,8 +15,13 @@ export const onUrlChange = (fn: (event: UrlChangeEvent) => void, dispatchBufferS
     }
   }
 
-  Linking.addEventListener("url", callback)
+  const sub = Linking.addEventListener("url", callback)
 
+  /* removeEventListener is deprecated but addEventListener does not return a
+   * subscription object in versions of React Native v0.64 or below. We can
+   * remove this condition when v64 (or below) is no longer supported.
+   */
   return () =>
-    Linking.removeEventListener("url", callback)
+    sub ? sub.remove() :
+      Linking.removeEventListener("url", callback)
 }
