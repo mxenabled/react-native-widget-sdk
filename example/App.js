@@ -11,14 +11,14 @@ export default function App() {
         {...config}
 
         uiMessageWebviewUrlScheme="mxwidgetsdkdemo"
-        onMessage={(request) => {
-          console.log(`Got a message: ${request.url}`)
+        onMessage={(url) => {
+          console.log(`Got a message: ${url}`)
         }}
-        onUnknownMessage={(request) => {
-          console.log(`Unknown request intercepted: ${request.url}`)
+        onMessageUnknownError={(url, _error) => {
+          console.log(`Unknown request intercepted: ${url}`)
         }}
-        onMessageDispatchError={(request, error) => {
-          console.log(`Error dispatching post message: ${request.url}`)
+        onMessageDispatchError={(url, _error) => {
+          console.log(`Error dispatching post message: ${url}`)
         }}
         onLoad={(payload) => {
           console.log("Widget is loading")
