@@ -23,7 +23,6 @@ are commands we use to perform various tasks:
 - `npm run build:dist`, run compile and save assets to `dist` directory.
 - `npm run test`, run unit tests.
 - `npm run open:coverage`, open code coverage report.
-- `npm run generate`, run code generators.
 
 
 ### Publishing to npm

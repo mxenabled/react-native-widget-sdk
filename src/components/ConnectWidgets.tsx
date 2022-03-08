@@ -1,5 +1,6 @@
+import { dispatchConnectLocationChangeEvent, ConnectPostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
+
 import { WidgetLoadingProps, WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
-import { handleConnectRequest as handleRequest, ConnectCallbackProps } from "../post_messages"
 import { Type, ConnectWidgetOptionProps, connectWidgetOptionsFromProps as optsFromProps } from "../widget/configuration"
 
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
@@ -11,7 +12,7 @@ export type ConnectWidgetProps =
   & WidgetLoadingProps
   & WidgetStylingProps
   & WidgetLoadUrlCallbackProps
-  & ConnectCallbackProps
+  & ConnectPostMessageCallbackProps
   & ConnectWidgetOptionProps
 
 export const ConnectAggregationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
@@ -33,7 +34,7 @@ export function ConnectWidget(props: ConnectWidgetProps) {
     Type.ConnectWidget,
     props,
     optsFromProps,
-    handleRequest,
+    dispatchConnectLocationChangeEvent,
   )
 
   useOAuthDeeplink(ref)

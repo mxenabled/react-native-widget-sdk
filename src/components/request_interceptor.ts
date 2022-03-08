@@ -9,7 +9,7 @@ export function makeRequestInterceptor<WidgetCallbackProps>(
   widgetUrl: string,
   uiMessageWebviewUrlScheme: string,
   callbacks: WidgetLoadUrlCallbackProps & WidgetCallbackProps,
-  handler: (callbacks: WidgetCallbackProps, request: WebViewNavigation) => void,
+  handler: (url: string, callbacks: WidgetCallbackProps) => void,
 ) {
   const interceptor = new Interceptor(widgetUrl, uiMessageWebviewUrlScheme)
 
@@ -20,11 +20,11 @@ export function makeRequestInterceptor<WidgetCallbackProps>(
         return true
 
       case Action.Intercept:
-        handler(callbacks, request)
+        handler(request.url, callbacks)
         return false
 
       case Action.LoadInBrowser:
-        loadUrlInBrowser(callbacks, request.url)
+        loadUrlInBrowser(request.url, callbacks)
         return false
 
       default:
