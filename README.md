@@ -101,4 +101,4 @@ your application, you will need to do three things:
 
 ---
 
-[![Build](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build.yml)
+[![Build SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml)
