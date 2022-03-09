@@ -13,6 +13,9 @@ jobs:
         node-version: 16
         cache: npm
 
+    - name: npm install sdk dependencies
+      run: npm install
+
     - run: npm install
       working-directory: example
 
