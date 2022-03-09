@@ -33,7 +33,7 @@ export default function App() {
           console.log(`Selecting ${payload.name}`)
         }}
         onFocusTrap={(payload) => {
-          console.log(`Focus trap ${payload}`)
+          console.log(`Focus trap ${payload.user_guid}`)
         }}
       />
     </View>
