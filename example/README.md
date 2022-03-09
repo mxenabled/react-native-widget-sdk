@@ -42,6 +42,7 @@ Next, install dependencies for iOS and React Native:
 
 ```
 npm install
+cd ios; pod install; cd ..
 ```
 
 Finally, you can run the application on an iOS or Android simulator.
