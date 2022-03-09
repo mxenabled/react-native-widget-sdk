@@ -19,7 +19,7 @@ jobs:
     - run: npm install
       working-directory: example
 
-    - name: Create sample config file
+    - name: Create config file
       working-directory: example
       run: |
         echo '{ "proxy": "http://fakeserver.com" }' > config.json
