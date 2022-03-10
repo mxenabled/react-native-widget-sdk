@@ -149,7 +149,7 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("mx/connect/loaded message with missing field value calls onMessageUnknownError", () => {
+    test("mx/connect/loaded message with missing field value calls onInvalidMessageError", () => {
       expect.assertions(1)
 
       const user_guid = "USR-123"
@@ -158,7 +158,7 @@ describe("makeRequestInterceptor", () => {
 
       const callbacks = {
         onLoaded: (_payload: ConnectLoadedPayload) => expect(false).toBe(true),
-        onMessageUnknownError: (url: string, _error: Error) => expect(url).toBe(newUrl),
+        onInvalidMessageError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
       const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid, initial_step }))
@@ -169,11 +169,11 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("an unknown message calls onMessageUnknownError", () => {
+    test("an unknown message calls onInvalidMessageError", () => {
       expect.assertions(1)
 
       const callbacks = {
-        onMessageUnknownError: (url: string, _error: Error) => expect(url).toBe(newUrl),
+        onInvalidMessageError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
       const newUrl = "appscheme://connect/notarealmessage?metadata="
@@ -236,7 +236,7 @@ describe("makeRequestInterceptor", () => {
 
       const callbacks = {
         onMessage: (url: string) => expect(url).toBeDefined(),
-        onMessageUnknownError: (url: string, _error: Error) => expect(url).toBeDefined(),
+        onInvalidMessageError: (url: string, _error: Error) => expect(url).toBeDefined(),
       }
 
       const newUrl = "appscheme://connect/notarealmessage?metadata="

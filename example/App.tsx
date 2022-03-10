@@ -14,11 +14,8 @@ export default function App() {
         onMessage={(url) => {
           console.log(`Got a message: ${url}`)
         }}
-        onMessageUnknownError={(url, _error) => {
+        onInvalidMessageError={(url, _error) => {
           console.log(`Unknown request intercepted: ${url}`)
-        }}
-        onMessageDispatchError={(url, _error) => {
-          console.log(`Error dispatching post message: ${url}`)
         }}
         onLoad={(payload) => {
           console.log("Widget is loading")
