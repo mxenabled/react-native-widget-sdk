@@ -6,7 +6,7 @@ import {
   defaultSsoRequestPreprocess,
 } from "./request_processor"
 
-export function getSsoUrl<Options>(props: Props<Options>): Promise<string> {
+export function getSsoUrl<Options>(props: Props<Options>): Promise<string | void> {
   if (isSsoUrlMethodUrl(props)) {
     return Promise.resolve(props.url)
   }
@@ -24,8 +24,8 @@ export function getSsoUrl<Options>(props: Props<Options>): Promise<string> {
 
   return fetch(req.url, req.options)
     .then(handleFetchResponse)
-    .catch(onSsoUrlLoadError)
     .then(ssoRequestPostprocess)
+    .catch(onSsoUrlLoadError)
 }
 
 function handleFetchResponse(res: Response) {
