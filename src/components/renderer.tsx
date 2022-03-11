@@ -29,7 +29,6 @@ export function useWidgetRendererWithRef<Configuration>(
   props: BaseProps<Configuration>,
   dispatchEvent: (url: string, callbacks: BaseProps<Configuration>) => void,
 ): [MaybeWebViewRef, ReactElement] {
-  const widgetType = props.widgetType
   const ref = useRef<WebView>(null)
   const url = useSsoUrl(props)
   const fullscreenStyles = useFullscreenStyles()

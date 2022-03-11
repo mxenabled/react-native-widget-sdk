@@ -38,7 +38,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain(`https://int-widgets.moneydesktop.com/md/`)
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/")
       })
 
       test("an error results in the onSsoUrlLoadError callback being triggered", async () => {
@@ -72,7 +72,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain(`https://int-widgets.moneydesktop.com/md/`)
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/")
       })
 
       test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
