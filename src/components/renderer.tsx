@@ -43,9 +43,9 @@ export function useWidgetRendererWithRef<Configuration>(
   const handler = makeRequestInterceptor(url, scheme, props, dispatchEvent)
 
   return [ref, (
-    <SafeAreaView testID={`${widgetType}_view`} style={style}>
+    <SafeAreaView testID="widget_view" style={style}>
       <WebView
-        testID={`${widgetType}_webview`}
+        testID="widget_webview"
         ref={ref}
         scrollEnabled={true}
         source={{ uri: url }}
