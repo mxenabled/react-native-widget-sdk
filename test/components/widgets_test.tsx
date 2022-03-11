@@ -53,12 +53,34 @@ function testSsoUrlLoading(Component: FC<Props>) {
             apiKey="myveryownapikey"
             userGuid="USR-777"
             environment="integration"
+
             onSsoUrlLoadError={(_error) => { called = true }}
           />
         )
 
         await waitFor(() => { if (!called) throw new Error })
         expect(called).toBe(true)
+      })
+
+      test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
+        const component = render(
+          <Component
+            clientId="myveryownclientid"
+            apiKey="myveryownapikey"
+            userGuid="USR-777"
+            environment="integration"
+
+            ssoRequestPreprocess={(req) => {
+              const body = JSON.parse(req.options.body?.toString() || "")
+              body.widget_url.widget_type = "something_else"
+              req.options.body = JSON.stringify(body)
+              return req
+            }}
+          />
+        )
+
+        const webView = await waitFor(() => component.findByTestId("widget_webview"))
+        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/something_else/")
       })
     })
 
@@ -74,10 +96,30 @@ function testSsoUrlLoading(Component: FC<Props>) {
         expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/")
       })
 
+      test("an error results in the onSsoUrlLoadError callback being triggered", async () => {
+        let called = false
+
+        server.use(
+          rest.post("https://client.com/mx-sso-proxy", (req, res, ctx) =>
+            res(ctx.status(500), ctx.json({ message: "NO!" }))))
+
+        render(
+          <Component
+            proxy="https://client.com/mx-sso-proxy"
+
+            onSsoUrlLoadError={(_error) => { called = true }}
+          />
+        )
+
+        await waitFor(() => { if (!called) throw new Error })
+        expect(called).toBe(true)
+      })
+
       test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
         const component = render(
           <Component
             proxy="https://client.com/mx-sso-proxy"
+
             ssoRequestPreprocess={(req) => {
               const body = JSON.parse(req.options.body?.toString() || "")
               body.widget_url.widget_type = "something_else"
