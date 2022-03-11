@@ -1,18 +1,21 @@
 import React, { useRef, MutableRefObject, ReactElement } from "react"
-import { SafeAreaView } from "react-native"
+import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { Props, useSsoUrl } from "../sso"
-import { WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
-
+import { LoadUrlInBrowserProps } from "./load_url_in_browser"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
+
+export type StylingProps = {
+  style?: StyleProp<ViewStyle>
+}
 
 type MaybeWebViewRef = MutableRefObject<WebView | null>
 type BaseProps<Configuration> =
   & Props<Configuration>
-  & WidgetStylingProps
-  & WidgetLoadUrlCallbackProps
+  & StylingProps
+  & LoadUrlInBrowserProps
 
 export function useWidgetRenderer<Configuration>(
   props: BaseProps<Configuration>,

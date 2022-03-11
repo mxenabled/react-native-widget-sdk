@@ -1,17 +1,16 @@
 import { dispatchConnectLocationChangeEvent, ConnectPostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
 
 import { Type, SsoUrlProps, ConnectWidgetConfigurationProps } from "../sso"
-import { WidgetStylingProps, WidgetLoadUrlCallbackProps } from "./standard_props"
-
+import { LoadUrlInBrowserProps } from "./load_url_in_browser"
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
 import { makeWidgetComponentWithDefaults } from "./make_component"
 import { useOAuthDeeplink } from "./oauth"
-import { useWidgetRendererWithRef } from "./renderer"
+import { useWidgetRendererWithRef, StylingProps } from "./renderer"
 
 export type ConnectWidgetProps =
   & SsoUrlProps
-  & WidgetStylingProps
-  & WidgetLoadUrlCallbackProps
+  & StylingProps
+  & LoadUrlInBrowserProps
   & ConnectPostMessageCallbackProps
   & ConnectWidgetConfigurationProps
 
