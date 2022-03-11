@@ -2,15 +2,14 @@ import React, { FC } from "react"
 import { render, waitFor } from "@testing-library/react-native"
 import { act } from "react-test-renderer"
 
+import { BudgetsWidget, MasterWidget } from "../../src/components/MoneyMapWidgets"
+import { PulseWidget, MiniPulseCarouselWidget } from "../../src/components/PulseWidgets"
+import { ConnectWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidgets"
 import { Props } from "../../src/components/make_component"
 
 import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
 import { rest, server } from "../mocks/server"
 import { Dimensions, rotateOrientation } from "../mocks/react_native"
-
-import { BudgetsWidget, MasterWidget } from "../../src/components/MoneyMapWidgets"
-import { PulseWidget, MiniPulseCarouselWidget } from "../../src/components/PulseWidgets"
-import { ConnectWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidgets"
 
 describe("BudgetsWidget", () => fullWidgetComponentTestSuite(BudgetsWidget))
 describe("ConnectVerificationWidget", () => fullWidgetComponentTestSuite(ConnectVerificationWidget))
