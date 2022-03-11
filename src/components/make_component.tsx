@@ -1,20 +1,20 @@
 import React, { FC } from "react"
 import { dispatchWidgetLocationChangeEvent, WidgetPostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
 
-import { WidgetLoadingProps, WidgetStylingProps } from "./standard_props"
-import { Type, WidgetOptionProps, widgetOptionsFromProps as optsFromProps } from "../widget/configuration"
+import { Type, SsoUrlProps, WidgetConfigurationProps } from "../sso"
+import { WidgetStylingProps } from "./standard_props"
 
 import { useWidgetRenderer } from "./renderer"
 
 type Props =
-  & WidgetLoadingProps
+  & SsoUrlProps
   & WidgetStylingProps
-  & WidgetOptionProps
+  & WidgetConfigurationProps
   & WidgetPostMessageCallbackProps
 
 export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
   return function Widget(props: Props) {
-    return useWidgetRenderer(widgetType, props, optsFromProps, dispatchWidgetLocationChangeEvent)
+    return useWidgetRenderer({ ...props, widgetType }, dispatchWidgetLocationChangeEvent)
   }
 }
 

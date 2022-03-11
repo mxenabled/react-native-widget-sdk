@@ -10,6 +10,10 @@ export default function App() {
       <ConnectAggregationWidget
         {...config}
 
+        onSsoUrlLoadError={(error) => {
+          console.error(error)
+        }}
+
         uiMessageWebviewUrlScheme="mxwidgetsdkdemo"
         onMessage={(url) => {
           console.log(`Got a message: ${url}`)

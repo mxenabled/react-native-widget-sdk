@@ -26,7 +26,7 @@ describe("ConnectWidget", () => {
       })
 
       test("an error from the Platform API results in the onSsoError callback being triggered", async () => {
-        let onSsoErrorCalled = false
+        let called = false
 
         server.use(
           rest.post("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
@@ -38,12 +38,12 @@ describe("ConnectWidget", () => {
             apiKey="myveryownapikey"
             userGuid="USR-777"
             environment="integration"
-            onSsoError={(_error) => { onSsoErrorCalled = true }}
+            onSsoUrlLoadError={(_error) => { called = true }}
           />
         )
 
-        await waitFor(() => { if (!onSsoErrorCalled) throw new Error })
-        expect(onSsoErrorCalled).toBe(true)
+        await waitFor(() => { if (!called) throw new Error })
+        expect(called).toBe(true)
       })
     })
 
@@ -63,8 +63,8 @@ describe("ConnectWidget", () => {
         const component = render(
           <ConnectWidget
             proxy="https://client.com/mx-sso-proxy"
-            buildProxyRequest={(req) => {
-              const body = JSON.parse(req.options.body)
+            ssoRequestPreprocess={(req) => {
+              const body = JSON.parse(req.options.body?.toString() || "")
               body.widget_url.widget_type = "something_else"
               req.options.body = JSON.stringify(body)
               return req

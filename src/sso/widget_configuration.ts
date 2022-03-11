@@ -47,21 +47,23 @@ type CamelizeString<T extends PropertyKey, C extends string = ""> =
     T extends `${infer F}_${infer R}` ?
       CamelizeString<Capitalize<R>, `${C}${F}`> : `${C}${T}` : T;
 
-export type InternalWidgetOptions = WidgetOptions & {
+export type InternalWidgetConfigurationProps = Camelize<InternalWidgetConfiguration>
+export type InternalWidgetConfiguration = WidgetConfiguration & {
   widget_type: Type
+  oauth_referral_source?: string
   is_mobile_webview?: boolean
   ui_message_version?: number
 }
 
-export type WidgetOptionProps = Camelize<WidgetOptions>
-export type WidgetOptions = {
+export type WidgetConfigurationProps = Camelize<WidgetConfiguration>
+export type WidgetConfiguration = {
   ui_message_webview_url_scheme?: string
   color_scheme?: "dark" | "light"
   language?: string
 }
 
-export type ConnectWidgetOptionProps = Camelize<ConnectWidgetOptions>
-export type ConnectWidgetOptions = WidgetOptions & {
+export type ConnectWidgetConfigurationProps = Camelize<ConnectWidgetConfiguration>
+export type ConnectWidgetConfiguration = WidgetConfiguration & {
   client_redirect_url?: string
   current_institution_code?: string
   current_institution_guid?: string
@@ -69,29 +71,25 @@ export type ConnectWidgetOptions = WidgetOptions & {
   disable_institution_search?: boolean
   include_transactions?: boolean
   mode?: ConnectWidgetMode
-  oauth_referral_source?: string
   update_credentials?: boolean
   wait_for_full_aggregation?: boolean
 }
 
-export function widgetOptionsFromProps(props: WidgetOptionProps): WidgetOptions {
+export function getWidgetConfigurationFromProps(props: ConnectWidgetConfigurationProps & InternalWidgetConfigurationProps) {
   return {
-    color_scheme: props.colorScheme,
-  }
-}
-
-export function connectWidgetOptionsFromProps(props: ConnectWidgetOptionProps): ConnectWidgetOptions {
-  return {
-    ...widgetOptionsFromProps(props),
     client_redirect_url: props.clientRedirectUrl,
+    color_scheme: props.colorScheme,
     current_institution_code: props.currentInstitutionCode,
     current_institution_guid: props.currentInstitutionGuid,
     current_member_guid: props.currentMemberGuid,
     disable_institution_search: props.disableInstitutionSearch,
     include_transactions: props.includeTransactions,
+    is_mobile_webview: true,
     mode: props.mode,
-    oauth_referral_source: props.oauthReferralSource,
+    ui_message_version: 4,
+    ui_message_webview_url_scheme: props.uiMessageWebviewUrlScheme,
     update_credentials: props.updateCredentials,
     wait_for_full_aggregation: props.waitForFullAggregation,
+    widget_type: props.widgetType,
   }
 }
