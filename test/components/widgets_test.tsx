@@ -131,26 +131,28 @@ function testSsoUrlLoading(Component: FC<Props>) {
 
 function testStyling(Component: FC<Props>) {
   describe("Styling", () => {
-    test("height and width match the device's screen dimensions by default", async () => {
-      const { width, height } = Dimensions.get("screen")
+    describe("default styles", () => {
+      test("height and width match the device's screen dimensions", async () => {
+        const { width, height } = Dimensions.get("screen")
 
-      const component = render(<Component url="https://int-widgets.moneydesktop.com/..." />)
-      const view = await waitFor(() => component.findByTestId("widget_view"))
+        const component = render(<Component url="https://int-widgets.moneydesktop.com/..." />)
+        const view = await waitFor(() => component.findByTestId("widget_view"))
 
-      expect(view.props.style.width).toBe(width)
-      expect(view.props.style.height).toBe(height)
-    })
+        expect(view.props.style.width).toBe(width)
+        expect(view.props.style.height).toBe(height)
+      })
 
-    test("screen orientation changes result in the view being resized", async () => {
-      const { width, height } = Dimensions.get("screen")
+      test("screen orientation changes result in the view being resized", async () => {
+        const { width, height } = Dimensions.get("screen")
 
-      const component = render(<Component url="https://int-widgets.moneydesktop.com/..." />)
-      const view = await waitFor(() => component.findByTestId("widget_view"))
+        const component = render(<Component url="https://int-widgets.moneydesktop.com/..." />)
+        const view = await waitFor(() => component.findByTestId("widget_view"))
 
-      await act(() => rotateOrientation())
+        await act(() => rotateOrientation())
 
-      expect(view.props.style.width).toBe(height)
-      expect(view.props.style.height).toBe(width)
+        expect(view.props.style.width).toBe(height)
+        expect(view.props.style.height).toBe(width)
+      })
     })
   })
 }
