@@ -1,4 +1,4 @@
-import { Type } from "../widget/configuration"
+import { Type } from "../sso"
 
 import { makeBaseWidgetComponent } from "./make_component"
 
