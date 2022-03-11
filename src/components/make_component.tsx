@@ -1,14 +1,13 @@
 import React, { FC } from "react"
+
 import { dispatchWidgetLocationChangeEvent, WidgetPostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
 
 import { Type, SsoUrlProps, WidgetConfigurationProps } from "../sso"
-import { WidgetStylingProps } from "./standard_props"
-
-import { useWidgetRenderer } from "./renderer"
+import { useWidgetRenderer, StylingProps } from "./renderer"
 
 type Props =
   & SsoUrlProps
-  & WidgetStylingProps
+  & StylingProps
   & WidgetConfigurationProps
   & WidgetPostMessageCallbackProps
 

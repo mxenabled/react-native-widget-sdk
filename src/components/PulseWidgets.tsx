@@ -1,13 +1,11 @@
 import { dispatchPulseLocationChangeEvent, PulsePostMessageCallbackProps } from "@mxenabled/widget-post-message-definitions"
 
 import { Type, SsoUrlProps, WidgetConfigurationProps } from "../sso"
-import { WidgetStylingProps } from "./standard_props"
-
-import { useWidgetRenderer } from "./renderer"
+import { useWidgetRenderer, StylingProps } from "./renderer"
 
 export type PulseWidgetProps =
   & SsoUrlProps
-  & WidgetStylingProps
+  & StylingProps
   & WidgetConfigurationProps
   & PulsePostMessageCallbackProps
 

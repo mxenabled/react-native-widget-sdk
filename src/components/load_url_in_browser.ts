@@ -1,23 +1,37 @@
 import { Linking } from "react-native"
 
-import { WidgetLoadUrlCallbackProps } from "./standard_props"
-import { asError } from "../utils/error"
+export type LoadUrlInBrowserProps = {
+  onLoadBrowserUrl?: (url: string) => void
+  onLoadBrowserUrlError?: (url: string, error: Error) => void
+}
 
-function defaultOnLoadUrl(url: string) {
+function asError(error: unknown): Error {
+  if (error instanceof Error) {
+    return error
+  } else if (typeof error === "string") {
+    new Error(error)
+  }
+
+  return new Error(
+    ((error || {}) as { valueOf(): string }).valueOf()
+  )
+}
+
+function defaultOnLoadBrowserUrl(url: string) {
   Linking.openURL(url)
 }
 
-function defaultOnLoadUrlError(url: string, error: Error) {
+function defaultOnLoadBrowserUrlError(url: string, error: Error) {
   console.log(`Error loading ${url}: ${error}`)
 }
 
-export function loadUrlInBrowser(url: string, callbacks: WidgetLoadUrlCallbackProps) {
-  const onLoadUrl = callbacks.onLoadUrl || defaultOnLoadUrl
-  const onLoadUrlError = callbacks.onLoadUrlError || defaultOnLoadUrlError
+export function loadUrlInBrowser(url: string, callbacks: LoadUrlInBrowserProps) {
+  const onLoadBrowserUrl = callbacks.onLoadBrowserUrl || defaultOnLoadBrowserUrl
+  const onLoadBrowserUrlError = callbacks.onLoadBrowserUrlError || defaultOnLoadBrowserUrlError
 
   try {
-    onLoadUrl(url)
+    onLoadBrowserUrl(url)
   } catch (error) {
-    onLoadUrlError(url, asError(error))
+    onLoadBrowserUrlError(url, asError(error))
   }
 }

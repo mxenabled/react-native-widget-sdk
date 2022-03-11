@@ -51,12 +51,12 @@ describe("makeRequestInterceptor", () => {
   })
 
   describe("callbacks", () => {
-    test("calls the onLoadUrl callback when loading a valid non post message url", () => {
+    test("calls the onLoadBrowserUrl callback when loading a valid non post message url", () => {
       expect.assertions(1)
 
       const newUrl = "https://mx.com/page2"
       const callbacks = {
-        onLoadUrl: (url: string) => expect(url).toBe(newUrl),
+        onLoadBrowserUrl: (url: string) => expect(url).toBe(newUrl),
       }
 
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
@@ -65,13 +65,13 @@ describe("makeRequestInterceptor", () => {
       fn(req)
     })
 
-    test("calls the onLoadUrlError callback when loading a url causes an error", () => {
+    test("calls the onLoadBrowserUrlError callback when loading a url causes an error", () => {
       expect.assertions(1)
 
       const newUrl = "https://mx.com/page2"
       const callbacks = {
-        onLoadUrl: (_url: string) => { throw new Error("not today") },
-        onLoadUrlError: (url: string, _error: Error) => expect(url).toBe(newUrl),
+        onLoadBrowserUrl: (_url: string) => { throw new Error("not today") },
+        onLoadBrowserUrlError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
