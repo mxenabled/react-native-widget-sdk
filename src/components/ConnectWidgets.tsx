@@ -4,12 +4,13 @@ import { Type, SsoUrlProps, ConnectWidgetConfigurationProps } from "../sso"
 import { LoadUrlInBrowserProps } from "./load_url_in_browser"
 import { makeDefaultConnectOnOAuthRequested } from "./oauth"
 import { makeWidgetComponentWithDefaults } from "./make_component"
-import { useOAuthDeeplink } from "./oauth"
+import { useOAuthDeeplink, OAuthProps } from "./oauth"
 import { useWidgetRendererWithRef, StylingProps } from "./renderer"
 
 export type ConnectWidgetProps =
   & SsoUrlProps
   & StylingProps
+  & OAuthProps
   & LoadUrlInBrowserProps
   & ConnectPostMessageCallbackProps
   & ConnectWidgetConfigurationProps
@@ -34,7 +35,7 @@ export function ConnectWidget(props: ConnectWidgetProps) {
     dispatchConnectLocationChangeEvent,
   )
 
-  useOAuthDeeplink(ref)
+  useOAuthDeeplink(ref, props)
 
   return elem
 }

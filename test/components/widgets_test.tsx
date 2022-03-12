@@ -9,14 +9,67 @@ import { Props } from "../../src/components/make_component"
 
 import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
 import { rest, server } from "../mocks/server"
-import { Dimensions, rotateOrientation } from "../mocks/react_native"
+import { Dimensions, triggerDeviceRotation, triggerUrlChange } from "../mocks/react_native"
 
 describe("BudgetsWidget", () => fullWidgetComponentTestSuite(BudgetsWidget))
 describe("ConnectVerificationWidget", () => fullWidgetComponentTestSuite(ConnectVerificationWidget))
-describe("ConnectWidget", () => fullWidgetComponentTestSuite(ConnectWidget))
 describe("MasterWidget", () => fullWidgetComponentTestSuite(MasterWidget))
 describe("MiniPulseCarouselWidget", () => fullWidgetComponentTestSuite(MiniPulseCarouselWidget))
 describe("PulseWidget", () => fullWidgetComponentTestSuite(PulseWidget))
+
+describe("ConnectWidget", () => {
+  fullWidgetComponentTestSuite(ConnectWidget)
+
+  describe("OAuth", () => {
+    test("an OAuth deeplink triggers a post message to the web view", async () => {
+      expect.assertions(1)
+
+      const component = render(
+        <ConnectWidget
+          url="https://widgets.moneydesktop.com/md/..."
+          sendOAuthPostMessage={(_ref, msg) => {
+            expect(msg).toContain("MBR-123")
+          }}
+        />
+      )
+
+      await waitFor(() => component.findByTestId("widget_webview"))
+      triggerUrlChange("appscheme://oauth_complete?member_guid=MBR-123&status=success")
+    })
+
+    test("an OAuth success deeplink includes the right status", async () => {
+      expect.assertions(1)
+
+      const component = render(
+        <ConnectWidget
+          url="https://widgets.moneydesktop.com/md/..."
+          sendOAuthPostMessage={(_ref, msg) => {
+            expect(msg).toContain("oauthComplete/success")
+          }}
+        />
+      )
+
+      await waitFor(() => component.findByTestId("widget_webview"))
+      triggerUrlChange("appscheme://oauth_complete?member_guid=MBR-123&status=success")
+    })
+
+    test("an OAuth failure deeplink includes the right status", async () => {
+      expect.assertions(1)
+
+      const component = render(
+        <ConnectWidget
+          url="https://widgets.moneydesktop.com/md/..."
+          sendOAuthPostMessage={(_ref, msg) => {
+            expect(msg).toContain("oauthComplete/error")
+          }}
+        />
+      )
+
+      await waitFor(() => component.findByTestId("widget_webview"))
+      triggerUrlChange("appscheme://oauth_complete?member_guid=MBR-123&status=error")
+    })
+  })
+})
 
 function fullWidgetComponentTestSuite(Component: FC<Props>) {
   testSsoUrlLoading(Component)
@@ -32,19 +85,19 @@ function testSsoUrlLoading(Component: FC<Props>) {
             clientId="myveryownclientid"
             apiKey="myveryownapikey"
             userGuid="USR-777"
-            environment="integration"
+            environment="production"
           />
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/")
+        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/")
       })
 
       test("an error results in the onSsoUrlLoadError callback being triggered", async () => {
         let called = false
 
         server.use(
-          rest.post("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
+          rest.post("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
             res(ctx.status(500), ctx.json({ message: "NO!" }))))
 
         render(
@@ -52,7 +105,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
             clientId="myveryownclientid"
             apiKey="myveryownapikey"
             userGuid="USR-777"
-            environment="integration"
+            environment="production"
 
             onSsoUrlLoadError={(_error) => { called = true }}
           />
@@ -68,7 +121,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
             clientId="myveryownclientid"
             apiKey="myveryownapikey"
             userGuid="USR-777"
-            environment="integration"
+            environment="production"
 
             ssoRequestPreprocess={(req) => {
               const body = JSON.parse(req.options.body?.toString() || "")
@@ -80,7 +133,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/something_else/")
+        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/something_else/")
       })
     })
 
@@ -93,7 +146,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/")
+        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/")
       })
 
       test("an error results in the onSsoUrlLoadError callback being triggered", async () => {
@@ -130,7 +183,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/something_else/")
+        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/something_else/")
       })
     })
 
@@ -138,12 +191,12 @@ function testSsoUrlLoading(Component: FC<Props>) {
       test("it is able to get the widget url from props when a url prop is passed in", async () => {
         const component = render(
           <Component
-            url="https://int-widgets.moneydesktop.com/md/hi/tototoken"
+            url="https://widgets.moneydesktop.com/md/hi/tototoken"
           />
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://int-widgets.moneydesktop.com/md/hi/tototoken")
+        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/hi/tototoken")
       })
     })
 
@@ -177,7 +230,7 @@ function testStyling(Component: FC<Props>) {
       test("height and width match the device's screen dimensions", async () => {
         const { width, height } = Dimensions.get("screen")
 
-        const component = render(<Component url="https://int-widgets.moneydesktop.com/..." />)
+        const component = render(<Component url="https://widgets.moneydesktop.com/..." />)
         const view = await waitFor(() => component.findByTestId("widget_view"))
 
         expect(view.props.style.width).toBe(width)
@@ -187,10 +240,10 @@ function testStyling(Component: FC<Props>) {
       test("screen orientation changes result in the view being resized", async () => {
         const { width, height } = Dimensions.get("screen")
 
-        const component = render(<Component url="https://int-widgets.moneydesktop.com/..." />)
+        const component = render(<Component url="https://widgets.moneydesktop.com/..." />)
         const view = await waitFor(() => component.findByTestId("widget_view"))
 
-        await act(() => rotateOrientation())
+        await act(() => triggerDeviceRotation())
 
         expect(view.props.style.width).toBe(height)
         expect(view.props.style.height).toBe(width)

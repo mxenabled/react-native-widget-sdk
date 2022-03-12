@@ -8,7 +8,7 @@ type Body = {
 }
 
 const handlers = [
-  rest.post<Body>("https://int-api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) => {
+  rest.post<Body>("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) => {
     const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
 
     if (!widget) {
@@ -23,7 +23,7 @@ const handlers = [
       ctx.json({
         widget_url: {
           type: `${widget}_widget`,
-          url: `https://int-widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
+          url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
         }
       })
     )
@@ -44,7 +44,7 @@ const handlers = [
       ctx.json({
         widget_url: {
           type: `${widget}_widget`,
-          url: `https://int-widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
+          url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
         }
       })
     )

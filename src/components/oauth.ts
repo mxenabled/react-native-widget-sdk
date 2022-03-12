@@ -43,7 +43,14 @@ export type OAuthRedirectEvent =
   | OAuthSuccessRedirectEvent
   | OAuthErrorRedirectEvent
 
-export function useOAuthDeeplink(webViewRef: WebViewRef): OAuthRedirectEvent | null {
+export type OAuthProps = {
+  sendOAuthPostMessage?: (webViewRef: WebViewRef, msg: string) => void
+}
+
+export function useOAuthDeeplink(
+  webViewRef: WebViewRef,
+  props: OAuthProps,
+): OAuthRedirectEvent | null {
   const [ev, setEvent] = useState<OAuthRedirectEvent | null>(null)
 
   useEffect(() => {
@@ -55,7 +62,7 @@ export function useOAuthDeeplink(webViewRef: WebViewRef): OAuthRedirectEvent | n
 
       const event = buildOAuthRedirectEvent(url)
       setEvent(event)
-      postOAuthMessage(event, webViewRef)
+      postOAuthMessage(event, webViewRef, props)
     })
   }, [])
 
@@ -72,7 +79,7 @@ function buildOAuthRedirectEvent(url: UrlWithParsedQuery): OAuthRedirectEvent {
   return { type: "error", success: false }
 }
 
-function postOAuthMessage(ev: OAuthRedirectEvent, webViewRef: WebViewRef) {
+function postOAuthMessage(ev: OAuthRedirectEvent, webViewRef: WebViewRef, props: OAuthProps) {
   if (!webViewRef.current) {
     return
   }
@@ -87,5 +94,11 @@ function postOAuthMessage(ev: OAuthRedirectEvent, webViewRef: WebViewRef) {
     metadata = {}
   }
 
-  webViewRef.current.postMessage(JSON.stringify({ mx: true, type, metadata }))
+  const message = JSON.stringify({ mx: true, type, metadata })
+
+  if (props.sendOAuthPostMessage) {
+    props.sendOAuthPostMessage(webViewRef, message)
+  } else {
+    webViewRef.current.postMessage(message)
+  }
 }
