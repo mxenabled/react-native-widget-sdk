@@ -1,6 +1,5 @@
 import fetch from "node-fetch"
 
-
 /* The type cast of `global.fetch` to `unknown` is needed because the global
  * `fetch`'s type definition comes from React Native, which is incompatible
  * with the one from the `node-fetch` module. As far as I can tell, there are

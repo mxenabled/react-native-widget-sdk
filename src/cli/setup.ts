@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+/* istanbul ignore file */
 /* eslint @typescript-eslint/no-var-requires: "off" */
 const { execSync } = require("child_process")
 

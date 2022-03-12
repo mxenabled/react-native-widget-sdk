@@ -5,7 +5,7 @@ import { dispatchWidgetLocationChangeEvent, WidgetPostMessageCallbackProps } fro
 import { Type, SsoUrlProps, WidgetConfigurationProps } from "../sso"
 import { useWidgetRenderer, StylingProps } from "./renderer"
 
-type Props =
+export type Props =
   & SsoUrlProps
   & StylingProps
   & WidgetConfigurationProps
