@@ -6,18 +6,14 @@ enum Orientation {
 }
 
 export const isPortrait = () => getScreenHeight() >= getScreenWidth()
-
 export const isLandscape = () => getScreenHeight() <= getScreenWidth()
 
 export const getScreenHeight = () => getScreen().height
-
 export const getScreenWidth = () => getScreen().width
-
 export const getScreen = () => Dimensions.get("screen")
 
 export const onDimensionChange = (fn: (orientation: Orientation) => void) => {
   const callback = () => fn(isPortrait() ? Orientation.Portrait : Orientation.Landscape)
-
   const sub = Dimensions.addEventListener("change", callback)
 
   /* removeEventListener is deprecated but addEventListener does not return a
