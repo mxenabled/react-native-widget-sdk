@@ -12,10 +12,7 @@ const handlers = [
     const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
 
     if (!widget) {
-      return res(
-        ctx.status(400),
-        ctx.json({ error: true })
-      )
+      return res(ctx.status(400), ctx.json({ error: true }))
     }
 
     return res(
@@ -24,8 +21,8 @@ const handlers = [
         widget_url: {
           type: `${widget}_widget`,
           url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
-        }
-      })
+        },
+      }),
     )
   }),
 
@@ -33,10 +30,7 @@ const handlers = [
     const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
 
     if (!widget) {
-      return res(
-        ctx.status(400),
-        ctx.json({ error: true })
-      )
+      return res(ctx.status(400), ctx.json({ error: true }))
     }
 
     return res(
@@ -45,8 +39,8 @@ const handlers = [
         widget_url: {
           type: `${widget}_widget`,
           url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
-        }
-      })
+        },
+      }),
     )
   }),
 ]

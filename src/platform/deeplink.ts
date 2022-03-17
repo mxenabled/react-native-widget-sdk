@@ -9,7 +9,10 @@ export const onUrlChange = (fn: (event: UrlChangeEvent) => void, dispatchBufferS
   const callback = (event: UrlChangeEvent) => {
     const now = new Date()
     const url = event.url
-    if (!(url in dispatchTimes) || dispatchTimes[url].getTime() + dispatchBufferSeconds < now.getTime()) {
+    if (
+      !(url in dispatchTimes) ||
+      dispatchTimes[url].getTime() + dispatchBufferSeconds < now.getTime()
+    ) {
       dispatchTimes[event.url] = now
       fn(event)
     }
@@ -21,7 +24,5 @@ export const onUrlChange = (fn: (event: UrlChangeEvent) => void, dispatchBufferS
    * subscription object in versions of React Native v0.64 or below. We can
    * remove this condition when v64 (or below) is no longer supported.
    */
-  return () =>
-    sub ? sub.remove() :
-      Linking.removeEventListener("url", callback)
+  return () => (sub ? sub.remove() : Linking.removeEventListener("url", callback))
 }

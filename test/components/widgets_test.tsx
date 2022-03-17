@@ -30,7 +30,7 @@ describe("ConnectWidget", () => {
           sendOAuthPostMessage={(_ref, msg) => {
             expect(msg).toContain("MBR-123")
           }}
-        />
+        />,
       )
 
       await waitFor(() => component.findByTestId("widget_webview"))
@@ -46,7 +46,7 @@ describe("ConnectWidget", () => {
           sendOAuthPostMessage={(_ref, msg) => {
             expect(msg).toContain("oauthComplete/success")
           }}
-        />
+        />,
       )
 
       await waitFor(() => component.findByTestId("widget_webview"))
@@ -62,7 +62,7 @@ describe("ConnectWidget", () => {
           sendOAuthPostMessage={(_ref, msg) => {
             expect(msg).toContain("oauthComplete/error")
           }}
-        />
+        />,
       )
 
       await waitFor(() => component.findByTestId("widget_webview"))
@@ -86,7 +86,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
             apiKey="myveryownapikey"
             userGuid="USR-777"
             environment="production"
-          />
+          />,
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
@@ -98,7 +98,9 @@ function testSsoUrlLoading(Component: FC<Props>) {
 
         server.use(
           rest.post("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
-            res(ctx.status(500), ctx.json({ message: "NO!" }))))
+            res(ctx.status(500), ctx.json({ message: "NO!" })),
+          ),
+        )
 
         render(
           <Component
@@ -106,12 +108,15 @@ function testSsoUrlLoading(Component: FC<Props>) {
             apiKey="myveryownapikey"
             userGuid="USR-777"
             environment="production"
-
-            onSsoUrlLoadError={(_error) => { called = true }}
-          />
+            onSsoUrlLoadError={(_error) => {
+              called = true
+            }}
+          />,
         )
 
-        await waitFor(() => { if (!called) throw new Error })
+        await waitFor(() => {
+          if (!called) throw new Error()
+        })
         expect(called).toBe(true)
       })
 
@@ -122,28 +127,25 @@ function testSsoUrlLoading(Component: FC<Props>) {
             apiKey="myveryownapikey"
             userGuid="USR-777"
             environment="production"
-
             ssoRequestPreprocess={(req) => {
               const body = JSON.parse(req.options.body?.toString() || "")
               body.widget_url.widget_type = "something_else"
               req.options.body = JSON.stringify(body)
               return req
             }}
-          />
+          />,
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/something_else/")
+        expect(webView.props.source.uri).toContain(
+          "https://widgets.moneydesktop.com/md/something_else/",
+        )
       })
     })
 
     describe("Proxy server", () => {
       test("it is able to load the widget url when proxy props are passed in", async () => {
-        const component = render(
-          <Component
-            proxy="https://client.com/mx-sso-proxy"
-          />
-        )
+        const component = render(<Component proxy="https://client.com/mx-sso-proxy" />)
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
         expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/")
@@ -154,17 +156,22 @@ function testSsoUrlLoading(Component: FC<Props>) {
 
         server.use(
           rest.post("https://client.com/mx-sso-proxy", (req, res, ctx) =>
-            res(ctx.status(500), ctx.json({ message: "NO!" }))))
+            res(ctx.status(500), ctx.json({ message: "NO!" })),
+          ),
+        )
 
         render(
           <Component
             proxy="https://client.com/mx-sso-proxy"
-
-            onSsoUrlLoadError={(_error) => { called = true }}
-          />
+            onSsoUrlLoadError={(_error) => {
+              called = true
+            }}
+          />,
         )
 
-        await waitFor(() => { if (!called) throw new Error })
+        await waitFor(() => {
+          if (!called) throw new Error()
+        })
         expect(called).toBe(true)
       })
 
@@ -172,37 +179,40 @@ function testSsoUrlLoading(Component: FC<Props>) {
         const component = render(
           <Component
             proxy="https://client.com/mx-sso-proxy"
-
             ssoRequestPreprocess={(req) => {
               const body = JSON.parse(req.options.body?.toString() || "")
               body.widget_url.widget_type = "something_else"
               req.options.body = JSON.stringify(body)
               return req
             }}
-          />
+          />,
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/something_else/")
+        expect(webView.props.source.uri).toContain(
+          "https://widgets.moneydesktop.com/md/something_else/",
+        )
       })
     })
 
     describe("URL", () => {
       test("it is able to get the widget url from props when a url prop is passed in", async () => {
         const component = render(
-          <Component
-            url="https://widgets.moneydesktop.com/md/hi/tototoken"
-          />
+          <Component url="https://widgets.moneydesktop.com/md/hi/tototoken" />,
         )
 
         const webView = await waitFor(() => component.findByTestId("widget_webview"))
-        expect(webView.props.source.uri).toContain("https://widgets.moneydesktop.com/md/hi/tototoken")
+        expect(webView.props.source.uri).toContain(
+          "https://widgets.moneydesktop.com/md/hi/tototoken",
+        )
       })
     })
 
     test("it throws when no loading props are included", () => {
       const spy = jest.spyOn(console, "error")
-      spy.mockImplementation(() => { /* do nothing */ })
+      spy.mockImplementation(() => {
+        /* do nothing */
+      })
 
       expect.assertions(1)
 
@@ -216,7 +226,7 @@ function testSsoUrlLoading(Component: FC<Props>) {
           {/* eslint @typescript-eslint/ban-ts-comment: "off" */}
           {/* @ts-ignore: see [1] for details */}
           <Component />
-        </TestingErrorBoundary>
+        </TestingErrorBoundary>,
       )
 
       spy.mockClear()

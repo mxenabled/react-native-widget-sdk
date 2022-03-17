@@ -12,9 +12,7 @@ function asError(error: unknown): Error {
     new Error(error)
   }
 
-  return new Error(
-    ((error || {}) as { valueOf(): string }).valueOf()
-  )
+  return new Error(((error || {}) as { valueOf(): string }).valueOf())
 }
 
 function defaultOnLoadUrlInBrowser(url: string) {
@@ -27,7 +25,8 @@ function defaultOnLoadUrlInBrowserError(url: string, error: Error) {
 
 export function loadUrlInBrowser(url: string, callbacks: LoadUrlInBrowserProps) {
   const onLoadUrlInBrowser = callbacks.onLoadUrlInBrowser || defaultOnLoadUrlInBrowser
-  const onLoadUrlInBrowserError = callbacks.onLoadUrlInBrowserError || defaultOnLoadUrlInBrowserError
+  const onLoadUrlInBrowserError =
+    callbacks.onLoadUrlInBrowserError || defaultOnLoadUrlInBrowserError
 
   try {
     onLoadUrlInBrowser(url)

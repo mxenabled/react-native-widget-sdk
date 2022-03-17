@@ -39,9 +39,7 @@ type OAuthErrorRedirectEvent = {
   success: boolean
 }
 
-export type OAuthRedirectEvent =
-  | OAuthSuccessRedirectEvent
-  | OAuthErrorRedirectEvent
+export type OAuthRedirectEvent = OAuthSuccessRedirectEvent | OAuthErrorRedirectEvent
 
 export type OAuthProps = {
   sendOAuthPostMessage?: (webViewRef: WebViewRef, msg: string) => void
