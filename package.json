@@ -14,7 +14,8 @@
     "documentation:copy": "cp node_modules/@mxenabled/widget-post-message-definitions/docs/generated.md docs/widget_callback_props.md",
     "build": "tsc",
     "build:dist": "[ -d dist ] && rm -r dist; npm run build -- --declaration --noEmit false --outDir dist",
-    "format": "prettier -w src test",
+    "format": "npm run prettier -- -w",
+    "prettier": "prettier src test",
     "lint": "eslint src test",
     "test": "jest --verbose --coverage",
     "open:coverage": "open coverage/lcov-report/index.html"
