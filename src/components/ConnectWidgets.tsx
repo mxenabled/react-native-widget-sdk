@@ -14,7 +14,7 @@ export type ConnectWidgetProps = SsoUrlProps &
   StylingProps &
   OAuthProps &
   LoadUrlInBrowserProps &
-  ConnectPostMessageCallbackProps &
+  ConnectPostMessageCallbackProps<string> &
   ConnectWidgetConfigurationProps
 
 export const ConnectAggregationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
