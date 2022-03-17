@@ -11,7 +11,7 @@ import { useWidgetRenderer, StylingProps } from "./renderer"
 export type Props = SsoUrlProps &
   StylingProps &
   WidgetConfigurationProps &
-  WidgetPostMessageCallbackProps
+  WidgetPostMessageCallbackProps<string>
 
 export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
   return function Widget(props: Props) {
