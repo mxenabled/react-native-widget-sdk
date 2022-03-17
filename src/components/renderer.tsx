@@ -12,10 +12,7 @@ export type StylingProps = {
 }
 
 type MaybeWebViewRef = MutableRefObject<WebView | null>
-type BaseProps<Configuration> =
-  & Props<Configuration>
-  & StylingProps
-  & LoadUrlInBrowserProps
+type BaseProps<Configuration> = Props<Configuration> & StylingProps & LoadUrlInBrowserProps
 
 export function useWidgetRenderer<Configuration>(
   props: BaseProps<Configuration>,
@@ -41,7 +38,8 @@ export function useWidgetRendererWithRef<Configuration>(
   const scheme = props.uiMessageWebviewUrlScheme || "mx"
   const handler = makeRequestInterceptor(url, scheme, props, dispatchEvent)
 
-  return [ref, (
+  return [
+    ref,
     <SafeAreaView testID="widget_view" style={style}>
       <WebView
         testID="widget_webview"
@@ -55,6 +53,6 @@ export function useWidgetRendererWithRef<Configuration>(
         incognito={true}
         onShouldStartLoadWithRequest={handler}
       />
-    </SafeAreaView>
-  )]
+    </SafeAreaView>,
+  ]
 }

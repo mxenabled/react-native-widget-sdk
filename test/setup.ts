@@ -6,4 +6,5 @@ import fetch from "node-fetch"
  * no run-time differences that impact the behavior we're testing, so using
  * `node-fetch` is a safe alternative to React Native's `fetch`.
  */
+// prettier-ignore
 (global.fetch as unknown) = fetch

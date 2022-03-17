@@ -8,6 +8,7 @@ let width = 200
 let height = 600
 
 export function triggerDeviceRotation() {
+  // prettier-ignore
   [width, height] = [height, width]
 
   if ("change" in callbacks["dimensions"]) {
@@ -36,7 +37,7 @@ export const Dimensions = {
   get: jest.fn().mockImplementation(() => ({
     height,
     width,
-  }))
+  })),
 }
 
 export const Linking = {
@@ -62,5 +63,6 @@ jest.doMock("react-native", () =>
       Dimensions,
       Linking,
     },
-    ReactNative
-  ))
+    ReactNative,
+  ),
+)

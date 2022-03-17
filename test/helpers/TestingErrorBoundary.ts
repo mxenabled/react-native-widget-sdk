@@ -30,4 +30,3 @@ export default class TestingErrorBoundary extends Component<Props, State> {
     return this.props.children
   }
 }
-

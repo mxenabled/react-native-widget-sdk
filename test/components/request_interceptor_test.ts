@@ -17,7 +17,7 @@ const makeNavigationEvent = (url: string) =>
     navigationType: "click",
     title: "Page",
     url,
-  }) as const
+  } as const)
 
 describe("makeRequestInterceptor", () => {
   test("it returns a navigation event handler", () => {
@@ -70,7 +70,9 @@ describe("makeRequestInterceptor", () => {
 
       const newUrl = "https://mx.com/page2"
       const callbacks = {
-        onLoadUrlInBrowser: (_url: string) => { throw new Error("not today") },
+        onLoadUrlInBrowser: (_url: string) => {
+          throw new Error("not today")
+        },
         onLoadUrlInBrowserError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
@@ -99,7 +101,9 @@ describe("makeRequestInterceptor", () => {
       expect.assertions(1)
 
       const callbacks = {
-        onLoad: (_payload: LoadPayload) => { throw new Error(":-(") }
+        onLoad: (_payload: LoadPayload) => {
+          throw new Error(":-(")
+        },
       }
 
       const metadata = encodeURIComponent(JSON.stringify({}))
@@ -201,12 +205,14 @@ describe("makeRequestInterceptor", () => {
         },
       }
 
-      const metadata = encodeURIComponent(JSON.stringify({
-        user_guid,
-        session_guid,
-        member_guid,
-        institution,
-      }))
+      const metadata = encodeURIComponent(
+        JSON.stringify({
+          user_guid,
+          session_guid,
+          member_guid,
+          institution,
+        }),
+      )
 
       const newUrl = `appscheme://connect/updateCredentials?metadata=${metadata}`
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
