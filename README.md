@@ -106,12 +106,12 @@ component props:
 - `uiMessageWebviewUrlScheme`: Used in postMessages and OAuth redirects.
   Defaults to `mx`. See [OAuth redirects](#oauth-redirects) for additional
   information.
-- `colorScheme`: Load the widget in the specified colorScheme; options are
-  `light` and `dark`. Defaults to `light`.
 - `language`: Load the widget in the specified language. Defaults to `en-US`.
   See [language
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
   for additional information.
+- `colorScheme`: Load the widget in the specified colorScheme; options are
+  `light` and `dark`. Defaults to `light`. _Connect only._
 - `currentInstitutionCode`: Load the widget into the credential view for the
   specified institution. _Connect only._
 - `currentInstitutionGuid`: Load the widget into the credential view for the
