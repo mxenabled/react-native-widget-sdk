@@ -78,7 +78,30 @@ export default function App() {
 }
 ```
 
-### Configuring the widget
+### Interacting with the widget
+
+You can listen to post message events by passing callback props in the widget
+component. The prop names follow this naming scheme:
+
+* For widget events: `on<event name>`,
+* For entity events: `on<entity><action>`
+
+For example, the `mx/connect/selectInstitution` event is made available via
+`onSelectInstitution` in the `ConnectWidget` component. Refer to [this
+document](docs/widget_callback_props.md) for a list of events and their
+payloads.
+
+```jsx
+<ConnectWidget
+  onMessage={(request) => console.log(`Message: ${request.url}`)}
+  onSelectedInstitution={(payload) => console.log(`Selecting ${payload.name}`)}
+/>
+```
+
+### Widget configuration props
+
+You can configure the state and behaviour of the widget with the following
+component props:
 
 - `uiMessageWebviewUrlScheme`: Used in postMessages and OAuth redirects.
   Defaults to `mx`. See [OAuth redirects](#oauth-redirects) for additional
@@ -112,26 +135,6 @@ export default function App() {
   any aggregation-type process is complete in order to fire a member connected
   postMessage. This allows clients to have transactional data by the time the
   widget is closed. _Connect only._
-
-### Interacting with the widget
-
-You can listen to post message events by passing callback props in the widget
-component. The prop names follow this naming scheme:
-
-* For widget events: `on<event name>`,
-* For entity events: `on<entity><action>`
-
-For example, the `mx/connect/selectInstitution` event is made available via
-`onSelectInstitution` in the `ConnectWidget` component. Refer to [this
-document](docs/widget_callback_props.md) for a list of events and their
-payloads.
-
-```jsx
-<ConnectWidget
-  onMessage={(request) => console.log(`Message: ${request.url}`)}
-  onSelectedInstitution={(payload) => console.log(`Selecting ${payload.name}`)}
-/>
-```
 
 ### OAuth redirects
 
