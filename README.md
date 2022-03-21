@@ -90,27 +90,28 @@ export default function App() {
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
   for additional information.
 - `currentInstitutionCode`: Load the widget into the credential view for the
-  specified institution.
+  specified institution. _Connect only._
 - `currentInstitutionGuid`: Load the widget into the credential view for the
-  specified institution.
+  specified institution. _Connect only._
 - `currentMemberGuid`: Load to a specific member that contains an error or
   requires MFA from the most recent job. `currentMemberGuid` takes precedence
-  over `currentInstitutionCode`.
+  over `currentInstitutionCode`. _Connect only._
 - `disableInstitutionSearch`: When set to true, the institution search feature
   will be disabled and end users will not be able to navigate to it. Must be
   used with `currentInstitutionCode`, `currentInstituionGuid`, or
-  `currentMemberGuid`.
+  `currentMemberGuid`. _Connect only._
 - `includeTransactions`: When set to false while creating or updating a member,
   transaction data will not be automatically aggregated. Future manual or
-  background aggregations will not be affected. Defaults to true.
+  background aggregations will not be affected. Defaults to true. _Connect
+  only._
 - `updateCredentials`: Loads widget to the update credential view of a current
   member. Optionally used with `currentMemberGuid`. This option should be used
   sparingly. The best practice is to use `currentMemberGuid` and let the widget
-  resolve the issue.
+  resolve the issue. _Connect only._
 - `waitForFullAggregation`: Loads Connect, but forces the widget to wait until
   any aggregation-type process is complete in order to fire a member connected
   postMessage. This allows clients to have transactional data by the time the
-  widget is closed.
+  widget is closed. _Connect only._
 
 ### Interacting with the widget
 
