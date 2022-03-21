@@ -78,6 +78,40 @@ export default function App() {
 }
 ```
 
+### Configuring the widget
+
+- `uiMessageWebviewUrlScheme`: Used in postMessages and OAuth redirects.
+  Defaults to `mx`. See [OAuth redirects](#oauth-redirects) for additional
+  information.
+- `colorScheme`: Load the widget in the specified colorScheme; options are
+  `light` and `dark`. Defaults to `light`.
+- `language`: Load the widget in the specified language. Defaults to `en-US`.
+  See [language
+  options](https://docs.mx.com/api#connect_configuring_connect_language_options)
+  for additional information.
+- `currentInstitutionCode`: Load the widget into the credential view for the
+  specified institution.
+- `currentInstitutionGuid`: Load the widget into the credential view for the
+  specified institution.
+- `currentMemberGuid`: Load to a specific member that contains an error or
+  requires MFA from the most recent job. `currentMemberGuid` takes precedence
+  over `currentInstitutionCode`.
+- `disableInstitutionSearch`: When set to true, the institution search feature
+  will be disabled and end users will not be able to navigate to it. Must be
+  used with `currentInstitutionCode`, `currentInstituionGuid`, or
+  `currentMemberGuid`.
+- `includeTransactions`: When set to false while creating or updating a member,
+  transaction data will not be automatically aggregated. Future manual or
+  background aggregations will not be affected. Defaults to true.
+- `updateCredentials`: Loads widget to the update credential view of a current
+  member. Optionally used with `currentMemberGuid`. This option should be used
+  sparingly. The best practice is to use `currentMemberGuid` and let the widget
+  resolve the issue.
+- `waitForFullAggregation`: Loads Connect, but forces the widget to wait until
+  any aggregation-type process is complete in order to fire a member connected
+  postMessage. This allows clients to have transactional data by the time the
+  widget is closed.
+
 ### Interacting with the widget
 
 You can listen to post message events by passing callback props in the widget
@@ -115,6 +149,31 @@ your application, you will need to do three things:
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
+
+### Available widget components
+
+This SDK exposes the following components:
+
+- `AccountsWidget`
+- `BudgetsWidget`
+- `ConnectAggregationWidget`
+- `ConnectVerificationWidget`
+- `ConnectWidget`
+- `ConnectionsWidget`
+- `DebtsWidget`
+- `FinstrongWidget`
+- `GoalsWidget`
+- `HelpWidget`
+- `MasterWidget`
+- `MiniBudgetsWidget`
+- `MiniFinstrongWidget`
+- `MiniPulseCarouselWidget`
+- `MiniSpendingWidget`
+- `PulseWidget`
+- `SettingsWidget`
+- `SpendingWidget`
+- `TransactionsWidget`
+- `TrendsWidget`
 
 ---
 
