@@ -103,9 +103,9 @@ payloads.
 You can configure the state and behaviour of the widget with the following
 component props:
 
-- `uiMessageWebviewUrlScheme`: Used in postMessages and OAuth redirects.
-  Defaults to `mx`. See [OAuth redirects](#oauth-redirects) for additional
-  information.
+- `uiMessageWebviewUrlScheme`: Used as the scheme that MX will redirect to at
+  the end of OAuth. This must be a scheme that your application responds to.
+  See [OAuth redirects](#oauth-redirects) for additional information.
 - `language`: Load the widget in the specified language. Defaults to `en-US`.
   See [language
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
