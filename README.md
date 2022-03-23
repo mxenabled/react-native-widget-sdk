@@ -108,7 +108,7 @@ component props:
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
   for additional information.
 
-#### Widget configuration props for Connect
+#### Connect specific configuration props
 
 - `colorScheme`: Load the widget in the specified colorScheme; options are
   `light` and `dark`. Defaults to `light`.
