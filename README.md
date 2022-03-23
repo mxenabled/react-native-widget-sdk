@@ -98,7 +98,47 @@ payloads.
 />
 ```
 
-### OAuth redirects
+### Widget configuration props
+
+You can configure the state and behaviour of the widget with the following
+component props:
+
+- `language`: Load the widget in the specified language. Defaults to `en-US`.
+  See [language
+  options](https://docs.mx.com/api#connect_configuring_connect_language_options)
+  for additional information.
+
+#### Connect specific configuration props
+
+- `colorScheme`: Load the widget in the specified colorScheme; options are
+  `light` and `dark`. Defaults to `light`.
+- `currentInstitutionCode`: Load the widget into the credential view for the
+  specified institution.
+- `currentInstitutionGuid`: Load the widget into the credential view for the
+  specified institution.
+- `currentMemberGuid`: Load to a specific member that contains an error or
+  requires MFA from the most recent job. `currentMemberGuid` takes precedence
+  over `currentInstitutionCode`.
+- `disableInstitutionSearch`: When set to true, the institution search feature
+  will be disabled and end users will not be able to navigate to it. Must be
+  used with `currentInstitutionCode`, `currentInstituionGuid`, or
+  `currentMemberGuid`.
+- `includeTransactions`: When set to false while creating or updating a member,
+  transaction data will not be automatically aggregated. Future manual or
+  background aggregations will not be affected. Defaults to true.
+- `uiMessageWebviewUrlScheme`: Used as the scheme that MX will redirect to at
+  the end of OAuth. This must be a scheme that your application responds to.
+  See [OAuth redirects](#oauth-redirects) for additional information.
+- `updateCredentials`: Loads widget to the update credential view of a current
+  member. Optionally used with `currentMemberGuid`. This option should be used
+  sparingly. The best practice is to use `currentMemberGuid` and let the widget
+  resolve the issue.
+- `waitForFullAggregation`: Loads Connect, but forces the widget to wait until
+  any aggregation-type process is complete in order to fire a member connected
+  postMessage. This allows clients to have transactional data by the time the
+  widget is closed.
+
+#### OAuth redirects in Connect
 
 In order to properly handle OAuth redirects from the Connect widget back to
 your application, you will need to do three things:
@@ -115,6 +155,31 @@ your application, you will need to do three things:
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
+
+### Available widget components
+
+This SDK exposes the following components:
+
+- `AccountsWidget`
+- `BudgetsWidget`
+- `ConnectAggregationWidget`
+- `ConnectVerificationWidget`
+- `ConnectWidget`
+- `ConnectionsWidget`
+- `DebtsWidget`
+- `FinstrongWidget`
+- `GoalsWidget`
+- `HelpWidget`
+- `MasterWidget`
+- `MiniBudgetsWidget`
+- `MiniFinstrongWidget`
+- `MiniPulseCarouselWidget`
+- `MiniSpendingWidget`
+- `PulseWidget`
+- `SettingsWidget`
+- `SpendingWidget`
+- `TransactionsWidget`
+- `TrendsWidget`
 
 ---
 
