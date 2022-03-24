@@ -15,7 +15,7 @@
     "build": "tsc",
     "build:dist": "[ -d dist ] && rm -r dist; npm run build -- --declaration --noEmit false --outDir dist",
     "format": "npm run prettier -- -w",
-    "prettier": "prettier src test",
+    "prettier": "prettier src test example/App.tsx",
     "lint": "eslint src test",
     "test": "jest --verbose --coverage",
     "open:coverage": "open coverage/lcov-report/index.html"
@@ -121,6 +121,8 @@
     "printWidth": 100,
     "semi": false,
     "trailingComma": "all",
-    "singleQuote": false
+    "singleQuote": false,
+    "bracketSameLine": true,
+    "bracketSpacing": true
   }
 }
