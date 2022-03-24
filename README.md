@@ -53,9 +53,16 @@ npx mx-widget-sdk-setup
 
 ### Generating your Widget SSO URL
 
-See [SSO Widget URL documentation](https://docs.mx.com/api#widgets_mx_widgets_request_widget_url)
-for instructions. If loading the Connect Widget, follow the instructions
-located the [Connect SSO Widget URL documentation](https://docs.mx.com/api#connect_request_a_url).
+See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
+loading the Connect Widget, follow the instructions located the [Connect SSO
+Widget URL documentation][api_request_connect_url]. The SSO URL should be
+passed to a Widget component via the `url` prop.
+
+#### Proxy server
+
+The SDK also has the option of making the SSO request on your behalf to your
+backend service that is able to make requests to our API. If used, the proxy
+URL should passed to a Widget component via the `proxy` prop.
 
 ### Importing the SDK into your project and rendering a widget
 
@@ -98,7 +105,7 @@ payloads.
 />
 ```
 
-### Widget configuration props
+### Widget props
 
 You can configure the state and behaviour of the widget with the following
 component props:
@@ -107,8 +114,14 @@ component props:
   See [language
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
   for additional information.
+- `proxy`: SSO proxy server URL.
+- `style`: Styles applied to the view containing the widget. See React Native's
+  [Style][react_native_style] documentation for additional information.
+- `url`: Widget SSO URL. See [Generating your Widget SSO
+  URL](#generating-your-widget-sso-url) for additional information. **This prop
+  is required.**
 
-#### Connect specific configuration props
+#### Connect specific props
 
 - `colorScheme`: Load the widget in the specified colorScheme; options are
   `light` and `dark`. Defaults to `light`.
@@ -185,3 +198,7 @@ This SDK exposes the following components:
 
 [![Build SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml)
 [![Build Example App](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-example-app.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-example-app.yml)
+
+[api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
+[api_request_connect_url]: https://docs.mx.com/api#connect_request_a_url "Request a Connect URL"
+[react_native_style]: https://reactnative.dev/docs/style "React Native Style"
