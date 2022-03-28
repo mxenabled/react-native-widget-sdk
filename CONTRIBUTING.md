@@ -25,14 +25,24 @@ are commands we use to perform various tasks:
 - `npm run open:coverage`, open code coverage report.
 
 
+## Publishing a new version
+
+1. Update `CHANGELOG.md` with any changes that need to be communicated to a
+   user of the SDK. See https://keepachangelog.com/en/1.1.0/ for details on
+   what and how content should be included.
+2. Update the version in `package.json`, run `npm install` to update the
+   lock file, and commit these changes.
+3. [Publish new version to npm.](#publishing-to-npm)
+4. Tag the commit create in the previous step with the version.
+
+
 ### Publishing to npm
 
 You will need permission to publish to the [mxenabled][mxenabled_npm_org]
-organization in npm before you can publish this package. **Before you
-publish**, make sure to update CHANGELOG.md. Once you are able to publish, log
-into npm with `npm login` then run `npm publish` to publish. Running `npm
-publish` will automatically execute `npm run build:dist` for you, so there is
-no need to do that manually.
+organization in npm before you can publish this package. Once you are able to
+publish, log into npm with `npm login` then run `npm publish` to publish.
+Running `npm publish` will automatically execute `npm run build:dist` for you,
+so there is no need to do that manually.
 
 
 [mxenabled_npm_org]: https://www.npmjs.com/org/mxenabled "mxenabled npm organization"
