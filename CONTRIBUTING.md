@@ -27,10 +27,12 @@ are commands we use to perform various tasks:
 
 ### Publishing to npm
 
-You will need permission to publish to the
-[mxenabled](https://www.npmjs.com/org/mxenabled) organization in npm before you
-can publish this package.
+You will need permission to publish to the [mxenabled][mxenabled_npm_org]
+organization in npm before you can publish this package. **Before you
+publish**, make sure to update CHANGELOG.md. Once you are able to publish, log
+into npm with `npm login` then run `npm publish` to publish. Running `npm
+publish` will automatically execute `npm run build:dist` for you, so there is
+no need to do that manually.
 
-Once you are able to publish, log into npm with `npm login` then run `npm
-publish` to publish. Running `npm publish` will automatically execute `npm run
-build:dist` for you, so there is no need to do that manually.
+
+[mxenabled_npm_org]: https://www.npmjs.com/org/mxenabled "mxenabled npm organization"
