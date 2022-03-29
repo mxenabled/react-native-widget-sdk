@@ -54,7 +54,7 @@ npx mx-widget-sdk-setup
 ### Generating your Widget SSO URL
 
 See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
-loading the Connect Widget, follow the instructions located the [Connect SSO
+loading the Connect Widget, follow the instructions located in [Connect SSO
 Widget URL documentation][api_request_connect_url]. The SSO URL should be
 passed to a Widget component via the `url` prop.
 
