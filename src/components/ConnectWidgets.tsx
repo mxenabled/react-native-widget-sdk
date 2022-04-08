@@ -17,10 +17,6 @@ export type ConnectWidgetProps = SsoUrlProps &
   ConnectPostMessageCallbackProps<string> &
   ConnectWidgetConfigurationProps
 
-export const ConnectAggregationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
-  mode: "aggregation",
-})
-
 export const ConnectVerificationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
   mode: "verification",
   includeTransactions: false,
