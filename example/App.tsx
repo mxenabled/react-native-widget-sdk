@@ -1,13 +1,13 @@
 import React from "react"
 import { View } from "react-native"
 
-import { ConnectAggregationWidget } from "@mxenabled/react-native-widget-sdk"
+import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 import config from "./config.json"
 
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
-      <ConnectAggregationWidget
+      <ConnectWidget
         {...config}
 
         onSsoUrlLoadError={(error) => {
