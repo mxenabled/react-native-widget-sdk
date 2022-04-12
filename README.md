@@ -175,7 +175,6 @@ This SDK exposes the following components:
 
 - `AccountsWidget`
 - `BudgetsWidget`
-- `ConnectAggregationWidget`
 - `ConnectVerificationWidget`
 - `ConnectWidget`
 - `ConnectionsWidget`
