@@ -38,9 +38,6 @@ filling in the appropriate values for `clientId`, `apiKey`, `userGuid`, and
 }
 ```
 
-⚠️ Only rely on loading the Widget using your API key in your test environment.
-This method will not work when you move to production.
-
 Next, install dependencies for iOS and React Native:
 
 ```
