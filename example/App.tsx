@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react"
 import { SafeAreaView, Text, View, StyleSheet, StyleProp, ViewStyle } from "react-native"
-import { NativeRouter, Routes, Route, Link as RouteLink } from "react-router-native"
+import { NativeRouter, Routes, Route, Link } from "react-router-native"
 
 import {
   BudgetsWidget,
@@ -16,13 +16,17 @@ import config from "./config.json"
 const styles = StyleSheet.create({
   page: {
     backgroundColor: "#ffffff",
-    paddingTop: 40,
+    paddingTop: 10,
   },
   heading: {
     paddingLeft: 25,
   },
-  nav: {},
-  navItem: {
+  navigation: {
+    flex: 1,
+    flexWrap: "wrap",
+    padding: 10,
+  },
+  navigationButton: {
     alignItems: "center",
     backgroundColor: "#fbfbfb",
     margin: 10,
@@ -32,9 +36,11 @@ const styles = StyleSheet.create({
     color: "#2980b9",
     fontSize: 20,
   },
-  navItemSmallText: {
+  back: {
     color: "#2980b9",
     fontSize: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
 })
 
@@ -55,13 +61,13 @@ export default function App() {
 }
 
 const Home = () => (
-  <Page style={styles.nav} goBack={false}>
-    <Link to="/connect">Load Connect Widget</Link>
-    <Link to="/budgets">Load Budgets Widget</Link>
-    <Link to="/goals">Load Goals Widget</Link>
-    <Link to="/pulse">Load Pulse Widget</Link>
-    <Link to="/spending">Load Spending Widget</Link>
-    <Link to="/transactions">Load Transactions Widget</Link>
+  <Page style={styles.navigation} goBack={false}>
+    <NavigationButton to="/connect">Connect</NavigationButton>
+    <NavigationButton to="/budgets">Budgets</NavigationButton>
+    <NavigationButton to="/goals">Goals</NavigationButton>
+    <NavigationButton to="/pulse">Pulse</NavigationButton>
+    <NavigationButton to="/spending">Spending</NavigationButton>
+    <NavigationButton to="/transactions">Transactions</NavigationButton>
   </Page>
 )
 
@@ -73,19 +79,19 @@ const Page: FC<{ style?: StyleProp<ViewStyle>; goBack?: boolean }> = ({
   <SafeAreaView style={styles.page}>
     {goBack ? (
       <View style={styles.heading}>
-        <RouteLink underlayColor="#ffffff" to="/">
-          <Text style={styles.navItemSmallText}>Back</Text>
-        </RouteLink>
+        <Link underlayColor="#ffffff" to="/">
+          <Text style={styles.back}>Back</Text>
+        </Link>
       </View>
     ) : null}
     {children}
   </SafeAreaView>
 )
 
-const Link: FC<{ to: string }> = ({ to, children }) => (
-  <RouteLink underlayColor="#f0f4f7" to={to} style={styles.navItem}>
+const NavigationButton: FC<{ to: string }> = ({ to, children }) => (
+  <Link underlayColor="#f0f4f7" to={to} style={styles.navigationButton}>
     <Text style={styles.navItemNormalText}>{children}</Text>
-  </RouteLink>
+  </Link>
 )
 
 const Connect = () => {
