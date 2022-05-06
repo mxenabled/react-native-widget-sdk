@@ -14,7 +14,9 @@ application](./../example/README.md).
 ## Full test suite
 
 Tests should be ran in an iOS (`npm run ios`) and an Android emulator (`npm run
-android`).
+android`). They should also be performed on the Connect widget, which can be
+loaded in the example app by clicking on the "Load Connect Widget" link on the
+home page.
 
 - **Loading Connect**: there are three ways of loading a widget in the SDK:
   through the Platform API, using a proxy server, and using a hard-coded URL.
