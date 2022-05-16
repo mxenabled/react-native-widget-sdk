@@ -11,7 +11,7 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "clean": "[ -d dist ] && rm -r dist",
+    "clean": "[ -d dist ] && rm -r dist || true",
     "compile": "tsc --declaration --noEmit false --outDir dist",
     "build": "npm run clean && npm run compile && npm run documentation",
     "documentation": "cp node_modules/@mxenabled/widget-post-message-definitions/docs/react-native-sdk-generated.md docs/widget_callback_props.md",
