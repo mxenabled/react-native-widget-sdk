@@ -288,7 +288,6 @@ import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 - Payload fields:
     - `user_guid` (`string`)
     - `session_guid` (`string`)
-    - `member_guid` (`string`)
 
 <details>
 <summary>Click here to view a sample usage of <code>onOAuthError</code>.</summary>
@@ -302,7 +301,6 @@ import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
   onOAuthError={(payload) => {
     console.log(`User guid: ${payload.user_guid}`)
     console.log(`Session guid: ${payload.session_guid}`)
-    console.log(`Member guid: ${payload.member_guid}`)
   }
 />
 ```
@@ -352,6 +350,10 @@ import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 
 ---
 ### Step change (`mx/connect/stepChange`)
+
+**Warning**: This message is intended for analytics tracking purposes and not
+controlling or altering user experience. The contents of this
+message's payload is subject to change.
 
 - Widget callback prop name: `onStepChange`
 - Payload fields:
