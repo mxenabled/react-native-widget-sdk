@@ -19,10 +19,11 @@ Clone this repo and install [Node v16](https://nodejs.org/en/download/). Below
 are commands we use to perform various tasks:
 
 - `npm install`, install depedencies.
-- `npm run build`, run compiler, does not generate assets in `dist` directory.
-- `npm run build:dist`, run compile and save assets to `dist` directory.
+- `npm run compile`, run compiler.
+- `npm run build`, build SDK assets.
 - `npm run test`, run unit tests.
-- `npm run open:coverage`, open code coverage report.
+- `npm run lint`, run linter.
+- `npm run format`, run code formatter.
 
 
 ## Publishing a new version
