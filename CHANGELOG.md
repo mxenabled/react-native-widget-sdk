@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Documentation for configuration and callback component props.
-- Updating @mxenabled/widget-post-message-definitions to v1.0.6.
+- Updating @mxenabled/widget-post-message-definitions to v1.0.9.
 - Loading additional widgets in example application.
 
 ## [1.0.5] - 2022-03-09
