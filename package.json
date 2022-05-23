@@ -10,16 +10,15 @@
     "url": "https://github.com/mxenabled/react-native-widget-sdk.git"
   },
   "scripts": {
-    "prepack": "npm run build",
+    "build": "npm run clean && npm run compile && npm run documentation",
     "clean": "[ -d dist ] && rm -r dist || true",
     "compile": "tsc --declaration --noEmit false --outDir dist",
-    "build": "npm run clean && npm run compile && npm run documentation",
     "documentation": "cp node_modules/@mxenabled/widget-post-message-definitions/docs/react-native-sdk-generated.md docs/widget_callback_props.md",
     "format": "npm run prettier -- -w",
-    "prettier": "prettier src test example/App.tsx",
     "lint": "eslint src test",
-    "test": "jest --verbose --coverage",
-    "open:coverage": "open coverage/lcov-report/index.html"
+    "prepack": "npm run build",
+    "prettier": "prettier src test example/App.tsx",
+    "test": "jest --verbose --coverage"
   },
   "bin": {
     "mx-widget-sdk-setup": "dist/src/cli/setup.js"
