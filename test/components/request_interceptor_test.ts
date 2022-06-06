@@ -180,7 +180,7 @@ describe("makeRequestInterceptor", () => {
         onInvalidMessageError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
-      const newUrl = "appscheme://connect/notarealmessage?metadata="
+      const newUrl = "appscheme://connect/notARealMessage?metadata="
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 
@@ -245,7 +245,7 @@ describe("makeRequestInterceptor", () => {
         onInvalidMessageError: (url: string, _error: Error) => expect(url).toBeDefined(),
       }
 
-      const newUrl = "appscheme://connect/notarealmessage?metadata="
+      const newUrl = "appscheme://connect/notARealMessage?metadata="
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", callbacks, handler)
       const req = makeNavigationEvent(newUrl)
 

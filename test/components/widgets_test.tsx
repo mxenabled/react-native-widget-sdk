@@ -82,8 +82,8 @@ function testSsoUrlLoading(Component: FC<Props>) {
       test("it is able to load the widget url when Platform API props are passed in", async () => {
         const component = render(
           <Component
-            clientId="myveryownclientid"
-            apiKey="myveryownapikey"
+            clientId="myVeryOwnClientId"
+            apiKey="myVeryOwnApiKey"
             userGuid="USR-777"
             environment="production"
           />,
@@ -104,8 +104,8 @@ function testSsoUrlLoading(Component: FC<Props>) {
 
         render(
           <Component
-            clientId="myveryownclientid"
-            apiKey="myveryownapikey"
+            clientId="myVeryOwnClientId"
+            apiKey="myVeryOwnApiKey"
             userGuid="USR-777"
             environment="production"
             onSsoUrlLoadError={(_error) => {
@@ -123,8 +123,8 @@ function testSsoUrlLoading(Component: FC<Props>) {
       test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
         const component = render(
           <Component
-            clientId="myveryownclientid"
-            apiKey="myveryownapikey"
+            clientId="myVeryOwnClientId"
+            apiKey="myVeryOwnApiKey"
             userGuid="USR-777"
             environment="production"
             ssoRequestPreprocess={(req) => {

@@ -1,0 +1,21 @@
+words:
+  - appscheme
+  - batcave
+  - camelize
+  - codepaths
+  - deeplink
+  - deeplinking
+  - finstrong
+  - mxenabled
+  - mxmobilewidgetsdkdemo
+  - mxwidgetsdkdemo
+  - ngrx
+  - tsbuildinfo
+
+ignorePaths:
+  - docs/widget_callback_props.md
+  - example/.flowconfig
+  - example/.gitignore
+  - example/android/**
+  - example/ios/**
+  - cspell.config.yaml
