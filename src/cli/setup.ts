@@ -9,7 +9,7 @@ try {
   execSync("npm install --save react-native-webview")
   console.log("\nLinking react-native-webview")
   execSync("npx react-native link react-native-webview")
-  console.log("\nInstalling native depedencies")
+  console.log("\nInstalling native dependencies")
   execSync("cd ios && pod install")
   console.log("\nDone, you're now ready to use the MX Widget SDK in your application")
 } catch (error) {
