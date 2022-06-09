@@ -17,11 +17,11 @@ jobs:
         node-version: 16
         cache: npm
 
-    - name: Run npm ci (sdk)
-      run: npm ci
+    - name: Run npm install (sdk)
+      run: npm install
 
-    - name: Run npm ci (app)
-      run: npm ci
+    - name: Run npm install (app)
+      run: npm install
       working-directory: example
 
     - name: Create config file
