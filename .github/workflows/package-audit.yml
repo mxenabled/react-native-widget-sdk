@@ -19,4 +19,9 @@ jobs:
         node-version: 16
         cache: npm
 
-    - run: npm audit --omit dev
+    - name: Run npm audit (sdk)
+      run: npm audit --omit dev
+
+    - name: Run npm audit (app)
+      run: npm audit --omit dev
+      working-directory: example
