@@ -15,7 +15,7 @@ words:
 ignorePaths:
   - cspell.config.yaml
   - docs/widget_callback_props.md
-  - example/.flowconfig
   - example/.gitignore
+  - example/Gemfile
   - example/android/**
   - example/ios/**
