@@ -1,7 +1,7 @@
 {
   "name": "@mxenabled/react-native-widget-sdk",
   "description": "MX React Native Widget SDK",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "dist/src/index.js",
   "source": "src/index.ts",
   "license": "MIT",
