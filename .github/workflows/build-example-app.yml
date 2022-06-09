@@ -17,6 +17,7 @@ jobs:
         node-version: 16
         cache: npm
 
+    - run: node --version
     - run: npm --version
     - name: Run npm install (sdk)
       run: npm install
