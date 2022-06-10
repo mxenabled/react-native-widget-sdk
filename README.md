@@ -163,7 +163,7 @@ your application, you will need to do three things:
   scheme](https://www.npmjs.com/package/uri-scheme) package to manage your
   application's schemes.
 - Provide your application's scheme to the widget component with the
-  `uiMessageWebviewUrlScheme` prop. Expo application that are not standalone
+  `uiMessageWebviewUrlScheme` prop. Expo applications that are not standalone
   should use `clientRedirectUrl` instead, see note below.
 
 ```jsx
