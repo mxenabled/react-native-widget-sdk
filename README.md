@@ -171,11 +171,11 @@ your application, you will need to do three things:
 ```
 
 **Note for Expo application:** non-standalone Expo applications are not
-installed with a unique application scheme. If this is the case for you, then
-you will need to use the `clientRedirectUrl` prop instead of
-`uiMessageWebviewUrlScheme`. Note that this does not apply for standalone Expo
-application, if your application is a standalone application you should
-continue to use the `uiMessageWebviewUrlScheme` prop.
+installed with a unique application scheme. If you are using a non-standalone
+Expo application, then you will need to use the `clientRedirectUrl` prop
+instead of `uiMessageWebviewUrlScheme`. Note that this does not apply for
+standalone Expo applications, if your application is a standalone application
+then you should continue to use the `uiMessageWebviewUrlScheme` prop.
 
 `clientRedirectUrl` works similarly to `uiMessageWebviewUrlScheme`, except you
 will need to pass in the full URL to your Expo application and include
