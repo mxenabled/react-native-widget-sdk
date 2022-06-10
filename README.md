@@ -163,10 +163,30 @@ your application, you will need to do three things:
   scheme](https://www.npmjs.com/package/uri-scheme) package to manage your
   application's schemes.
 - Provide your application's scheme to the widget component with the
-  `uiMessageWebviewUrlScheme` prop.
+  `uiMessageWebviewUrlScheme` prop. Expo users should use `clientRedirectUrl`
+  instead, see note below.
 
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
+```
+
+**Note for Expo users:** Expo applications are not installed with a unique
+application scheme unless it is installed as standalone application. If this is
+the case for you, then you will need to use the `clientRedirectUrl` prop
+instead of `uiMessageWebviewUrlScheme`.
+
+`clientRedirectUrl` works similarly to `uiMessageWebviewUrlScheme`, except you
+will need to pass in the full URL to your Expo application and include
+`/oauth_complete` at the end of the URL path in order for the Widget SDK to
+properly detect the linking event. Below you will find examples of what
+redirect URLs will look like.
+
+- When running locally, `exp://127.0.0.1:19000/--/oauth_complete`.
+- In development, `exp://wg-qka.community.app.exp.direct:80/--/oauth_complete`.
+- In production, `exp://exp.host/@community/with-webbrowser-redirect`.
+
+```
+<ConnectWidget clientRedirectUrl="exp://127.0.0.1:19000/--/oauth_complete" />
 ```
 
 ### Available widget components
