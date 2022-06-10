@@ -170,7 +170,7 @@ your application, you will need to do three things:
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
 
-**Note for Expo application:** non-standalone Expo applications are not
+**Note for Expo applications:** non-standalone Expo applications are not
 installed with a unique application scheme. If you are using a non-standalone
 Expo application, then you will need to use the `clientRedirectUrl` prop
 instead of `uiMessageWebviewUrlScheme`. Note that this does not apply for
