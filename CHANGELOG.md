@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 ### Changed
+### Fixed
+
+## [1.0.8] - 2022-06-10
+### Fixed
+
+- Deeplinking: listening for URL events with expo-linking for Expo applications.
 
 ## [1.0.7] - 2022-06-09
 ### Changed
