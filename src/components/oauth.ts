@@ -54,7 +54,28 @@ export function useOAuthDeeplink(
   useEffect(() => {
     return onUrlChange(({ url: rawUrl }) => {
       const url = parseUrl(rawUrl, true)
-      if (url.host !== OAuthCompleteHost) {
+
+      /**
+       * When the ui_message_webview_url_scheme setting is used, our backend
+       * will generate a URL which looks like this:
+       *
+       *   <scheme>://<event>?<query>
+       *
+       * For URLs like these, we need to check the host.
+       *
+       * However, when a client is using Expo in dev/qa mode and doesn't have
+       * access to their app's scheme, they rely on the client_redirect_url
+       * setting which must use the host to specify Expo's application
+       * location. In this case, the redirect URL has to have the specified
+       * event as part of the path:
+       *
+       *   exp://<ip>/--/<event>?<query>
+       *
+       * For URLs like these, we need to check the path.
+       */
+      const isOAuthEventUrl =
+        url.host === OAuthCompleteHost || url.pathname?.includes(OAuthCompleteHost)
+      if (!isOAuthEventUrl) {
         return
       }
 

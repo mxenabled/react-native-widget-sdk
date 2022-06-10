@@ -1,4 +1,11 @@
-import { Linking } from "react-native"
+import { Linking as RNLinking } from "react-native"
+
+let Linking: RNLinking
+try {
+  Linking = require("expo-linking")
+} catch (err) {
+  Linking = RNLinking
+}
 
 export type UrlChangeEvent = {
   url: string
