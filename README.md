@@ -183,7 +183,7 @@ will need to pass in the full URL to your Expo application and include
 properly detect the linking event. You can use Expo's `Linking.createURL`
 method to create the URL.
 
-```
+```jsx
 <ConnectWidget clientRedirectUrl={Linking.createURL("/oauth_complete")} />
 ```
 
