@@ -178,15 +178,11 @@ instead of `uiMessageWebviewUrlScheme`.
 `clientRedirectUrl` works similarly to `uiMessageWebviewUrlScheme`, except you
 will need to pass in the full URL to your Expo application and include
 `/oauth_complete` at the end of the URL path in order for the Widget SDK to
-properly detect the linking event. Below you will find examples of what
-redirect URLs will look like.
-
-- When running locally, `exp://127.0.0.1:19000/--/oauth_complete`.
-- In development, `exp://wg-qka.community.app.exp.direct:80/--/oauth_complete`.
-- In production, `exp://exp.host/@community/with-webbrowser-redirect`.
+properly detect the linking event. You can use Expo's `Linking.createURL`
+method to create the URL.
 
 ```
-<ConnectWidget clientRedirectUrl="exp://127.0.0.1:19000/--/oauth_complete" />
+<ConnectWidget clientRedirectUrl={Linking.createURL("/oauth_complete")} />
 ```
 
 ### Available widget components
