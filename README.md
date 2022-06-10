@@ -163,16 +163,16 @@ your application, you will need to do three things:
   scheme](https://www.npmjs.com/package/uri-scheme) package to manage your
   application's schemes.
 - Provide your application's scheme to the widget component with the
-  `uiMessageWebviewUrlScheme` prop. Expo applications that are not standalone
-  should use `clientRedirectUrl` instead, see note below.
+  `uiMessageWebviewUrlScheme` prop. Expo applications that are not deployed as
+  standalone applications should use `clientRedirectUrl` instead, see note
+  below.
 
 ```jsx
 <ConnectWidget uiMessageWebviewUrlScheme="sampleScheme" />
 ```
 
-**Note for Expo applications:** non-standalone Expo applications are not
-installed with a unique application scheme. If you are using a non-standalone
-Expo application, then you will need to use the `clientRedirectUrl` prop
+**Note for Expo applications:** since Expo applications rely on Expo's own
+application scheme, Expo users will need to use the `clientRedirectUrl` prop
 instead of `uiMessageWebviewUrlScheme`. Note that this does not apply for
 standalone Expo applications, if your application is a standalone application
 then you should continue to use the `uiMessageWebviewUrlScheme` prop.
