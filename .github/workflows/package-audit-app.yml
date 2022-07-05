@@ -1,10 +1,9 @@
-name: Package Audit
+name: Package Audit for example application
 
 on:
   pull_request:
-  push:
-    branches:
-    - master
+    paths:
+    - example
   schedule:
   - cron: "0 0 1 * *" # every month
 
@@ -18,9 +17,6 @@ jobs:
       with:
         node-version: 16
         cache: npm
-
-    - name: Run npm audit (sdk)
-      run: npm audit --omit dev
 
     - name: Run npm audit (app)
       run: npm audit --omit dev
