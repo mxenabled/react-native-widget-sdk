@@ -66,8 +66,10 @@ URL should passed to a Widget component via the `proxy` prop.
 
 ##### Connect Widget configuration
 
-When using the `proxy` option with the Connect Widget, you may pass the widget
-settings directly to the widget component.
+When you are not using the `proxy` setting, you must pass the widget
+configuration in the SSO request that generates the SSO URL. However, when
+using the `proxy` setting with the Connect Widget, those configuration settings
+may be passed directly to the widget component.
 
 - `colorScheme`: Load the widget in the specified colorScheme; options are
   `light` and `dark`. Defaults to `light`.
@@ -104,10 +106,6 @@ settings directly to the widget component.
   disableInstitutionSearch={true}
 />
 ```
-
-Note that if you are not using the `proxy` setting, then all widget
-configuration must be included in the SSO request and passed to the component
-via the SSO URL.
 
 ### Importing the SDK into your project and rendering a widget
 
