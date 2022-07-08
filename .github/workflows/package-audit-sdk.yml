@@ -1,4 +1,4 @@
-name: Package Audit for SDK
+name: Package Audit SDK
 
 on:
   pull_request:

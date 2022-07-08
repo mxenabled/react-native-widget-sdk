@@ -228,8 +228,8 @@ This SDK exposes the following components:
 
 [![Build SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml)
 [![Build Example App](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-example-app.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-example-app.yml)
-[![Package Audit for SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-sdk.yml)
-[![Package Audit for example application](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-app.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-app.yml)
+[![Package Audit SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-sdk.yml)
+[![Package Audit Example App](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-app.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-app.yml)
 
 [api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
 [api_request_connect_url]: https://docs.mx.com/api#connect_request_a_url "Request a Connect URL"

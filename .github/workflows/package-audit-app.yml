@@ -1,4 +1,4 @@
-name: Package Audit for example application
+name: Package Audit Example App
 
 on:
   pull_request:
