@@ -234,8 +234,8 @@ widget component but they are not being triggered:
 - Ensure your SSO request is correctly configured for the React Native SDK:
     - `ui_message_version` should be set to `4`.
     - `is_mobile_webview` should be set to `true`.
-- Ensure you are using the appropriate widget component for the `widget_type`
-  used when making the SSO request. For example, if you set `widget_type` to
+- Ensure you are using the corresponding widget component for the `widget_type`
+  used in the SSO request. For example, if you set `widget_type` to
   `connect_widget`, then you should use the `ConnectWidget` component.
 
 ---
