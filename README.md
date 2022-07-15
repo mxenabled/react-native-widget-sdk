@@ -148,20 +148,6 @@ payloads.
 />
 ```
 
-### Troubleshooting
-
-#### Post messages not working
-
-Check the following items if you have passed post message callbacks in your
-widget component but they are not being triggered:
-
-- Ensure your SSO request is correctly configured for the Web SDK:
-    - `ui_message_version` should be set to `4`.
-    - `is_mobile_webview` should be set to `true`.
-- Ensure you the appropriate widget class for the `widget_type` used when
-  making the SSO request. For example, if you set `widget_type` to be
-  `connect_widget`, then you should use the `ConnectWidget` component.
-
 ### Widget props
 
 You can configure the state and behavior of the widget with the following
@@ -237,6 +223,20 @@ This SDK exposes the following components:
 - `SpendingWidget`
 - `TransactionsWidget`
 - `TrendsWidget`
+
+### Troubleshooting
+
+#### Post messages not working
+
+Check the following items if you have passed post message callbacks in your
+widget component but they are not being triggered:
+
+- Ensure your SSO request is correctly configured for the Web SDK:
+    - `ui_message_version` should be set to `4`.
+    - `is_mobile_webview` should be set to `true`.
+- Ensure you the appropriate widget class for the `widget_type` used when
+  making the SSO request. For example, if you set `widget_type` to be
+  `connect_widget`, then you should use the `ConnectWidget` component.
 
 ---
 
