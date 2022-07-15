@@ -231,7 +231,7 @@ This SDK exposes the following components:
 Check the following items if you have passed post message callbacks to your
 widget component but they are not being triggered:
 
-- Ensure your SSO request is correctly configured for the Web SDK:
+- Ensure your SSO request is correctly configured for the React Native SDK:
     - `ui_message_version` should be set to `4`.
     - `is_mobile_webview` should be set to `true`.
 - Ensure you the appropriate widget class for the `widget_type` used when
