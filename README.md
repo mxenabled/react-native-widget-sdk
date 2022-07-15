@@ -228,8 +228,8 @@ This SDK exposes the following components:
 
 #### Post messages not working
 
-Check the following items if you have passed post message callbacks to your
-widget component but they are not being triggered:
+Check the following items if widget post message callbacks are not being
+triggered in your application.
 
 - Ensure your SSO request is correctly configured for the React Native SDK:
     - `ui_message_version` should be set to `4`.
