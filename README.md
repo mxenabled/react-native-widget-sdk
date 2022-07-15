@@ -228,7 +228,7 @@ This SDK exposes the following components:
 
 #### Post messages not working
 
-Check the following items if you have passed post message callbacks in your
+Check the following items if you have passed post message callbacks to your
 widget component but they are not being triggered:
 
 - Ensure your SSO request is correctly configured for the Web SDK:
