@@ -224,6 +224,20 @@ This SDK exposes the following components:
 - `TransactionsWidget`
 - `TrendsWidget`
 
+### Troubleshooting
+
+#### Post messages not working
+
+Check the following items if widget post message callbacks are not being
+triggered in your application.
+
+- Ensure your SSO request is correctly configured for the React Native SDK:
+    - `ui_message_version` should be set to `4`.
+    - `is_mobile_webview` should be set to `true`.
+- Ensure you are using the corresponding widget component for the `widget_type`
+  used in the SSO request. For example, if you set `widget_type` to
+  `connect_widget`, then you should use the `ConnectWidget` component.
+
 ---
 
 [![Build SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/build-sdk.yml)
