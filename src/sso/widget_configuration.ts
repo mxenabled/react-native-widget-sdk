@@ -73,7 +73,6 @@ export type ConnectWidgetConfiguration = WidgetConfiguration & {
   include_transactions?: boolean
   mode?: ConnectWidgetMode
   update_credentials?: boolean
-  wait_for_full_aggregation?: boolean
 }
 
 export function getWidgetConfigurationFromProps(
@@ -92,7 +91,6 @@ export function getWidgetConfigurationFromProps(
     ui_message_version: 4,
     ui_message_webview_url_scheme: props.uiMessageWebviewUrlScheme,
     update_credentials: props.updateCredentials,
-    wait_for_full_aggregation: props.waitForFullAggregation,
     widget_type: props.widgetType,
   }
 }
