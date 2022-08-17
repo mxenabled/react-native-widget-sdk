@@ -53,10 +53,12 @@ npx mx-widget-sdk-setup
 
 ### Generating your Widget SSO URL
 
-See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
-loading the Connect Widget, follow the instructions located in [Connect SSO
-Widget URL documentation][api_request_connect_url]. The SSO URL should be
-passed to a Widget component via the `url` prop.
+Refer to our [authentication][authentication_and_security] and [SSO Widget URL
+documentation][api_request_widget_url] for instructions and information related
+to making an SSO URL request. If loading the Connect Widget, follow the
+instructions located in [Connect SSO Widget URL
+documentation][api_request_connect_url]. The SSO URL should be passed to a
+Widget component via the `url` prop.
 
 #### Proxy server
 
@@ -241,6 +243,7 @@ triggered in your application.
 [![Package Audit SDK](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-sdk.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-sdk.yml)
 [![Package Audit Example App](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-example-app.yml/badge.svg)](https://github.com/mxenabled/react-native-widget-sdk/actions/workflows/package-audit-example-app.yml)
 
+[authentication_and_security]: https://docs.mx.com/api#authentication_and_security "Authentication and security"
 [api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
 [api_request_connect_url]: https://docs.mx.com/api#connect_request_a_url "Request a Connect URL"
 [react_native_style]: https://reactnative.dev/docs/style "React Native Style"
