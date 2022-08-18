@@ -38,9 +38,11 @@ assignees: ''
 
 **Device information**
 
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - SDK version: [e.g. 22]
+- Device: [e.g. iPhone6]
+- OS: [e.g. iOS 8.1]
+- React Native version: [e.g. 0.68.1]
+- MX React Native Widget SDK version: [e.g. 1.0.8]
+- Are you using Expo: [yes/no]
 
 
 **Additional context**
