@@ -3,7 +3,7 @@ import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { Props, useSsoUrl } from "../sso"
-import { LoadUrlInBrowserProps } from "./load_url_in_browser"
+import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
 
@@ -36,7 +36,14 @@ export function useWidgetRendererWithRef<Configuration>(
   }
 
   const scheme = props.uiMessageWebviewUrlScheme || "mx"
-  const handler = makeRequestInterceptor(url, scheme, props, dispatchEvent)
+  const handler = makeRequestInterceptor(url, scheme, {
+    onIntercept: (url) => {
+      dispatchEvent(url, props)
+    },
+    onLoadUrlInBrowser: (url) => {
+      loadUrlInBrowser(url, props)
+    },
+  })
 
   return [
     ref,

@@ -1,12 +1,15 @@
 import { WebViewNavigation } from "react-native-webview"
 import { parse as parseUrl } from "url"
 
-import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
-
 export enum Action {
   LoadInApp,
   LoadInBrowser,
   Intercept,
+}
+
+type Callbacks = {
+  onIntercept?: (url: string) => void
+  onLoadUrlInBrowser?: (url: string) => void
 }
 
 class Interceptor {
@@ -32,11 +35,10 @@ class Interceptor {
   }
 }
 
-export function makeRequestInterceptor<WidgetCallbackProps>(
+export function makeRequestInterceptor(
   widgetUrl: string,
   uiMessageWebviewUrlScheme: string,
-  callbacks: LoadUrlInBrowserProps & WidgetCallbackProps,
-  handler: (url: string, callbacks: WidgetCallbackProps) => void,
+  callbacks: Callbacks,
 ) {
   const interceptor = new Interceptor(widgetUrl, uiMessageWebviewUrlScheme)
 
@@ -47,11 +49,11 @@ export function makeRequestInterceptor<WidgetCallbackProps>(
         return true
 
       case Action.Intercept:
-        handler(request.url, callbacks)
+        callbacks.onIntercept?.(request.url)
         return false
 
       case Action.LoadInBrowser:
-        loadUrlInBrowser(request.url, callbacks)
+        callbacks.onLoadUrlInBrowser?.(request.url)
         return false
     }
   }
