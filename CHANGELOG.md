@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 ### Changed
+
+- Updating @mxenabled/widget-post-message-definitions to v1.1.0.
+
 ### Fixed
 
 ## [1.0.8] - 2022-06-10
