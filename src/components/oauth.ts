@@ -1,9 +1,9 @@
-import { MutableRefObject, useEffect, useState } from "react"
-import { WebView } from "react-native-webview"
+import { useEffect, useState } from "react"
 import { parse as parseUrl, UrlWithParsedQuery } from "url"
 
 import { ConnectOAuthRequestedPayload } from "@mxenabled/widget-post-message-definitions"
 
+import { WebViewRef } from "./webview"
 import { onUrlChange } from "../platform/deeplink"
 import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
 
@@ -25,8 +25,6 @@ const OAuthStatusSuccess = "success"
  */
 const OAuthTypeSuccess = "oauthComplete/success"
 const OAuthTypeError = "oauthComplete/error"
-
-type WebViewRef = MutableRefObject<WebView | null>
 
 type OAuthSuccessRedirectEvent = {
   type: "success"
