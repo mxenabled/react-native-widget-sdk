@@ -181,14 +181,13 @@ describe("makeRequestInterceptor", () => {
 
       const user_guid = "USR-123"
       const session_guid = "777"
-      const initial_step = ""
 
       const callbacks = {
         onLoaded: (_payload: ConnectLoadedPayload) => expect(false).toBe(true),
         onInvalidMessageError: (url: string, _error: Error) => expect(url).toBe(newUrl),
       }
 
-      const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid, initial_step }))
+      const metadata = encodeURIComponent(JSON.stringify({ user_guid, session_guid }))
       const newUrl = `appscheme://connect/loaded?metadata=${metadata}`
       const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {
         onIntercept: (url) => handler(url, callbacks),
