@@ -1,2 +1,1 @@
-const pkg = require("../package")
-export const sdkVersion = pkg.version
+export { version as sdkVersion } from "../package"
