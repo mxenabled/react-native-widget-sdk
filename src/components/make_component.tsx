@@ -7,9 +7,11 @@ import {
 
 import { Type, SsoUrlProps, WidgetConfigurationProps } from "../sso"
 import { useWidgetRenderer, StylingProps } from "./renderer"
+import { SdkTelemetryProps } from "./telemetry"
 
 export type Props = SsoUrlProps &
   StylingProps &
+  SdkTelemetryProps &
   WidgetConfigurationProps &
   WidgetPostMessageCallbackProps<string>
 
