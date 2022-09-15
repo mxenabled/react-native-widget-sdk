@@ -19,14 +19,6 @@ project.
     - `user_guid` (`string`)
     - `session_guid` (`string`)
     - `initial_step` (`string`)
-        - One of:
-            - `"search"`
-            - `"selectMember"`
-            - `"enterCreds"`
-            - `"mfa"`
-            - `"connected"`
-            - `"loginError"`
-            - `"disclosure"`
 
 <details>
 <summary>Click here to view a sample usage of <code>onLoaded</code>.</summary>
