@@ -7,8 +7,7 @@ const { execSync } = require("child_process")
 const tryExecSync = (cmd: string) => {
   try {
     execSync(cmd)
-  } catch (ignore) {
-  }
+  } catch (ignore) {}
 }
 
 try {
