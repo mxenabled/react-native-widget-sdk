@@ -57,11 +57,19 @@ export const Linking = {
   }),
 }
 
+export const NativeModules = {
+  ...ReactNative.NativeModules,
+  RNCWebViewManager: {
+    startLoadWithResult: jest.fn(),
+  },
+}
+
 jest.doMock("react-native", () =>
   Object.setPrototypeOf(
     {
       Dimensions,
       Linking,
+      NativeModules,
     },
     ReactNative,
   ),
