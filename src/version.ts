@@ -1,1 +1,1 @@
-export { version as sdkVersion } from "../package"
+export { version as sdkVersion } from "../package.json"
