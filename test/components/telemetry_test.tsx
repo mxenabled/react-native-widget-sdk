@@ -2,7 +2,10 @@ import React, { FC } from "react"
 import { render, waitFor } from "@testing-library/react-native"
 import { act } from "react-test-renderer"
 
-import { ConnectWidget as BaseConnectWidget, ConnectWidgetProps } from "../../src/components/ConnectWidgets"
+import {
+  ConnectWidget as BaseConnectWidget,
+  ConnectWidgetProps,
+} from "../../src/components/ConnectWidgets"
 import { SdkTelemetryProps } from "../../src/components/telemetry"
 import { sdkVersion } from "../../src/version"
 
