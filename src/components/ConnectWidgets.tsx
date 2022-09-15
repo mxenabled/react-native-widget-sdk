@@ -9,13 +9,11 @@ import { makeDefaultConnectOnOAuthRequested } from "./oauth"
 import { makeWidgetComponentWithDefaults } from "./make_component"
 import { useOAuthDeeplink, OAuthProps } from "./oauth"
 import { useWidgetRendererWithRef, StylingProps } from "./renderer"
-import { SdkTelemetryProps } from "./telemetry"
 
 export type ConnectWidgetProps = SsoUrlProps &
   StylingProps &
   OAuthProps &
   LoadUrlInBrowserProps &
-  SdkTelemetryProps &
   ConnectPostMessageCallbackProps<string> &
   ConnectWidgetConfigurationProps
 

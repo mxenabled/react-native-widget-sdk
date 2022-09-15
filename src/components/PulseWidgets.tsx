@@ -5,11 +5,9 @@ import {
 
 import { Type, SsoUrlProps, WidgetConfigurationProps } from "../sso"
 import { useWidgetRenderer, StylingProps } from "./renderer"
-import { SdkTelemetryProps } from "./telemetry"
 
 export type PulseWidgetProps = SsoUrlProps &
   StylingProps &
-  SdkTelemetryProps &
   WidgetConfigurationProps &
   PulsePostMessageCallbackProps<string>
 
