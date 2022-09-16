@@ -1,0 +1,115 @@
+#!/bin/bash
+
+rn_version=${1:-latest}
+app_name="TestRnApp_$(echo "$rn_version" | tr "." "_")"
+sdk_version=$(node -e 'console.log(require("./package.json").version)')
+sdk_tar="mxenabled-react-native-widget-sdk-${sdk_version}.tgz"
+
+print_info() {
+  echo "Preparing to build a React Native application with the following information:"
+  echo "  - SDK version: $sdk_version"
+  echo "  - React Native version: $rn_version"
+  echo "  - Application directory: $app_name"
+  echo "  - Client ID: $INTEGRATION_TEST_CLIENT_ID"
+  echo "  - Environment: $INTEGRATION_TEST_ENVIRONMENT"
+  echo
+}
+
+build_sdk() {
+  local step="$1"
+  echo -n "Step $step: Building the SDK ... "
+  npm build &> /dev/null
+  echo "done"
+}
+
+create_app() {
+  local step="$1"
+  echo -n "Step $step: Creating application ... "
+
+  if [ -d "$app_name" ]; then
+    echo "found"
+    return
+  fi
+
+  npx react-native init "$app_name" --version "$rn_version" &> /dev/null
+  echo "done"
+}
+
+install_sdk_in_app() {
+  local step="$1"
+  echo -n "Step $step: Installing the SDK ... "
+  cd "$app_name"
+  npm install "../$sdk_tar" &> /dev/null
+  echo "done"
+  cd ".."
+}
+
+setup_sdk_in_app() {
+  local step="$1"
+  echo -n "Step $1: Setting up the SDK ... "
+  cd "$app_name"
+  npx mx-widget-sdk-setup &> /dev/null
+  echo "done"
+  cd ".."
+}
+
+save_app_code() {
+  local step="$1"
+  local file=App.js
+  echo -n "Step $step: Creating $file ... "
+  cd "$app_name"
+  cat <<-CODE > "$file"
+import React from "react"
+
+import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
+
+export default function App() {
+  return (
+    <ConnectWidget
+      clientId="$INTEGRATION_TEST_CLIENT_ID"
+      apiKey="$INTEGRATION_TEST_API_KEY"
+      userGuid="$INTEGRATION_TEST_USER_GUID"
+      environment="$INTEGRATION_TEST_ENVIRONMENT"
+    />
+  )
+}
+CODE
+
+  echo "done"
+  cd ".."
+}
+
+run_in_ios() {
+  local step="$1"
+  echo "Step $step: Starting application in an iOS Simulator, this will take a while"
+  cd "$app_name"
+  npm run ios
+  cd ".."
+}
+
+main() {
+  if [ -z "$INTEGRATION_TEST_CLIENT_ID" ] ||
+     [ -z "$INTEGRATION_TEST_API_KEY" ] ||
+     [ -z "$INTEGRATION_TEST_USER_GUID" ] ||
+     [ -z "$INTEGRATION_TEST_ENVIRONMENT" ];
+  then
+    echo "Usage: $0 [React Native version]"
+    echo
+    echo "  The following environment variables are required:"
+    echo "    - INTEGRATION_TEST_CLIENT_ID"
+    echo "    - INTEGRATION_TEST_API_KEY"
+    echo "    - INTEGRATION_TEST_USER_GUID"
+    echo "    - INTEGRATION_TEST_ENVIRONMENT"
+    exit 1
+  fi
+
+  print_info
+  build_sdk 1
+  create_app 2
+  install_sdk_in_app 3
+  setup_sdk_in_app 4
+  save_app_code 5
+  run_in_ios 6
+}
+
+main

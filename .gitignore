@@ -1,5 +1,6 @@
 *.tgz
 .DS_Store
+TestRnApp_*
 build
 config.json
 coverage
