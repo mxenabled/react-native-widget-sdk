@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 rn_version=${1:-latest}
 app_name="TestRnApp_$(echo "$rn_version" | tr "." "_")"
 sdk_version=$(node -e 'console.log(require("./package.json").version)')
@@ -47,7 +49,7 @@ print_info() {
 build_sdk() {
   local step="$1"
   echo -n "Step $step: Building the SDK ... "
-  npm build &> /dev/null
+  npm run build &> /dev/null
   echo "done"
 }
 
