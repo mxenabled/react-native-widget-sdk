@@ -5,6 +5,35 @@ app_name="TestRnApp_$(echo "$rn_version" | tr "." "_")"
 sdk_version=$(node -e 'console.log(require("./package.json").version)')
 sdk_tar="mxenabled-react-native-widget-sdk-${sdk_version}.tgz"
 
+main() {
+  if [ -z "$INTEGRATION_TEST_CLIENT_ID" ] ||
+     [ -z "$INTEGRATION_TEST_API_KEY" ] ||
+     [ -z "$INTEGRATION_TEST_USER_GUID" ] ||
+     [ -z "$INTEGRATION_TEST_ENVIRONMENT" ];
+  then
+    print_usage
+    exit 1
+  fi
+
+  print_info
+  build_sdk 1
+  create_app 2
+  install_sdk_in_app 3
+  setup_sdk_in_app 4
+  save_app_code 5
+  run_in_ios 6
+}
+
+print_usage() {
+  echo "Usage: $0 [React Native version]"
+  echo
+  echo "  The following environment variables are required:"
+  echo "    - INTEGRATION_TEST_CLIENT_ID"
+  echo "    - INTEGRATION_TEST_API_KEY"
+  echo "    - INTEGRATION_TEST_USER_GUID"
+  echo "    - INTEGRATION_TEST_ENVIRONMENT"
+}
+
 print_info() {
   echo "Preparing to build a React Native application with the following information:"
   echo "  - SDK version: $sdk_version"
@@ -85,31 +114,6 @@ run_in_ios() {
   cd "$app_name"
   npm run ios
   cd ".."
-}
-
-main() {
-  if [ -z "$INTEGRATION_TEST_CLIENT_ID" ] ||
-     [ -z "$INTEGRATION_TEST_API_KEY" ] ||
-     [ -z "$INTEGRATION_TEST_USER_GUID" ] ||
-     [ -z "$INTEGRATION_TEST_ENVIRONMENT" ];
-  then
-    echo "Usage: $0 [React Native version]"
-    echo
-    echo "  The following environment variables are required:"
-    echo "    - INTEGRATION_TEST_CLIENT_ID"
-    echo "    - INTEGRATION_TEST_API_KEY"
-    echo "    - INTEGRATION_TEST_USER_GUID"
-    echo "    - INTEGRATION_TEST_ENVIRONMENT"
-    exit 1
-  fi
-
-  print_info
-  build_sdk 1
-  create_app 2
-  install_sdk_in_app 3
-  setup_sdk_in_app 4
-  save_app_code 5
-  run_in_ios 6
 }
 
 main
