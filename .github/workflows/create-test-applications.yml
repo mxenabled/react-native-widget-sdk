@@ -28,6 +28,13 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('TestRnApp_0_69_1/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
+    - uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-caches-${{ hashFiles('TestRnApp_0_69_1/android/gradle/wrapper/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-caches-
+
 
     - run: npm install
     - run: npm pack
@@ -45,5 +52,5 @@ jobs:
     - name: Upload Android APK
       uses: actions/upload-artifact@v1
       with:
-        name: app-release.apk
+        name: release
         path: TestRnApp_0_69_1/android/app/build/outputs/apk/release/
