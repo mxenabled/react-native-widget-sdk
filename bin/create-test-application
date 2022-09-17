@@ -19,12 +19,16 @@ main() {
   fi
 
   print_info
+
   build_sdk_package 1
   create_app 2
   install_sdk_in_app 3
   setup_sdk_in_app 4
   save_app_code 5
-  [ -z "$NO_RUN" ] && run_in_ios 6
+
+  if [ -z "$NO_RUN" ]; then
+    run_in_ios 6
+  fi
 }
 
 print_usage() {
