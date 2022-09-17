@@ -8,16 +8,6 @@ sdk_version=$(node -e 'console.log(require("./package.json").version)')
 sdk_tar="mxenabled-react-native-widget-sdk-${sdk_version}.tgz"
 
 main() {
-  if ( [ -z "$INTEGRATION_TEST_CLIENT_ID" ] ||
-       [ -z "$INTEGRATION_TEST_API_KEY" ] ||
-       [ -z "$INTEGRATION_TEST_USER_GUID" ] ||
-       [ -z "$INTEGRATION_TEST_ENVIRONMENT" ] ) &&
-     ( [ -z "$INTEGRATION_TEST_PROXY" ] );
-  then
-    print_usage
-    exit 1
-  fi
-
   print_info
   build_sdk_package 1
   create_app 2
@@ -27,20 +17,6 @@ main() {
   run_in_ios 6
 }
 
-print_usage() {
-  echo "Usage: $0 [React Native version]"
-  echo
-  echo "  The following environment variables are required:"
-  echo "    - INTEGRATION_TEST_CLIENT_ID"
-  echo "    - INTEGRATION_TEST_API_KEY"
-  echo "    - INTEGRATION_TEST_USER_GUID"
-  echo "    - INTEGRATION_TEST_ENVIRONMENT"
-  echo
-  echo "      - or -"
-  echo
-  echo "    - INTEGRATION_TEST_PROXY"
-}
-
 print_info() {
   echo "Preparing to build a React Native application with the following information:"
   echo "  - SDK version: $sdk_version"
@@ -48,7 +24,6 @@ print_info() {
   echo "  - Application directory: $app_name"
   echo "  - Client ID: ${INTEGRATION_TEST_CLIENT_ID:-N/A}"
   echo "  - Environment: ${INTEGRATION_TEST_ENVIRONMENT:-N/A}"
-  echo "  - Proxy: ${INTEGRATION_TEST_PROXY:-N/A}"
   echo
 }
 
@@ -103,31 +78,76 @@ save_app_code() {
   echo -n "Step $step: Creating $file ... "
   cd "$app_name"
 
-  if [ ! -z "$INTEGRATION_TEST_PROXY" ]; then
-    config=$(cat <<-CONFIG
-      proxy="$INTEGRATION_TEST_PROXY"
-CONFIG
-    )
-  else
-    config=$(cat <<-CONFIG
-      clientId="$INTEGRATION_TEST_CLIENT_ID"
-      apiKey="$INTEGRATION_TEST_API_KEY"
-      userGuid="$INTEGRATION_TEST_USER_GUID"
-      environment="$INTEGRATION_TEST_ENVIRONMENT"
-CONFIG
-    )
-  fi
-
   cat <<-CODE > "$file"
-import React from "react"
+import React, { useState } from "react"
+import { Button, SafeAreaView, StyleSheet, TextInput } from "react-native"
 
 import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+})
+
 export default function App() {
+  const [clientId, setClientId] = useState("$INTEGRATION_TEST_CLIENT_ID")
+  const [apiKey, setApiKey] = useState("$INTEGRATION_TEST_API_KEY")
+  const [userGuid, setUserGuid] = useState("$INTEGRATION_TEST_USER_GUID")
+  const [environment, setEnvironment] = useState("$INTEGRATION_TEST_ENVIRONMENT")
+  const [showConfig, setShowConfig] = useState(true)
+
+  if (showConfig) {
+    return (
+      <SafeAreaView>
+        <TextInput
+          style={styles.input}
+          placeholder="Client ID"
+          onChangeText={setClientId}
+          value={clientId}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="API Key"
+          onChangeText={setApiKey}
+          value={apiKey}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="User GUID"
+          onChangeText={setUserGuid}
+          value={userGuid}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Environemnt"
+          onChangeText={setEnvironment}
+          value={environment}
+        />
+        <Button
+          title="Load Connect"
+          onPress={() => setShowConfig(false)}
+        />
+      </SafeAreaView>
+    )
+  }
+
   return (
-    <ConnectWidget
-$config
-    />
+    <SafeAreaView>
+      <Button
+        title="Go back to configuration"
+        onPress={() => setShowConfig(true)}
+      />
+      <ConnectWidget
+        clientId={clientId}
+        apiKey={apiKey}
+        userGuid={userGuid}
+        environment={environment}
+      />
+    </SafeAreaView>
   )
 }
 CODE
