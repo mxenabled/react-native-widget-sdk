@@ -34,7 +34,7 @@ jobs:
     - run: npm pack
 
 
-  Create Applications:
+  "Create Applications":
     needs: Setup
     runs-on: ubuntu-latest
     steps:
