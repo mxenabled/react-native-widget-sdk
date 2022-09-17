@@ -18,7 +18,7 @@ main() {
   fi
 
   print_info
-  build_sdk 1
+  build_sdk_package 1
   create_app 2
   install_sdk_in_app 3
   setup_sdk_in_app 4
@@ -46,10 +46,10 @@ print_info() {
   echo
 }
 
-build_sdk() {
+build_sdk_package() {
   local step="$1"
-  echo -n "Step $step: Building the SDK ... "
-  npm run build &> /dev/null
+  echo -n "Step $step: Building the SDK package ... "
+  npm pack &> /dev/null
   echo "done"
 }
 
