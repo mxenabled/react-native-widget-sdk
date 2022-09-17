@@ -43,8 +43,8 @@ jobs:
     - run: npm install
     - run: npm pack
 
-    - name: Create React Native v${{ matrix.rn_version }} application
-      run: bin/create-test-application ${{ matrix.rn_version }}
+    - name: Create React Native v${{ matrix.version }} application
+      run: bin/create-test-application ${{ matrix.version }}
       env:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
         INTEGRATION_TEST_APP_NAME: TestApplication
@@ -57,6 +57,6 @@ jobs:
     - name: Upload Android APK
       uses: actions/upload-artifact@v3
       with:
-        name: android-release
+        name: android-release-react-native-${{ matrix.version }}
         path: TestApplication/android/app/build/outputs/apk/release/
         retention-days: 7
