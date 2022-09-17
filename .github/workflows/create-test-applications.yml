@@ -12,7 +12,10 @@ jobs:
 
     strategy:
       matrix:
-        version: [ 0.69.1, 0.70.1 ]
+        version:
+          - 0.68.1
+          - 0.69.1
+          - 0.70.1
 
     steps:
     - uses: actions/checkout@v2
