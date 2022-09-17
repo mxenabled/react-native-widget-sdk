@@ -1,0 +1,60 @@
+name: Create Test Applications
+
+on:
+  pull_request:
+  push:
+    branches:
+    - master
+
+jobs:
+  Setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        cache: npm
+
+    - uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - uses: actions/cache@v3
+      with:
+        path: TestRnApp_0_69_1
+        key: ${{ runner.os }}-node-${{ hashFiles('TestRnApp_0_69_1/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - run: npm install
+    - run: npm pack
+
+
+  Create Applications:
+    needs: Setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create app with React Native v0.69.1
+      run: bin/create-test-application 0.69.1
+      env:
+        INTEGRATION_TEST_PROXY: "http://fakeserver.com"
+
+
+  Build Android:
+    needs: Create Applications
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Build Android Release
+      working-directory: TestRnApp_0_69_1/android
+      run: ./gradlew assembleRelease
+
+    - name: Upload Android APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: app-release.apk
+        path: TestRnApp_0_69_1/android/app/build/outputs/apk/release/
