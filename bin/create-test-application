@@ -3,7 +3,7 @@
 set -eo pipefail
 
 rn_version=${1:-latest}
-app_name="TestRnApp_$(echo "$rn_version" | tr "." "_")"
+app_name="${INTEGRATION_TEST_APP_NAME:-TestRnApp_$(echo "$rn_version" | tr "." "_")}"
 sdk_version=$(node -e 'console.log(require("./package.json").version)')
 sdk_tar="mxenabled-react-native-widget-sdk-${sdk_version}.tgz"
 

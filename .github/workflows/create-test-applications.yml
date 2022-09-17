@@ -12,11 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          - rn_version: 0.69.1
-            app_path: TestRnApp_0_69_1
-          - rn_version: 0.70.1
-            app_path: TestRnApp_0_70_1
+        version: [ 0.69.1, 0.70.1 ]
 
     steps:
     - uses: actions/checkout@v2
@@ -33,14 +29,14 @@ jobs:
           ${{ runner.os }}-node-
     - uses: actions/cache@v3
       with:
-        path: ${{ matrix.app_path }}
-        key: ${{ runner.os }}-node-${{ hashFiles(matrix.app_path + '/package-lock.json') }}
+        path: TestApplication
+        key: ${{ runner.os }}-node-${{ hashFiles('TestApplication/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
     - uses: actions/cache@v3
       with:
         path: ~/.gradle/caches
-        key: ${{ runner.os }}-gradle-caches-${{ hashFiles(matrix.app_path + '/android/gradle/wrapper/gradle-wrapper.properties') }}
+        key: ${{ runner.os }}-gradle-caches-${{ hashFiles('TestApplication/android/gradle/wrapper/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-caches-
 
@@ -52,15 +48,16 @@ jobs:
       run: bin/create-test-application ${{ matrix.rn_version }}
       env:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
+        INTEGRATION_TEST_APP_NAME: TestApplication
         NO_RUN: 1
 
     - name: Build Android Release
-      working-directory: ${{ matrix.app_path }}/android
+      working-directory: TestApplication/android
       run: ./gradlew assembleRelease
 
     - name: Upload Android APK
       uses: actions/upload-artifact@v1
       with:
         name: android-release
-        path: ${{ matrix.app_path }}/android/app/build/outputs/apk/release/
+        path: TestApplication/android/app/build/outputs/apk/release/
         retention-days: 7
