@@ -34,7 +34,7 @@ jobs:
     - run: npm pack
 
 
-  "Create Applications":
+  Create_Applications:
     needs: Setup
     runs-on: ubuntu-latest
     steps:
@@ -44,8 +44,8 @@ jobs:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
 
 
-  Build Android:
-    needs: Create Applications
+  Build_Android:
+    needs: Create_Applications
     runs-on: ubuntu-latest
 
     steps:
