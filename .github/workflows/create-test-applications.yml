@@ -7,7 +7,7 @@ on:
     - master
 
 jobs:
-  Setup:
+  Build_Android:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -33,22 +33,11 @@ jobs:
     - run: npm install
     - run: npm pack
 
-
-  Create_Applications:
-    needs: Setup
-    runs-on: ubuntu-latest
-    steps:
     - name: Create app with React Native v0.69.1
       run: bin/create-test-application 0.69.1
       env:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
 
-
-  Build_Android:
-    needs: Create_Applications
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Build Android Release
       working-directory: TestRnApp_0_69_1/android
       run: ./gradlew assembleRelease
