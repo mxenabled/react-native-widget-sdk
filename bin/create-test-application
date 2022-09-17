@@ -55,6 +55,12 @@ print_info() {
 build_sdk_package() {
   local step="$1"
   echo -n "Step $step: Building the SDK package ... "
+
+  if [ -f "$sdk_tar" ]; then
+    echo "found"
+    return
+  fi
+
   npm pack &> /dev/null
   echo "done"
 }
