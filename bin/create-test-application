@@ -43,6 +43,11 @@ print_usage() {
   echo "      - or -"
   echo
   echo "    - INTEGRATION_TEST_PROXY"
+  echo
+  echo
+  echo "  The following environment variables are required:"
+  echo "    - INTEGRATION_TEST_APP_NAME"
+  echo "    - INTEGRATION_TEST_NO_RUN_APP"
 }
 
 print_info() {
