@@ -26,7 +26,7 @@ main() {
   setup_sdk_in_app 4
   save_app_code 5
 
-  if [ -z "$NO_RUN" ]; then
+  if [ -z "$INTEGRATION_TEST_NO_RUN_APP" ]; then
     run_in_ios 6
   fi
 }

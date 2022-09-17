@@ -49,7 +49,7 @@ jobs:
       env:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
         INTEGRATION_TEST_APP_NAME: TestApplication
-        NO_RUN: 1
+        INTEGRATION_TEST_NO_RUN_APP: 1
 
     - name: Build Android Release
       working-directory: TestApplication/android
