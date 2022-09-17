@@ -93,8 +93,25 @@ setup_sdk_in_app() {
 save_app_code() {
   local step="$1"
   local file=App.js
+  local config=
   echo -n "Step $step: Creating $file ... "
   cd "$app_name"
+
+  if [ ! -z "$INTEGRATION_TEST_PROXY" ]; then
+    config=$(cat <<-CONFIG
+      proxy="$INTEGRATION_TEST_PROXY"
+CONFIG
+    )
+  else
+    config=$(cat <<-CONFIG
+      clientId="$INTEGRATION_TEST_CLIENT_ID"
+      apiKey="$INTEGRATION_TEST_API_KEY"
+      userGuid="$INTEGRATION_TEST_USER_GUID"
+      environment="$INTEGRATION_TEST_ENVIRONMENT"
+CONFIG
+    )
+  fi
+
   cat <<-CODE > "$file"
 import React from "react"
 
@@ -103,11 +120,7 @@ import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
 export default function App() {
   return (
     <ConnectWidget
-      clientId="$INTEGRATION_TEST_CLIENT_ID"
-      apiKey="$INTEGRATION_TEST_API_KEY"
-      userGuid="$INTEGRATION_TEST_USER_GUID"
-      environment="$INTEGRATION_TEST_ENVIRONMENT"
-      proxy="$INTEGRATION_TEST_PROXY"
+$config
     />
   )
 }
