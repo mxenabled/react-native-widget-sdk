@@ -33,9 +33,9 @@ jobs:
     - uses: actions/cache@v3
       with:
         path: TestApplication
-        key: ${{ runner.os }}-node-${{ hashFiles('TestApplication/package-lock.json') }}
+        key: ${{ runner.os }}-test-app-node-${{ hashFiles('TestApplication/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-test-app-node-
     - uses: actions/cache@v3
       with:
         path: ~/.gradle/caches
