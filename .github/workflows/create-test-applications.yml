@@ -40,18 +40,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-caches-
 
-
     - run: npm install
     - run: npm pack
 
-    - name: Create app with React Native v${{ matrix.rn_version }}
+    - name: Create React Native v${{ matrix.rn_version }} application
       run: bin/create-test-application ${{ matrix.rn_version }}
       env:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
         INTEGRATION_TEST_APP_NAME: TestApplication
         INTEGRATION_TEST_NO_RUN_APP: 1
 
-    - name: Build Android Release
+    - name: Build Android APK
       working-directory: TestApplication/android
       run: ./gradlew assembleRelease
 
