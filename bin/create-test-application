@@ -24,7 +24,7 @@ main() {
   install_sdk_in_app 3
   setup_sdk_in_app 4
   save_app_code 5
-  run_in_ios 6
+  [ -z "$NO_RUN" ] && run_in_ios 6
 }
 
 print_usage() {

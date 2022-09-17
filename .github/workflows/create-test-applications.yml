@@ -37,6 +37,7 @@ jobs:
       run: bin/create-test-application 0.69.1
       env:
         INTEGRATION_TEST_PROXY: "http://fakeserver.com"
+        NO_RUN: 1
 
     - name: Build Android Release
       working-directory: TestRnApp_0_69_1/android
