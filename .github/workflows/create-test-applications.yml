@@ -49,7 +49,6 @@ jobs:
     - name: Create React Native v${{ matrix.version }} application
       run: bin/create-test-application ${{ matrix.version }}
       env:
-        INTEGRATION_TEST_PROXY: "http://fakeserver.com"
         INTEGRATION_TEST_APP_NAME: TestApplication
         INTEGRATION_TEST_NO_RUN_APP: 1
 
