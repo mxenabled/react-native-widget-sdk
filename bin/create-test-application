@@ -8,10 +8,11 @@ sdk_version=$(node -e 'console.log(require("./package.json").version)')
 sdk_tar="mxenabled-react-native-widget-sdk-${sdk_version}.tgz"
 
 main() {
-  if [ -z "$INTEGRATION_TEST_CLIENT_ID" ] ||
-     [ -z "$INTEGRATION_TEST_API_KEY" ] ||
-     [ -z "$INTEGRATION_TEST_USER_GUID" ] ||
-     [ -z "$INTEGRATION_TEST_ENVIRONMENT" ];
+  if ( [ -z "$INTEGRATION_TEST_CLIENT_ID" ] ||
+       [ -z "$INTEGRATION_TEST_API_KEY" ] ||
+       [ -z "$INTEGRATION_TEST_USER_GUID" ] ||
+       [ -z "$INTEGRATION_TEST_ENVIRONMENT" ] ) &&
+     ( [ -z "$INTEGRATION_TEST_PROXY" ] );
   then
     print_usage
     exit 1
@@ -34,6 +35,10 @@ print_usage() {
   echo "    - INTEGRATION_TEST_API_KEY"
   echo "    - INTEGRATION_TEST_USER_GUID"
   echo "    - INTEGRATION_TEST_ENVIRONMENT"
+  echo
+  echo "      - or -"
+  echo
+  echo "    - INTEGRATION_TEST_PROXY"
 }
 
 print_info() {
@@ -41,8 +46,9 @@ print_info() {
   echo "  - SDK version: $sdk_version"
   echo "  - React Native version: $rn_version"
   echo "  - Application directory: $app_name"
-  echo "  - Client ID: $INTEGRATION_TEST_CLIENT_ID"
-  echo "  - Environment: $INTEGRATION_TEST_ENVIRONMENT"
+  echo "  - Client ID: ${INTEGRATION_TEST_CLIENT_ID:-N/A}"
+  echo "  - Environment: ${INTEGRATION_TEST_ENVIRONMENT:-N/A}"
+  echo "  - Proxy: ${INTEGRATION_TEST_PROXY:-N/A}"
   echo
 }
 
@@ -101,6 +107,7 @@ export default function App() {
       apiKey="$INTEGRATION_TEST_API_KEY"
       userGuid="$INTEGRATION_TEST_USER_GUID"
       environment="$INTEGRATION_TEST_ENVIRONMENT"
+      proxy="$INTEGRATION_TEST_PROXY"
     />
   )
 }
