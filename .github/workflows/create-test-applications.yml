@@ -15,6 +15,8 @@ jobs:
         include:
           - rn_version: 0.69.1
             app_path: TestRnApp_0_69_1
+          - rn_version: 0.70.1
+            app_path: TestRnApp_0_70_1
 
     steps:
     - uses: actions/checkout@v2
