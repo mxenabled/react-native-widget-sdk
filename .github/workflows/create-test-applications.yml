@@ -1,7 +1,6 @@
 name: Create Test Applications
 
 on:
-  pull_request:
   push:
     branches:
     - master
