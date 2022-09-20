@@ -74,7 +74,7 @@ setup_sdk_in_app() {
 save_app_code() {
   local step="$1"
   local file=App.js
-  local config=
+
   echo -n "Step $step: Creating $file ... "
   cd "$app_name"
 
