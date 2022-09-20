@@ -1,0 +1,101 @@
+#!/bin/bash
+
+set -eo pipefail
+
+rn_version=${1:-latest}
+app_name="TestRnApp_$(echo "$rn_version" | tr "." "_")"
+sdk_version=$(node -e 'console.log(require("./package.json").version)')
+sdk_tar="mxenabled-react-native-widget-sdk-${sdk_version}.tgz"
+
+main() {
+  print_info
+  build_sdk_package 1
+  create_app 2
+  install_sdk_in_app 3
+  setup_sdk_in_app 4
+  save_app_code 5
+  run_in_ios 6
+}
+
+print_info() {
+  echo "Preparing to build a React Native application with the following information:"
+  echo "  - SDK version: $sdk_version"
+  echo "  - React Native version: $rn_version"
+  echo "  - Application directory: $app_name"
+  echo "  - Client ID: ${INTEGRATION_TEST_CLIENT_ID:-N/A}"
+  echo "  - Environment: ${INTEGRATION_TEST_ENVIRONMENT:-N/A}"
+  echo
+}
+
+build_sdk_package() {
+  local step="$1"
+  echo -n "Step $step: Building the SDK package ... "
+
+  if [ -f "$sdk_tar" ]; then
+    echo "found"
+    return
+  fi
+
+  npm pack &> /dev/null
+  echo "done"
+}
+
+create_app() {
+  local step="$1"
+  echo -n "Step $step: Creating application ... "
+
+  if [ -d "$app_name" ]; then
+    echo "found"
+    return
+  fi
+
+  npx react-native init "$app_name" --version "$rn_version" &> /dev/null
+  echo "done"
+}
+
+install_sdk_in_app() {
+  local step="$1"
+  echo -n "Step $step: Installing the SDK ... "
+  cd "$app_name"
+  npm install "../$sdk_tar" &> /dev/null
+  echo "done"
+  cd ".."
+}
+
+setup_sdk_in_app() {
+  local step="$1"
+  echo -n "Step $1: Setting up the SDK ... "
+  cd "$app_name"
+  npx mx-widget-sdk-setup &> /dev/null
+  echo "done"
+  cd ".."
+}
+
+save_app_code() {
+  local step="$1"
+  local template=bin/templates/App.js.template
+  local file=App.js
+  local contents=$(cat $template \
+    | sed "s/{{INTEGRATION_TEST_CLIENT_ID}}/$INTEGRATION_TEST_CLIENT_ID/" \
+    | sed "s/{{INTEGRATION_TEST_API_KEY}}/$INTEGRATION_TEST_API_KEY/" \
+    | sed "s/{{INTEGRATION_TEST_USER_GUID}}/$INTEGRATION_TEST_USER_GUID/" \
+    | sed "s/{{INTEGRATION_TEST_ENVIRONMENT}}/$INTEGRATION_TEST_ENVIRONMENT/")
+
+  echo -n "Step $step: Creating $file ... "
+  cd "$app_name"
+
+  echo "$contents" > "$file"
+
+  echo "done"
+  cd ".."
+}
+
+run_in_ios() {
+  local step="$1"
+  echo "Step $step: Starting application in an iOS Simulator, this will take a while"
+  cd "$app_name"
+  npm run ios
+  cd ".."
+}
+
+main

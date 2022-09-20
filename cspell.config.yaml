@@ -10,6 +10,7 @@ words:
   - mxmobilewidgetsdkdemo
   - mxwidgetsdkdemo
   - ngrx
+  - pipefail
   - tsbuildinfo
   - webbrowser
 
