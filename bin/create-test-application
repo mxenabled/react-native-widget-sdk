@@ -73,84 +73,18 @@ setup_sdk_in_app() {
 
 save_app_code() {
   local step="$1"
+  local template=bin/templates/App.js.template
   local file=App.js
+  local contents=$(cat $template \
+    | sed "s/{INTEGRATION_TEST_CLIENT_ID}/$INTEGRATION_TEST_CLIENT_ID/" \
+    | sed "s/{INTEGRATION_TEST_API_KEY}/$INTEGRATION_TEST_API_KEY/" \
+    | sed "s/{INTEGRATION_TEST_USER_GUID}/$INTEGRATION_TEST_USER_GUID/" \
+    | sed "s/{INTEGRATION_TEST_ENVIRONMENT}/$INTEGRATION_TEST_ENVIRONMENT/")
 
   echo -n "Step $step: Creating $file ... "
   cd "$app_name"
 
-  cat <<-CODE > "$file"
-import React, { useState } from "react"
-import { Button, SafeAreaView, StyleSheet, TextInput } from "react-native"
-
-import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-})
-
-export default function App() {
-  const [clientId, setClientId] = useState("$INTEGRATION_TEST_CLIENT_ID")
-  const [apiKey, setApiKey] = useState("$INTEGRATION_TEST_API_KEY")
-  const [userGuid, setUserGuid] = useState("$INTEGRATION_TEST_USER_GUID")
-  const [environment, setEnvironment] = useState("$INTEGRATION_TEST_ENVIRONMENT")
-  const [showConfig, setShowConfig] = useState(true)
-
-  if (showConfig) {
-    return (
-      <SafeAreaView>
-        <TextInput
-          style={styles.input}
-          placeholder="Client ID"
-          onChangeText={setClientId}
-          value={clientId}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="API Key"
-          onChangeText={setApiKey}
-          value={apiKey}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="User GUID"
-          onChangeText={setUserGuid}
-          value={userGuid}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Environment"
-          onChangeText={setEnvironment}
-          value={environment}
-        />
-        <Button
-          title="Load Connect"
-          onPress={() => setShowConfig(false)}
-        />
-      </SafeAreaView>
-    )
-  }
-
-  return (
-    <SafeAreaView>
-      <Button
-        title="Go back to configuration"
-        onPress={() => setShowConfig(true)}
-      />
-      <ConnectWidget
-        clientId={clientId}
-        apiKey={apiKey}
-        userGuid={userGuid}
-        environment={environment}
-      />
-    </SafeAreaView>
-  )
-}
-CODE
+  echo "$contents" > "$file"
 
   echo "done"
   cd ".."
