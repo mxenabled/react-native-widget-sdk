@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+
+## [1.0.9] - 2022-09-20
+### Added
 
 - Sending SDK information to widget.
 
