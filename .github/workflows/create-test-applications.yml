@@ -1,0 +1,65 @@
+name: Create Test Applications
+
+on:
+  push:
+    branches:
+    - master
+  schedule:
+  - cron: "0 0 1 * *" # every month
+
+jobs:
+  Build_Android:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version:
+          - 0.68.1
+          - 0.69.1
+          - 0.70.1
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        cache: npm
+
+    - uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - uses: actions/cache@v3
+      with:
+        path: TestApplication
+        key: ${{ runner.os }}-test-app-node-${{ hashFiles('TestApplication/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-test-app-node-
+    - uses: actions/cache@v3
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-caches-${{ hashFiles('TestApplication/android/gradle/wrapper/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-caches-
+
+    - run: npm install
+    - run: npm pack
+
+    - name: Create React Native v${{ matrix.version }} application
+      run: bin/create-test-application ${{ matrix.version }}
+      env:
+        INTEGRATION_TEST_APP_NAME: TestApplication
+        INTEGRATION_TEST_NO_RUN_APP: 1
+
+    - name: Build Android APK
+      working-directory: TestApplication/android
+      run: ./gradlew assembleRelease
+
+    - name: Upload Android APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-release-react-native-${{ matrix.version }}
+        path: TestApplication/android/app/build/outputs/apk/release/
+        retention-days: 7
