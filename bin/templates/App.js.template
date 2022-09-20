@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
 })
 
 export default function App() {
-  const [clientId, setClientId] = useState("{INTEGRATION_TEST_CLIENT_ID}")
-  const [apiKey, setApiKey] = useState("{INTEGRATION_TEST_API_KEY}")
-  const [userGuid, setUserGuid] = useState("{INTEGRATION_TEST_USER_GUID}")
-  const [environment, setEnvironment] = useState("{INTEGRATION_TEST_ENVIRONMENT}")
+  const [clientId, setClientId] = useState("{{INTEGRATION_TEST_CLIENT_ID}}")
+  const [apiKey, setApiKey] = useState("{{INTEGRATION_TEST_API_KEY}}")
+  const [userGuid, setUserGuid] = useState("{{INTEGRATION_TEST_USER_GUID}}")
+  const [environment, setEnvironment] = useState("{{INTEGRATION_TEST_ENVIRONMENT}}")
   const [showConfig, setShowConfig] = useState(true)
 
   if (showConfig) {

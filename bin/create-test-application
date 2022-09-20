@@ -76,10 +76,10 @@ save_app_code() {
   local template=bin/templates/App.js.template
   local file=App.js
   local contents=$(cat $template \
-    | sed "s/{INTEGRATION_TEST_CLIENT_ID}/$INTEGRATION_TEST_CLIENT_ID/" \
-    | sed "s/{INTEGRATION_TEST_API_KEY}/$INTEGRATION_TEST_API_KEY/" \
-    | sed "s/{INTEGRATION_TEST_USER_GUID}/$INTEGRATION_TEST_USER_GUID/" \
-    | sed "s/{INTEGRATION_TEST_ENVIRONMENT}/$INTEGRATION_TEST_ENVIRONMENT/")
+    | sed "s/{{INTEGRATION_TEST_CLIENT_ID}}/$INTEGRATION_TEST_CLIENT_ID/" \
+    | sed "s/{{INTEGRATION_TEST_API_KEY}}/$INTEGRATION_TEST_API_KEY/" \
+    | sed "s/{{INTEGRATION_TEST_USER_GUID}}/$INTEGRATION_TEST_USER_GUID/" \
+    | sed "s/{{INTEGRATION_TEST_ENVIRONMENT}}/$INTEGRATION_TEST_ENVIRONMENT/")
 
   echo -n "Step $step: Creating $file ... "
   cd "$app_name"
