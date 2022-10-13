@@ -11,7 +11,7 @@ import { SdkTelemetryProps, postSdkInfoMessage } from "./telemetry"
 
 export type StylingProps = {
   style?: StyleProp<ViewStyle>
-  webviewStyle?: StyleProp<ViewStyle>
+  webViewStyle?: StyleProp<ViewStyle>
 }
 
 type MaybeWebViewRef = MutableRefObject<WebView | null>
@@ -59,7 +59,7 @@ export function useWidgetRendererWithRef<Configuration>(
     <SafeAreaView testID="widget_view" style={style}>
       <WebView
         testID="widget_webview"
-        style={props.webviewStyle}
+        style={props.webViewStyle}
         ref={ref}
         scrollEnabled={true}
         source={{ uri: url }}
