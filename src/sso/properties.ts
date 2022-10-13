@@ -1,4 +1,4 @@
-import { WebViewErrorEvent } from "react-native-webview/lib/WebViewTypes"
+import { WebViewErrorEvent } from "react-native-webview"
 import {
   Type,
   InternalWidgetConfigurationProps,
@@ -23,7 +23,7 @@ export type ApiResponseBody = {
 }
 
 export type WebViewProps = {
-  onError?: (event: WebViewErrorEvent) => void;
+  onWebViewError?: (event: WebViewErrorEvent) => void;
 }
 
 export type SsoUrlProps = SsoUrlMethodProps & SsoUrlRequestProps

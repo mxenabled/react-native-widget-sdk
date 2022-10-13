@@ -10,7 +10,7 @@ import { useFullscreenStyles } from "./screen_dimensions"
 import { SdkTelemetryProps, postSdkInfoMessage } from "./telemetry"
 
 export type StylingProps = {
-  style?: StyleProp<ViewStyle>,
+  style?: StyleProp<ViewStyle>
   webviewStyle?: StyleProp<ViewStyle>
 }
 
@@ -69,7 +69,7 @@ export function useWidgetRendererWithRef<Configuration>(
         domStorageEnabled={true}
         incognito={true}
         onShouldStartLoadWithRequest={handler}
-        onError={props.onError}
+        onError={props.onWebViewError}
       />
     </SafeAreaView>,
   ]
