@@ -1,4 +1,4 @@
-import { WebViewErrorEvent } from "react-native-webview"
+import { WebViewErrorEvent } from "react-native-webview/lib/WebViewTypes"
 import {
   Type,
   InternalWidgetConfigurationProps,
