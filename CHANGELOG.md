@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Fixed
 
-## [1.1.0] - 2022-09-20
+## [1.1.0] - 2022-10-14
 ### Added
 
 - Ability to style underlying WebView
