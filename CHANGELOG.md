@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Ability to style underlying WebView
-- Prop to handle errors on the WebView
-
 ### Changed
 ### Fixed
+
+## [1.1.0] - 2022-09-20
+### Added
+
+- Ability to style underlying WebView
+- Prop to handle errors on the WebView
 
 ## [1.0.9] - 2022-09-20
 ### Added
