@@ -55,7 +55,7 @@
     "eslint": "^8.9.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.5.0",
-    "msw": "^0.36.8",
+    "msw": "^0.47.4",
     "node-fetch": "^2.6.7",
     "prettier": "^2.5.1",
     "react": "17.0.1",
