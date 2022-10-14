@@ -23,7 +23,7 @@ export type ApiResponseBody = {
 }
 
 export type WebViewProps = {
-  onWebViewError?: (event: WebViewErrorEvent) => void;
+  onWebViewError?: (event: WebViewErrorEvent) => void
 }
 
 export type SsoUrlProps = SsoUrlMethodProps & SsoUrlRequestProps
