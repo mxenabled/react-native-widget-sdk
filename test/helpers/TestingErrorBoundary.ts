@@ -1,8 +1,8 @@
-import { Component, ErrorInfo } from "react"
+import { Component, ErrorInfo, PropsWithChildren } from "react"
 
-type Props = {
+type Props = PropsWithChildren<{
   onError?: (error: Error) => void
-}
+}>
 
 type State = {
   errored: boolean

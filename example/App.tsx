@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react"
+import React, { useState, FC, PropsWithChildren } from "react"
 import { SafeAreaView, Text, View, StyleSheet, StyleProp, ViewStyle } from "react-native"
 import { NativeRouter, Routes, Route, Link } from "react-router-native"
 
@@ -71,7 +71,7 @@ const Home = () => (
   </Page>
 )
 
-const Page: FC<{ style?: StyleProp<ViewStyle>; goBack?: boolean }> = ({
+const Page: FC<PropsWithChildren<{ style?: StyleProp<ViewStyle>; goBack?: boolean }>> = ({
   children,
   style,
   goBack = true,
@@ -88,7 +88,7 @@ const Page: FC<{ style?: StyleProp<ViewStyle>; goBack?: boolean }> = ({
   </SafeAreaView>
 )
 
-const NavigationButton: FC<{ to: string }> = ({ to, children }) => (
+const NavigationButton: FC<PropsWithChildren<{ to: string }>> = ({ to, children }) => (
   <Link underlayColor="#f0f4f7" to={to} style={styles.navigationButton}>
     <Text style={styles.navItemNormalText}>{children}</Text>
   </Link>

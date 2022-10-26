@@ -1,4 +1,6 @@
-import { Linking as RNLinking } from "react-native"
+import { Linking as RNLinking, LinkingStatic } from "react-native"
+
+import { RNv64Compat } from "../react_native_v64_compat"
 
 let Linking: RNLinking
 try {
@@ -31,5 +33,8 @@ export const onUrlChange = (fn: (event: UrlChangeEvent) => void, dispatchBufferS
    * subscription object in versions of React Native v0.64 or below. We can
    * remove this condition when v64 (or below) is no longer supported.
    */
-  return () => (sub ? sub.remove() : Linking.removeEventListener("url", callback))
+  return () =>
+    sub
+      ? sub.remove()
+      : (Linking as RNv64Compat<LinkingStatic>).removeEventListener("url", callback)
 }

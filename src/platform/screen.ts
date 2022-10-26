@@ -1,5 +1,7 @@
 import { Dimensions } from "react-native"
 
+import { RNv64Compat } from "../react_native_v64_compat"
+
 enum Orientation {
   Portrait,
   Landscape,
@@ -20,5 +22,8 @@ export const onDimensionChange = (fn: (orientation: Orientation) => void) => {
    * subscription object in versions of React Native v0.64 or below. We can
    * remove this condition when v64 (or below) is no longer supported.
    */
-  return () => (sub ? sub.remove() : Dimensions.removeEventListener("change", callback))
+  return () =>
+    sub
+      ? sub.remove()
+      : (Dimensions as RNv64Compat<Dimensions>).removeEventListener("change", callback)
 }
