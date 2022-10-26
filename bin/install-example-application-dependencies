@@ -1,14 +1,14 @@
 #!/bin/bash
 
-echo Install dependencies for the example application
+echo "Install dependencies for the example application"
 npm install
 
 echo
-echo Install dependencies for the Widget SDK
+echo "Install dependencies for the Widget SDK"
 cd example
 npm install
 
 echo
-echo Install Pods for example application
+echo "Install Pods for example application"
 cd ios
 pod install

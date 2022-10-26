@@ -15,20 +15,20 @@ following commands:
 
 1. Clone this repository:
 
-  ```console
+  ```bash
   git clone https://github.com/mxenabled/react-native-widget-sdk.git
   cd react-native-widget-sdk
   ```
 
 2. Install project dependencies:
 
-  ```console
+  ```bash
   npm run example:install
   ```
 
 3. Start the SSO proxy server:
 
-  ```console
+  ```bash
   # This command will continue to run until it is manually stopped.
   npm run example:server
   ```
@@ -42,7 +42,7 @@ following commands:
 
 4. Finally, you can run the application on an iOS or Android simulator.
 
-  ```console
+  ```bash
   # This command will continue to run until it is manually stopped.
   npm run example:start
 
