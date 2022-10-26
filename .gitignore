@@ -2,8 +2,8 @@
 .DS_Store
 TestRnApp_*
 build
-config.json
 coverage
 dist
+mx-sso-api-proxy-rc.yaml
 node_modules
 npm-debug.log

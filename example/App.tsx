@@ -11,8 +11,7 @@ import {
   TransactionsWidget,
 } from "@mxenabled/react-native-widget-sdk"
 
-import config from "./config.json"
-
+const proxy = "http://localhost:8089/user/widget_urls"
 const styles = StyleSheet.create({
   page: {
     backgroundColor: "#ffffff",
@@ -98,7 +97,7 @@ const Connect = () => {
   return (
     <Page>
       <ConnectWidget
-        {...config}
+        proxy={proxy}
         uiMessageWebviewUrlScheme="mxwidgetsdkdemo"
         onSsoUrlLoadError={(error) => {
           console.error(`SSO URL load error: ${error}`)
@@ -129,7 +128,7 @@ const Connect = () => {
 const Budgets = () => {
   return (
     <Page>
-      <BudgetsWidget {...config} />
+      <BudgetsWidget proxy={proxy} />
     </Page>
   )
 }
@@ -137,7 +136,7 @@ const Budgets = () => {
 const Goals = () => {
   return (
     <Page>
-      <GoalsWidget {...config} />
+      <GoalsWidget proxy={proxy} />
     </Page>
   )
 }
@@ -145,7 +144,7 @@ const Goals = () => {
 const Pulse = () => {
   return (
     <Page>
-      <PulseWidget {...config} />
+      <PulseWidget proxy={proxy} />
     </Page>
   )
 }
@@ -153,7 +152,7 @@ const Pulse = () => {
 const Spending = () => {
   return (
     <Page>
-      <SpendingWidget {...config} />
+      <SpendingWidget proxy={proxy} />
     </Page>
   )
 }
@@ -161,7 +160,7 @@ const Spending = () => {
 const Transactions = () => {
   return (
     <Page>
-      <TransactionsWidget {...config} />
+      <TransactionsWidget proxy={proxy} />
     </Page>
   )
 }
