@@ -9,7 +9,8 @@ import { useWidgetRenderer, StylingProps } from "./renderer"
 export type PulseWidgetProps = SsoUrlProps &
   StylingProps &
   WidgetConfigurationProps &
-  PulsePostMessageCallbackProps<string>
+  PulsePostMessageCallbackProps<string> &
+  JSX.IntrinsicAttributes
 
 export function PulseWidget(props: PulseWidgetProps) {
   return useWidgetRenderer(

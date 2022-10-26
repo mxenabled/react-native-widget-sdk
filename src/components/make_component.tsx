@@ -11,7 +11,8 @@ import { useWidgetRenderer, StylingProps } from "./renderer"
 export type Props = SsoUrlProps &
   StylingProps &
   WidgetConfigurationProps &
-  WidgetPostMessageCallbackProps<string>
+  WidgetPostMessageCallbackProps<string> &
+  JSX.IntrinsicAttributes
 
 export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
   return function Widget(props: Props) {
@@ -19,7 +20,7 @@ export function makeBaseWidgetComponent(widgetType: Type): FC<Props> {
   }
 }
 
-export function makeWidgetComponentWithDefaults<Props>(
+export function makeWidgetComponentWithDefaults<Props extends JSX.IntrinsicAttributes>(
   Component: FC<Props>,
   defaultProps?: Partial<Props>,
 ): FC<Props> {

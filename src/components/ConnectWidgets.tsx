@@ -15,7 +15,8 @@ export type ConnectWidgetProps = SsoUrlProps &
   OAuthProps &
   LoadUrlInBrowserProps &
   ConnectPostMessageCallbackProps<string> &
-  ConnectWidgetConfigurationProps
+  ConnectWidgetConfigurationProps &
+  JSX.IntrinsicAttributes
 
 export const ConnectVerificationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
   mode: "verification",
