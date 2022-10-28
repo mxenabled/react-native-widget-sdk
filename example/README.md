@@ -9,46 +9,47 @@ MxMobileWidgetDemo --version 0.64.3`. The application's scheme is
 
 First, you will need to set up your environment so that you can run React
 Native apps. See https://reactnative.dev/docs/environment-setup for
-instructions on how to do that. Once your environment is setup, clone the repo
-and cd into the example directory within it:
+instructions on how to do that. Once your environment is setup, run the
+following commands:
 
-```
-git clone https://github.com/mxenabled/react-native-widget-sdk.git
-cd react-native-widget-sdk
-cd example
-```
 
-Create an open `config.json` file in the example directory:
+1. Clone this repository:
 
-```
-touch config.json
-open -a TextEdit config.json
-```
+  ```bash
+  git clone https://github.com/mxenabled/react-native-widget-sdk.git
+  cd react-native-widget-sdk
+  ```
 
-And copy and paste the JSON below into your `config.json` file and save after
-filling in the appropriate values for `clientId`, `apiKey`, `userGuid`, and
-`environment` (`environment` should be `"integration"` or `"production"`).
+2. Install project dependencies:
 
-```json
-{
-  "clientId": "...",
-  "apiKey": "...",
-  "userGuid": "...",
-  "environment": "integration"
-}
-```
+  ```bash
+  npm run example:install
+  ```
 
-Next, install dependencies for iOS and React Native:
+3. Start the SSO proxy server:
 
-```
-npm install
-cd ios; pod install; cd -
-cd ..;  npm install; cd -
-```
+  ```bash
+  # This command will continue to run until it is manually stopped.
+  npm run example:server
+  ```
 
-Finally, you can run the application on an iOS or Android simulator.
+  The example application uses [`@mxenabled/sso-api-proxy`][sso_api_proxy] to
+  run a proxy server that talks to MX's Platform API. When the proxy server
+  first starts up, it will prompt you to enter the necessary API and user
+  settings in order to run. This configuration is then saved locally. See [this
+  page][sso_api_proxy_config] for more information on how to configure
+  `@mxenabled/sso-api-proxy`.
 
-```
-npm run ios
-npm run android
-```
+4. Finally, you can run the application on an iOS or Android simulator.
+
+  ```bash
+  # This command will continue to run until it is manually stopped.
+  npm run example:start
+
+  npm run example:ios     # Run application in an iOS simulator
+  npm run example:android # Run application in an Android simulator
+  ```
+
+
+[sso_api_proxy]: https://www.npmjs.com/package/@mxenabled/sso-api-proxy "@mxenabled/sso-api-proxy"
+[sso_api_proxy_config]: https://github.com/mxenabled/sso-api-proxy#configuration "Configuration"
