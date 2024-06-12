@@ -13,7 +13,7 @@
     "react-native": "0.70.3",
     "react-native-base64": "^0.2.1",
     "react-native-webview": "^11.23.1",
-    "react-router-native": "^6.3.0",
+    "react-router-native": "^6.6.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
