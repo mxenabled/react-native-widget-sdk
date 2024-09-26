@@ -1,14 +1,14 @@
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
-const { resolve } = require('path')
+const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config")
+const { resolve } = require("path")
 
 const siblings = {
-  '@mxenabled/react-native-widget-sdk': resolve(__dirname, '..', 'src'),
-  '@mxenabled/widget-post-message-definitions': resolve(
+  "@mxenabled/react-native-widget-sdk": resolve(__dirname, "..", "src"),
+  "@mxenabled/widget-post-message-definitions": resolve(
     __dirname,
-    '..',
-    'node_modules',
-    '@mxenabled',
-    'widget-post-message-definitions',
+    "..",
+    "node_modules",
+    "@mxenabled",
+    "widget-post-message-definitions",
   ),
 }
 /**
@@ -31,7 +31,7 @@ const config = {
       {},
       {
         get: (target, name) =>
-          name in siblings ? siblings[name] : resolve(process.cwd(), 'node_modules', name),
+          name in siblings ? siblings[name] : resolve(process.cwd(), "node_modules", name),
       },
     ),
   },
