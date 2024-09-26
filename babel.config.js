@@ -1,9 +1,4 @@
-module.exports = function(api) {
-  api.cache(true);
-  return {
-    presets: [
-      "module:metro-react-native-babel-preset",
-      "@babel/preset-typescript",
-    ]
-  };
-};
+// eslint-disable-next-line no-undef
+module.exports = {
+  presets: ["module:@react-native/babel-preset"],
+}

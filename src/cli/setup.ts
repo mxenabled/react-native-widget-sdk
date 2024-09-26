@@ -19,7 +19,7 @@ async function main() {
     await tryExec("npx react-native link react-native-webview")
 
     console.log("3. Installing native dependencies")
-    execSync("cd ios && pod install")
+    execSync("cd example/ios && pod install")
 
     console.log("\nDone, you're now ready to use the MX Widget SDK in your application")
   } catch (error) {

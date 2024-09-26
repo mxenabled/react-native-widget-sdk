@@ -1,5 +1,5 @@
-import React, { useState, FC, PropsWithChildren } from "react"
-import { SafeAreaView, Text, View, StyleSheet, StyleProp, ViewStyle } from "react-native"
+import React, { FC, PropsWithChildren } from "react"
+import { SafeAreaView, Text, View, StyleSheet, StyleProp, ViewStyle, Platform } from "react-native"
 import { NativeRouter, Routes, Route, Link } from "react-router-native"
 
 import {
@@ -11,7 +11,8 @@ import {
   TransactionsWidget,
 } from "@mxenabled/react-native-widget-sdk"
 
-const proxy = "http://localhost:8089/user/widget_urls"
+const baseUrl = Platform.OS === "android" ? "http://10.0.2.2:8089" : "http://localhost:8089"
+const proxy = `${baseUrl}/user/widget_urls`
 const styles = StyleSheet.create({
   page: {
     backgroundColor: "#ffffff",
@@ -72,7 +73,6 @@ const Home = () => (
 
 const Page: FC<PropsWithChildren<{ style?: StyleProp<ViewStyle>; goBack?: boolean }>> = ({
   children,
-  style,
   goBack = true,
 }) => (
   <SafeAreaView style={styles.page}>
@@ -108,10 +108,10 @@ const Connect = () => {
         onInvalidMessageError={(url, _error) => {
           console.log(`Got an unknown message: ${url}`)
         }}
-        onLoad={(payload) => {
+        onLoad={(_payload) => {
           console.log("Widget is loading")
         }}
-        onLoaded={(payload) => {
+        onLoaded={(_payload) => {
           console.log("Widget has loaded")
         }}
         onStepChange={(payload) => {
