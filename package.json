@@ -83,7 +83,8 @@
       "./test/setup.ts"
     ],
     "setupFilesAfterEnv": [
-      "./test/mocks/setup.ts"
+      "./test/mocks/setup.ts",
+      "./test/mocks/react_native_webview.ts"
     ],
     "testRegex": [
       "_test\\.[jt]sx?$"
@@ -126,7 +127,8 @@
           "argsIgnorePattern": "^_",
           "varsIgnorePattern": "^_"
         }
-      ]
+      ],
+      "@typescript-eslint/no-var-requires": 0
     }
   },
   "prettier": {
