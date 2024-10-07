@@ -38,9 +38,7 @@ describe("SDK telemetry", () => {
       const { onShouldStartLoadWithRequest } = webView.props
 
       onShouldStartLoadWithRequest({
-        nativeEvent: {
-          url: `mx://load?metadata=${encodeURIComponent(JSON.stringify({}))}`,
-        },
+        url: `mx://load?metadata=${encodeURIComponent(JSON.stringify({}))}`,
       })
     })
   })
