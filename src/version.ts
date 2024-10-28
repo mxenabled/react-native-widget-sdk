@@ -4,4 +4,4 @@
  * DO NOT MODIFY
  */
 
-export const sdkVersion = "1.1.2"
+export const sdkVersion = "1.1.4"
