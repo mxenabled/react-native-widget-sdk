@@ -8,7 +8,7 @@ import { ConnectWidget, ConnectVerificationWidget } from "../../src/components/C
 import { Props } from "../../src/components/make_component"
 
 import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
-import { rest, server } from "../mocks/server"
+import { http, server } from "../mocks/server"
 import { Dimensions, triggerDeviceRotation, triggerUrlChange } from "../mocks/react_native"
 
 describe("BudgetsWidget", () => fullWidgetComponentTestSuite(BudgetsWidget))
@@ -126,9 +126,9 @@ function testSsoUrlLoading(Component: FC<Props>) {
         let called = false
 
         server.use(
-          rest.post("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
-            res(ctx.status(500), ctx.json({ message: "NO!" })),
-          ),
+          http.post("https://api.mx.com/users/:userGuid/widget_urls", () => {
+            return new Response(JSON.stringify({ message: "NO!" }), { status: 500 })
+          }),
         )
 
         render(
@@ -184,9 +184,9 @@ function testSsoUrlLoading(Component: FC<Props>) {
         let called = false
 
         server.use(
-          rest.post("https://client.com/mx-sso-proxy", (req, res, ctx) =>
-            res(ctx.status(500), ctx.json({ message: "NO!" })),
-          ),
+          http.post("https://client.com/mx-sso-proxy", () => {
+            return new Response(JSON.stringify({ message: "NO!" }), { status: 500 })
+          }),
         )
 
         render(
