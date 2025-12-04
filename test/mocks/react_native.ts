@@ -1,4 +1,4 @@
-import * as ReactNative from "react-native"
+import { vi } from "vitest"
 
 const callbacks: Record<string, Record<string, ((...args: unknown[]) => void)[]>> = {
   dimensions: {},
@@ -23,32 +23,32 @@ export function triggerUrlChange(url: string) {
 }
 
 export const Dimensions = {
-  addEventListener: jest.fn().mockImplementation((event, fn) => {
+  addEventListener: vi.fn().mockImplementation((event, fn) => {
     callbacks["dimensions"][event] = callbacks["dimensions"][event] || []
     callbacks["dimensions"][event].push(fn)
   }),
-  removeEventListener: jest.fn().mockImplementation((event, fn) => {
+  removeEventListener: vi.fn().mockImplementation((event, fn) => {
     callbacks["dimensions"][event] = callbacks["dimensions"][event] || []
     const index = callbacks["dimensions"][event].indexOf(fn)
     if (index > -1) {
       callbacks["dimensions"][event].splice(index, 1)
     }
   }),
-  get: jest.fn().mockImplementation(() => ({
+  get: vi.fn().mockImplementation(() => ({
     height,
     width,
   })),
 }
 
 export const Linking = {
-  openURL: jest.fn().mockImplementation((url) => {
+  openURL: vi.fn().mockImplementation((url) => {
     return url
   }),
-  addEventListener: jest.fn().mockImplementation((event, fn) => {
+  addEventListener: vi.fn().mockImplementation((event, fn) => {
     callbacks["linking"][event] = callbacks["linking"][event] || []
     callbacks["linking"][event].push(fn)
   }),
-  removeEventListener: jest.fn().mockImplementation((event, fn) => {
+  removeEventListener: vi.fn().mockImplementation((event, fn) => {
     callbacks["linking"][event] = callbacks["linking"][event] || []
     const index = callbacks["linking"][event].indexOf(fn)
     if (index > -1) {
@@ -58,19 +58,14 @@ export const Linking = {
 }
 
 export const NativeModules = {
-  ...ReactNative.NativeModules,
   RNCWebViewManager: {
-    startLoadWithResult: jest.fn(),
+    startLoadWithResult: vi.fn(),
   },
 }
 
-jest.doMock("react-native", () =>
-  Object.setPrototypeOf(
-    {
-      Dimensions,
-      Linking,
-      NativeModules,
-    },
-    ReactNative,
-  ),
-)
+vi.mock("react-native", () => ({
+  SafeAreaView: "SafeAreaView",
+  Dimensions,
+  Linking,
+  NativeModules,
+}))
