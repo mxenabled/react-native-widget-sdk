@@ -1,0 +1,35 @@
+name: "NPM Version Check"
+
+on: pull_request
+
+jobs:
+    push_to_registry:
+        name: "NPM Version Check"
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: "Check out the repo"
+              uses: actions/checkout@v4
+
+            - name: "Set up Node"
+              uses: actions/setup-node@v4
+              with:
+                  registry-url: "https://registry.npmjs.org"
+                  node-version: "lts/*"
+                  check-latest: true
+
+            - name: "Check if version is published"
+              run: |
+                  PACKAGE_VERSION=$(npm pkg get version --workspaces=false | tr -d \")
+                  PACKAGE_NAME=$(npm pkg get name --workspaces=false | tr -d \")
+                  # Run npm view and capture the exit code (success or failure)
+                  npm view "$PACKAGE_NAME@$PACKAGE_VERSION" --json > result.json 2>&1 || true
+                  # Check the exit code to determine if the version exists
+                  if grep -q "is not in this registry." result.json; then
+                    echo "Version $PACKAGE_VERSION does not exist for $PACKAGE_NAME on npmjs.com. 🎉"
+                    exit 0
+                  else
+                    echo "Version $PACKAGE_VERSION already exists for $PACKAGE_NAME on npmjs.com. 😬🫠"
+                    echo "Please update the 'version' property in package.json and try again."
+                    exit 1
+                  fi
