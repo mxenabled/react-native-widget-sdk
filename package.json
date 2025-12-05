@@ -72,45 +72,5 @@
     "uri-scheme": "^1.0.112",
     "vitest": "^4.0.15",
     "vitest-react-native": "^0.1.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended"
-    ],
-    "rules": {
-      "semi": [
-        "error",
-        "never"
-      ],
-      "quotes": [
-        "error",
-        "double"
-      ],
-      "no-trailing-spaces": "error",
-      "react-hooks/exhaustive-deps": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
-        }
-      ],
-      "@typescript-eslint/no-var-requires": 0
-    }
-  },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "trailingComma": "all",
-    "singleQuote": false,
-    "bracketSameLine": true,
-    "bracketSpacing": true
   }
 }
