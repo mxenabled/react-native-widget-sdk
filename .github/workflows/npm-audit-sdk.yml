@@ -1,4 +1,4 @@
-name: Package Audit SDK
+name: NPM Audit SDK
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     - cron: "0 0 1 * *" # every month
 
 jobs:
-  Package-Audit-SDK:
+  NPM-Audit-SDK:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: npm
 
       - name: Run npm audit
         run: npm audit
