@@ -2,46 +2,42 @@ name: Build Example App
 
 on:
   pull_request:
-  push:
-    branches:
-    - master
 
 jobs:
   Build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 16
-        cache: npm
-    - uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - uses: actions/cache@v3
-      with:
-        path: example/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('example/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - uses: actions/cache@v3
+        with:
+          path: example/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('example/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - run: node --version
-    - run: npm --version
-    - name: Run npm install (sdk)
-      run: npm install
+      - run: node --version
+      - run: npm --version
+      - name: Run npm install (sdk)
+        run: npm install
 
-    - name: Run npm install (app)
-      run: npm install
-      working-directory: example
+      - name: Run npm install (app)
+        run: npm install
+        working-directory: example
 
-    - name: Create config file
-      working-directory: example
-      run: |
-        echo '{ "proxy": "http://fakeserver.com" }' > config.json
+      - name: Create config file
+        working-directory: example
+        run: |
+          echo '{ "proxy": "http://fakeserver.com" }' > config.json
 
-    - run: npm run build
-      working-directory: example
+      - run: npm run build
+        working-directory: example

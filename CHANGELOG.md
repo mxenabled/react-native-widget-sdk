@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.1.5]
+
+### Added
+
+- Auto publishing of the npm package
+- Changelog check workflow
+- npm version check workflow
+
+### Changed
+
+- Running package audits more frequently
+- Split up github workflows
+- Converted from jest to vitest
+- Moved eslint and prettier config out of package.json
+
+### Fixed
+
+- Updated packages with vulnerabilities
+
 ## [1.1.4] - 2024-10-18
 
 ### Fixed

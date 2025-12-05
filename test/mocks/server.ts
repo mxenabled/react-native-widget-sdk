@@ -1,4 +1,4 @@
-import { rest } from "msw"
+import { http, HttpResponse } from "msw"
 import { setupServer } from "msw/node"
 
 type Body = {
@@ -8,43 +8,45 @@ type Body = {
 }
 
 const handlers = [
-  rest.post<Body>("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) => {
-    const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
+  http.post("https://api.mx.com/users/:userGuid/widget_urls", async ({ request }) => {
+    const body = (await request.json()) as Body
+    const widget = body?.widget_url?.widget_type?.replace("_widget", "")
 
     if (!widget) {
-      return res(ctx.status(400), ctx.json({ error: true }))
+      return HttpResponse.json({ error: true }, { status: 400 })
     }
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         widget_url: {
           type: `${widget}_widget`,
           url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
         },
-      }),
+      },
+      { status: 200 },
     )
   }),
 
-  rest.post<Body>("https://client.com/mx-sso-proxy", (req, res, ctx) => {
-    const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
+  http.post("https://client.com/mx-sso-proxy", async ({ request }) => {
+    const body = (await request.json()) as Body
+    const widget = body?.widget_url?.widget_type?.replace("_widget", "")
 
     if (!widget) {
-      return res(ctx.status(400), ctx.json({ error: true }))
+      return HttpResponse.json({ error: true }, { status: 400 })
     }
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         widget_url: {
           type: `${widget}_widget`,
           url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
         },
-      }),
+      },
+      { status: 200 },
     )
   }),
 ]
 
 const server = setupServer(...handlers)
 
-export { rest, server }
+export { http, server }

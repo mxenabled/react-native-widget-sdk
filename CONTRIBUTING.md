@@ -12,7 +12,6 @@ following information:
 3. Example code snippet that causes the issue.
 4. Screenshots of the broken UI.
 
-
 ## Development
 
 Clone this repo and install [Node v16](https://nodejs.org/en/download/). Below
@@ -25,24 +24,6 @@ are commands we use to perform various tasks:
 - `npm run lint`, run linter.
 - `npm run format`, run code formatter.
 
-
 ## Publishing a new version
 
-1. Update `CHANGELOG.md` with any changes that need to be communicated to a
-   user of the SDK. See https://keepachangelog.com/en/1.1.0/ for details on
-   what and how content should be included.
-2. Run `npm version <new version>` to set the new SDK version and create the git
-   tag.
-3. [Publish new version to npm.](#publishing-to-npm)
-
-
-### Publishing to npm
-
-You will need permission to publish to the [mxenabled][mxenabled_npm_org]
-organization in npm before you can publish this package. Once you are able to
-publish, log into npm with `npm login` then run `npm publish` to publish. Note
-that running `npm publish` will automatically execute `npm run build:dist` for
-you, so there is no need to do that manually.
-
-
-[mxenabled_npm_org]: https://www.npmjs.com/org/mxenabled "mxenabled npm organization"
+Publishing of the npm package is handled by github actions. The `CHANGELOG.md` and `package.json` version need to be manually updated.
