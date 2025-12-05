@@ -22,3 +22,4 @@ ignorePaths:
   - example/Gemfile
   - example/android/**
   - example/ios/**
+  - vitest.config.ts
