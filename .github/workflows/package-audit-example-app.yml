@@ -3,22 +3,22 @@ name: Package Audit Example App
 on:
   pull_request:
     paths:
-    - example/**
-    - .github/workflows/package-audit-app.yml
+      - example/**
+      - .github/workflows/package-audit-app.yml
   schedule:
-  - cron: "0 0 1 * *" # every month
+    - cron: "0 0 1 * *" # every month
 
 jobs:
   Build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 16
-        cache: npm
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
 
-    - name: Run npm audit (app)
-      run: npm audit --omit dev
-      working-directory: example
+      - name: Run npm audit (app)
+        run: npm audit
+        working-directory: example

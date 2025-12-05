@@ -2,9 +2,6 @@ name: Build Example App
 
 on:
   pull_request:
-  push:
-    branches:
-      - master
 
 jobs:
   Build:
