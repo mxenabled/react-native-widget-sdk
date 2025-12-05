@@ -28,7 +28,6 @@
     "lint": "eslint src test",
     "prepack": "npm run build",
     "prettier": "prettier src test example/App.tsx",
-    "spellcheck": "cspell $(git ls-files)",
     "test": "vitest run --coverage",
     "test:watch": "vitest"
   },
@@ -58,7 +57,6 @@
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "@vitest/coverage-v8": "^4.0.15",
-    "cspell": "^6.1.1",
     "eslint": "^8.19.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "msw": "^2.12.4",
