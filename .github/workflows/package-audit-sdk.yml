@@ -6,7 +6,7 @@ on:
     - cron: "0 0 1 * *" # every month
 
 jobs:
-  Build:
+  Package-Audit-SDK:
     runs-on: ubuntu-latest
 
     steps:

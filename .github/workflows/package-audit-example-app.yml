@@ -2,14 +2,11 @@ name: Package Audit Example App
 
 on:
   pull_request:
-    paths:
-      - example/**
-      - .github/workflows/package-audit-app.yml
   schedule:
     - cron: "0 0 1 * *" # every month
 
 jobs:
-  Build:
+  Package-Audit-Example-App:
     runs-on: ubuntu-latest
 
     steps:
