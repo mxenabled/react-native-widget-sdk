@@ -1,7 +1,7 @@
 {
   "name": "@mxenabled/react-native-widget-sdk",
   "description": "MX React Native Widget SDK",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "main": "dist/src/index.js",
   "source": "src/index.ts",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "example:start": "cd example && npm start",
     "example:ios": "cd example && npm run ios",
     "example:android": "cd example && npm run android",
-    "example:server": "mx-sso-api-proxy run",
+    "example:server": "mx-sso-proxy run",
     "format": "npm run prettier -- -w",
     "lint": "eslint src test",
     "prepack": "npm run build",

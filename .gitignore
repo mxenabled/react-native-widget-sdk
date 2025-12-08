@@ -4,6 +4,6 @@ TestRnApp_*
 build
 coverage
 dist
-mx-sso-api-proxy-rc.yaml
+.mx-sso-proxy-rc.yaml
 node_modules
 npm-debug.log
