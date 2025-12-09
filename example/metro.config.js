@@ -2,7 +2,7 @@ const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config")
 const { resolve } = require("path")
 
 const siblings = {
-  "@mxenabled/react-native-widget-sdk": resolve(__dirname, "..", "src"),
+  "@mxenabled/react-native-widget-sdk": resolve(__dirname, "..", "dist"),
   "@mxenabled/widget-post-message-definitions": resolve(
     __dirname,
     "..",

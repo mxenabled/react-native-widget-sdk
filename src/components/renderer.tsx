@@ -55,6 +55,23 @@ export function useWidgetRendererWithRef<Configuration>(
     },
   })
 
+  const jsCode = `
+        // Create an object with the properties you want to check
+        const propertiesToCheck = {
+          app: window.app,
+          MXReactNativeSDKVersion: window.MXReactNativeSDKVersion
+        };
+        
+        // Post the data back to React Native
+        window.ReactNativeWebView.postMessage(JSON.stringify({ 
+          type: 'windowContent', 
+          content: propertiesToCheck 
+        }));
+        
+        // Must return true to avoid errors in some Android versions
+        true;
+      `
+
   const setReactNativeSDKVersionOnWindow = `
     window.MXReactNativeSDKVersion = "${sdkVersion}";
   `
@@ -71,8 +88,12 @@ export function useWidgetRendererWithRef<Configuration>(
         originWhitelist={["*"]}
         cacheMode="LOAD_NO_CACHE"
         injectedJavaScriptBeforeContentLoaded={setReactNativeSDKVersionOnWindow}
+        injectedJavaScript={jsCode}
         javaScriptEnabled={true}
         domStorageEnabled={true}
+        onMessage={(event) => {
+          console.log("WebView message:", event.nativeEvent.data)
+        }}
         incognito={true}
         onShouldStartLoadWithRequest={handler}
         onError={props.onWebViewError}
