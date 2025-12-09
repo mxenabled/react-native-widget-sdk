@@ -8,6 +8,7 @@ import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
 import { SdkTelemetryProps, postSdkInfoMessage } from "./telemetry"
+import { sdkVersion } from "../version"
 
 export type StylingProps = {
   style?: StyleProp<ViewStyle>
@@ -54,6 +55,10 @@ export function useWidgetRendererWithRef<Configuration>(
     },
   })
 
+  const setReactNativeSDKVersionOnWindow = `
+    window.MXReactNativeSDKVersion = "${sdkVersion}";
+  `
+
   return [
     ref,
     <SafeAreaView testID="widget_view" style={style}>
@@ -65,6 +70,7 @@ export function useWidgetRendererWithRef<Configuration>(
         source={{ uri: url }}
         originWhitelist={["*"]}
         cacheMode="LOAD_NO_CACHE"
+        injectedJavaScriptBeforeContentLoaded={setReactNativeSDKVersionOnWindow}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         incognito={true}
