@@ -2,7 +2,9 @@
   "name": "@mxenabled/react-native-widget-sdk",
   "description": "MX React Native Widget SDK",
   "version": "1.1.6",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "source": "src/index.ts",
   "license": "MIT",
   "repository": {
@@ -10,13 +12,13 @@
     "url": "https://github.com/mxenabled/react-native-widget-sdk.git"
   },
   "files": [
-    "dist/src"
+    "dist"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run documentation",
     "clean": "[ -d dist ] && rm -r dist || true",
     "compile": "npm run compile:version && npm run compile:sdk",
-    "compile:sdk": "tsc --declaration --noEmit false --outDir dist",
+    "compile:sdk": "vite build --config vite.config.build.ts",
     "compile:version": "ts-node bin/generate-version-file.ts",
     "documentation": "cp node_modules/@mxenabled/widget-post-message-definitions/docs/react-native-sdk-generated.md docs/widget_callback_props.md",
     "example:install": "bin/install-example-application-dependencies",
@@ -32,7 +34,7 @@
     "test:watch": "vitest"
   },
   "bin": {
-    "mx-widget-sdk-setup": "dist/src/cli/setup.js"
+    "mx-widget-sdk-setup": "dist/cli/setup.js"
   },
   "dependencies": {
     "@mxenabled/widget-post-message-definitions": "^1.4.0",
@@ -67,6 +69,8 @@
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
     "uri-scheme": "^1.0.112",
+    "vite": "^7.2.7",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.15",
     "vitest-react-native": "^0.1.5"
   }
