@@ -39,7 +39,7 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-webview": "*"
+    "react-native-webview": ">=13.0.0"
   },
   "devDependencies": {
     "@mxenabled/sso-api-proxy": "^1.3.4",
