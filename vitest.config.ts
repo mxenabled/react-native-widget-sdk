@@ -2,6 +2,9 @@ import { defineConfig } from "vitest/config"
 import react from "vitest-react-native"
 
 export default defineConfig({
+  define: {
+    __SDK_VERSION__: JSON.stringify("test-version"),
+  },
   plugins: [react()],
   test: {
     globals: true,

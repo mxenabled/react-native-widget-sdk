@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.0.0]
+
+### Changed
+
+- Now using vite to build
+- Using vite to populate the version instead of running a script
+- Example app is now using the built files instead of pointing directly at src
+- react-native-webview is now a peer dependency
+- reduced the number of commands required to develop locally
+
+### Fixed
+
+- SDK version now stays up to date when running `npm run dev:dependences`
+
+### Removed
+
+- mx-widget-sdk-setup script
+- mx/sdk/info post message
+
 ## [1.1.6]
 
 ### Fixed
