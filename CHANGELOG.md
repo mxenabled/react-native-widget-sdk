@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - mx-widget-sdk-setup script
+- mx/sdk/info post message
 
 ## [1.1.6]
 

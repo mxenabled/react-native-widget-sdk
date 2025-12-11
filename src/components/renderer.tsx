@@ -1,13 +1,12 @@
 import React, { useRef, MutableRefObject, ReactElement } from "react"
 import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
 import { WebView } from "react-native-webview"
-import { Payload, Type } from "@mxenabled/widget-post-message-definitions"
+import { Payload } from "@mxenabled/widget-post-message-definitions"
 
 import { Props, useSsoUrl } from "../sso"
 import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
-import { SdkTelemetryProps, postSdkInfoMessage } from "./telemetry"
 import { sdkVersion } from "../version"
 
 export type StylingProps = {
@@ -16,10 +15,7 @@ export type StylingProps = {
 }
 
 type MaybeWebViewRef = MutableRefObject<WebView | null>
-type BaseProps<Configuration> = Props<Configuration> &
-  StylingProps &
-  LoadUrlInBrowserProps &
-  SdkTelemetryProps
+type BaseProps<Configuration> = Props<Configuration> & StylingProps & LoadUrlInBrowserProps
 
 export function useWidgetRenderer<Configuration>(
   props: BaseProps<Configuration>,
@@ -45,32 +41,12 @@ export function useWidgetRendererWithRef<Configuration>(
   const scheme = props.uiMessageWebviewUrlScheme || "mx"
   const handler = makeRequestInterceptor(url, scheme, {
     onIntercept: (url) => {
-      const event = dispatchEvent(url, props)
-      if (event && event.type === Type.Load) {
-        postSdkInfoMessage(ref, props)
-      }
+      dispatchEvent(url, props)
     },
     onLoadUrlInBrowser: (url) => {
       loadUrlInBrowser(url, props)
     },
   })
-
-  const jsCode = `
-        // Create an object with the properties you want to check
-        const propertiesToCheck = {
-          app: window.app,
-          MXReactNativeSDKVersion: window.MXReactNativeSDKVersion
-        };
-        
-        // Post the data back to React Native
-        window.ReactNativeWebView.postMessage(JSON.stringify({ 
-          type: 'windowContent', 
-          content: propertiesToCheck 
-        }));
-        
-        // Must return true to avoid errors in some Android versions
-        true;
-      `
 
   const setReactNativeSDKVersionOnWindow = `
     window.MXReactNativeSDKVersion = "${sdkVersion}";
@@ -88,7 +64,6 @@ export function useWidgetRendererWithRef<Configuration>(
         originWhitelist={["*"]}
         cacheMode="LOAD_NO_CACHE"
         injectedJavaScriptBeforeContentLoaded={setReactNativeSDKVersionOnWindow}
-        injectedJavaScript={jsCode}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         onMessage={(event) => {
