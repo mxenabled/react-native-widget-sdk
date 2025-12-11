@@ -66,9 +66,6 @@ export function useWidgetRendererWithRef<Configuration>(
         injectedJavaScriptBeforeContentLoaded={setReactNativeSDKVersionOnWindow}
         javaScriptEnabled={true}
         domStorageEnabled={true}
-        onMessage={(event) => {
-          console.log("WebView message:", event.nativeEvent.data)
-        }}
         incognito={true}
         onShouldStartLoadWithRequest={handler}
         onError={props.onWebViewError}
