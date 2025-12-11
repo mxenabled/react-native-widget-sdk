@@ -31,12 +31,7 @@ cd react-native-widget-sdk
 npm run example:install
 ```
 
-4. Start the SSO proxy server:
-
-```bash
-# This command will continue to run until it is manually stopped.
-npm run example:server
-```
+4. Configure the sso api proxy
 
 The example application uses [`@mxenabled/sso-api-proxy`][sso_api_proxy] to
 run a proxy server that talks to MX's Platform API. When the proxy server
@@ -45,15 +40,18 @@ settings in order to run. This configuration is then saved locally. See [this
 page][sso_api_proxy_config] for more information on how to configure
 `@mxenabled/sso-api-proxy`.
 
-5. Finally, you can run the application on an iOS or Android simulator.
-
-```bash
-# This command will continue to run until it is manually stopped.
-npm run example:start
-
-npm run example:ios     # Run application in an iOS simulator
-npm run example:android # Run application in an Android simulator
-```
-
 [sso_api_proxy]: https://www.npmjs.com/package/@mxenabled/sso-api-proxy "@mxenabled/sso-api-proxy"
 [sso_api_proxy_config]: https://github.com/mxenabled/sso-api-proxy#configuration "Configuration"
+
+5. Start the development dependences
+
+```bash
+# This will start an sso proxy server and watch for changes to the SDK
+npm run dev:dependencies
+```
+
+6. Finally, you can run the application on an iOS or Android simulator.
+
+```bash
+npm run dev
+```
