@@ -12,10 +12,7 @@ export default defineConfig({
   build: {
     emptyOutDir: false,
     lib: {
-      entry: {
-        index: resolve(__dirname, "src/index.ts"),
-        "cli/setup": resolve(__dirname, "src/cli/setup.ts"),
-      },
+      entry: resolve(__dirname, "src/index.ts"),
       formats: ["cjs", "es"],
     },
     outDir: "dist",
