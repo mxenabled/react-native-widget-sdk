@@ -10,6 +10,7 @@ export default defineConfig({
     __SDK_VERSION__: JSON.stringify(packageJson.version),
   },
   build: {
+    emptyOutDir: false,
     lib: {
       entry: {
         index: resolve(__dirname, "src/index.ts"),
