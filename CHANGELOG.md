@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - SDK version now stays up to date when running `npm run dev:dependences`
+- Fix package.json for publishing
 
 ### Removed
 
