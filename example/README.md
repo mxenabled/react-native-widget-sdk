@@ -1,57 +1,50 @@
-# MX React Native Widget SDK example application
+# Welcome to your Expo app 👋
 
-This is a React Native application created with `npx react-native init
-MxMobileWidgetDemo --version 0.64.3`. The application's scheme is
-`mxwidgetsdkdemo` and was set with `npx uri-scheme add mxwidgetsdkdemo`.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Running this application
+## Get started
 
-First, you will need to set up your environment so that you can run React
-Native apps. See https://reactnative.dev/docs/environment-setup for
-instructions on how to do that. Once your environment is setup, run the
-following commands:
+1. Install dependencies
 
-1. Clone this repository:
+   ```bash
+   npm install
+   ```
 
-```bash
-git clone https://github.com/mxenabled/react-native-widget-sdk.git
-cd react-native-widget-sdk
-```
+2. Start the app
 
-2. [Setup react native](https://reactnative.dev/docs/set-up-your-environment)
+   ```bash
+   npx expo start
+   ```
 
-```
-  # Run the following command to help debug setup issues
-  npx react-native doctor
-```
+In the output, you'll find options to open the app in a
 
-3. Install project dependencies:
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-```bash
-npm run example:install
-```
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-4. Configure the sso api proxy
+## Get a fresh project
 
-The example application uses [`@mxenabled/sso-api-proxy`][sso_api_proxy] to
-run a proxy server that talks to MX's Platform API. When the proxy server
-first starts up, it will prompt you to enter the necessary API and user
-settings in order to run. This configuration is then saved locally. See [this
-page][sso_api_proxy_config] for more information on how to configure
-`@mxenabled/sso-api-proxy`.
-
-[sso_api_proxy]: https://www.npmjs.com/package/@mxenabled/sso-api-proxy "@mxenabled/sso-api-proxy"
-[sso_api_proxy_config]: https://github.com/mxenabled/sso-api-proxy#configuration "Configuration"
-
-5. Start the development dependences
+When you're ready, run:
 
 ```bash
-# This will start an sso proxy server and watch for changes to the SDK
-npm run dev:dependencies
+npm run reset-project
 ```
 
-6. Finally, you can run the application on an iOS or Android simulator.
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-```bash
-npm run dev
-```
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
