@@ -59,7 +59,7 @@
     "nodemon": "^3.1.11",
     "prettier": "^2.8.8",
     "react": "^19.1.0",
-    "react-native": "^0.82.0",
+    "react-native": "^0.81.5",
     "react-native-base64": "^0.2.1",
     "react-test-renderer": "^19.0.0",
     "ts-node": "^10.4.0",
