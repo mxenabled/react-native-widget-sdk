@@ -1,3 +1,5 @@
+import "./react_native"
+
 import { server } from "./server"
 
 beforeAll(() => server.listen())

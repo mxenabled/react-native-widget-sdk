@@ -1,43 +1,21 @@
 module.exports = {
-  testEnvironment: "node",
-  injectGlobals: true,
   globals: {
     __SDK_VERSION__: "test-version",
   },
-  setupFiles: [
-    "./test/mocks/react_native.ts",
-    "./test/setup.ts",
-    "./test/mocks/react_native_webview.ts",
+  preset: "react-native",
+  collectCoverageFrom: ["src/**/**"],
+  setupFiles: ["./test/setup.ts"],
+  setupFilesAfterEnv: ["./test/mocks/setup.ts", "./test/mocks/react_native_webview.ts"],
+  testRegex: ["_test\\.[jt]sx?$"],
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules",
+    "<rootDir>/dist",
+    "<rootDir>/build",
+    "<rootDir>/example",
   ],
-  setupFilesAfterEnv: [
-    "./test/mocks/setup.ts",
-  ],
-  collectCoverageFrom: ["src/**/*"],
-  coverageReporters: ["text", "json", "html", "lcov"],
-  testMatch: ["**/*_test.{ts,tsx}"],
-  testPathIgnorePatterns: ["/node_modules/", "/dist/", "/build/", "/example/"],
-  transform: {
-    "^.+\\.(ts|tsx)$": [
-      "ts-jest",
-      {
-        tsconfig: {
-          jsx: "react",
-          esModuleInterop: true,
-        },
-      },
-    ],
-    "^.+\\.m?js$": [
-      "ts-jest",
-      {
-        tsconfig: {
-          allowJs: true,
-          esModuleInterop: true,
-        },
-      },
-    ],
+  transformIgnorePatterns: ["node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"],
+  testEnvironment: "node",
+  moduleNameMapper: {
+    "^msw/node$": "<rootDir>/node_modules/msw/lib/node/index.js",
   },
-  transformIgnorePatterns: [
-    "node_modules/(?!(react-native|@react-native|react-native-webview|react-native-base64|msw|@mswjs|until-async|@mxenabled)/)",
-  ],
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-};
+}

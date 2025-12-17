@@ -1,3 +1,5 @@
+import * as ReactNative from "react-native"
+
 const callbacks: Record<string, Record<string, ((...args: unknown[]) => void)[]>> = {
   dimensions: {},
   linking: {},
@@ -56,14 +58,19 @@ export const Linking = {
 }
 
 export const NativeModules = {
+  ...ReactNative.NativeModules,
   RNCWebViewManager: {
     startLoadWithResult: jest.fn(),
   },
 }
 
-jest.mock("react-native", () => ({
-  SafeAreaView: "SafeAreaView",
-  Dimensions,
-  Linking,
-  NativeModules,
-}))
+jest.doMock("react-native", () =>
+  Object.setPrototypeOf(
+    {
+      Dimensions,
+      Linking,
+      NativeModules,
+    },
+    ReactNative,
+  ),
+)
