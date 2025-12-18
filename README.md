@@ -6,3 +6,7 @@ Native widget. Please refer to our [React Native Widget SDK
 documentation][sdk_docs] to get started.
 
 [sdk_docs]: https://docs.mx.com/connect/guides/widget-sdks/react-native/ "React Native Widget SDK"
+
+[Contributiong](./CONTRIBUTING.md)
+
+[Development](./DEVELOPMENT.md)

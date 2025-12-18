@@ -1,41 +1,30 @@
-const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config")
-const { resolve } = require("path")
+const { getDefaultConfig } = require("expo/metro-config")
+const path = require("path")
 
-const siblings = {
-  "@mxenabled/react-native-widget-sdk": resolve(__dirname, "..", "dist"),
-  "@mxenabled/widget-post-message-definitions": resolve(
-    __dirname,
-    "..",
-    "node_modules",
-    "@mxenabled",
-    "widget-post-message-definitions",
-  ),
-}
-/**
- * Metro configuration
- * https://metrobundler.dev/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-const config = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
-  },
-  resolver: {
-    extraNodeModules: new Proxy(
-      {},
-      {
-        get: (target, name) =>
-          name in siblings ? siblings[name] : resolve(process.cwd(), "node_modules", name),
-      },
-    ),
-  },
-  watchFolders: [...Object.values(siblings)],
+const config = getDefaultConfig(__dirname)
+
+// Point to the SDK's root directory
+const sdkRoot = path.resolve(__dirname, "..")
+
+// Watch all files within the SDK
+config.watchFolders = [sdkRoot]
+
+// Only use example's node_modules, not SDK's
+config.resolver.nodeModulesPaths = [path.resolve(__dirname, "node_modules")]
+
+// Blacklist React dependencies in SDK's node_modules to prevent duplicates
+config.resolver.blockList = [
+  new RegExp(`${sdkRoot}/node_modules/react/`),
+  new RegExp(`${sdkRoot}/node_modules/react-native/`),
+  new RegExp(`${sdkRoot}/node_modules/react-native-webview/`),
+]
+
+// Force React dependencies to resolve from example's node_modules only
+config.resolver.extraNodeModules = {
+  "@mxenabled/react-native-widget-sdk": sdkRoot,
+  react: path.resolve(__dirname, "node_modules/react"),
+  "react-native": path.resolve(__dirname, "node_modules/react-native"),
+  "react-native-webview": path.resolve(__dirname, "node_modules/react-native-webview"),
 }
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config)
+module.exports = config

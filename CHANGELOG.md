@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Example app is now using the built files instead of pointing directly at src
 - react-native-webview is now a peer dependency
 - reduced the number of commands required to develop locally
+- Using expo for the example app
+- Converted from vitest to jest to fix compatibility issues
 
 ### Fixed
 
