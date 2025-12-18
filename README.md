@@ -10,3 +10,5 @@ documentation][sdk_docs] to get started.
 [Contributiong](./CONTRIBUTING.md)
 
 [Development](./DEVELOPMENT.md)
+
+[E2E Testing](./E2E_TESTING.md)
