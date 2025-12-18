@@ -1,0 +1,7 @@
+appId: com.anonymous.example
+---
+- launchApp
+- tapOn: "Connect"
+- assertVisible: "Select your institution"
+- tapOn: ".*MX Bank.*"
+- assertVisible: "Enter your credentials"
