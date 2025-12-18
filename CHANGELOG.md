@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.0.1]
+
+### Added
+
+- Local E2E testing via maestro
+
 ## [2.0.0]
 
 ### Changed
