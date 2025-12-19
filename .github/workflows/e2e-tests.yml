@@ -115,13 +115,7 @@ jobs:
           script: |
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
             maestro test ./example/maestro/ --format junit --output maestro-results.xml || true
-            ls -la
-            if [ -f maestro-results.xml ]; then
-              mv maestro-results.xml example/
-              echo "Results file moved to example/"
-            else
-              echo "Results file was not created"
-            fi
+            test -f maestro-results.xml && mv maestro-results.xml example/ && echo "Results file moved" || echo "No results file"
             maestro test ./example/maestro/
 
       - name: Upload Maestro test results
