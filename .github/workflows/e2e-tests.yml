@@ -114,8 +114,8 @@ jobs:
           disable-animations: true
           script: |
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
-            cd example
-            maestro test ./maestro/ --format junit --output maestro-results.xml
+            maestro test ./example/maestro/ --format junit --output maestro-results.xml
+            mv maestro-results.xml example/
 
       - name: Upload Maestro test results
         if: always()
