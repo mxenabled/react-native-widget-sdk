@@ -97,7 +97,11 @@ jobs:
 
       - name: Build Android app
         working-directory: ./example
-        run: npx expo prebuild --platform android && cd android && ./gradlew assembleDebug
+        run: |
+          npx expo prebuild --platform android
+          cd android
+          ./gradlew assembleDebug
+          ls -la app/build/outputs/apk/debug/
 
       - name: Run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2
@@ -109,9 +113,10 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            cd example
-            adb install android/app/build/outputs/apk/debug/app-debug.apk
-            npm run e2e
+            cd example/android
+            adb install app/build/outputs/apk/debug/app-debug.apk
+            cd ..
+            maestro test ./maestro/ --format junit --output maestro-results.xml
 
       - name: Upload Maestro test results
         if: always()
@@ -119,6 +124,6 @@ jobs:
         with:
           name: maestro-test-results
           path: |
-            example/.maestro/
-            ~/.maestro/tests/
+            example/maestro-results.xml
           retention-days: 7
+          if-no-files-found: warn
