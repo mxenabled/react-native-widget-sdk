@@ -115,7 +115,10 @@ jobs:
           script: |
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
             maestro test ./example/maestro/ --format junit --output maestro-results.xml
-            mv maestro-results.xml example/
+            ls -la
+            cat maestro-results.xml || echo "Results file not found in root"
+            mv maestro-results.xml example/ || echo "Could not move file"
+            ls -la example/
 
       - name: Upload Maestro test results
         if: always()
