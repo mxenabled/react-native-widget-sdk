@@ -114,11 +114,15 @@ jobs:
           disable-animations: true
           script: |
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
-            maestro test ./example/maestro/ --format junit --output maestro-results.xml
+            maestro test ./example/maestro/ --format junit --output maestro-results.xml || true
             ls -la
-            cat maestro-results.xml || echo "Results file not found in root"
-            mv maestro-results.xml example/ || echo "Could not move file"
-            ls -la example/
+            if [ -f maestro-results.xml ]; then
+              mv maestro-results.xml example/
+              echo "Results file moved to example/"
+            else
+              echo "Results file was not created"
+            fi
+            maestro test ./example/maestro/
 
       - name: Upload Maestro test results
         if: always()
