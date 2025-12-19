@@ -114,9 +114,12 @@ jobs:
           disable-animations: true
           script: |
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
+            mkdir -p maestro-output
             maestro test ./example/maestro/ --format junit --output maestro-results.xml || true
-            test -f maestro-results.xml && mv maestro-results.xml example/ && echo "Results file moved" || echo "No results file"
-            maestro test ./example/maestro/
+            maestro record ./example/maestro/ --output maestro-output/ || maestro test ./example/maestro/
+            test -f maestro-results.xml && mv maestro-results.xml example/ || echo "No results file"
+            test -d maestro-output && mv maestro-output example/ || echo "No maestro output directory"
+            ls -la example/
 
       - name: Upload Maestro test results
         if: always()
@@ -125,5 +128,7 @@ jobs:
           name: maestro-test-results
           path: |
             example/maestro-results.xml
+            example/maestro-output/
+            ~/.maestro/tests/
           retention-days: 7
           if-no-files-found: warn
