@@ -45,6 +45,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9c680ba9-b514-4d3e-9b75-6d7e7baf0e3e"
+      }
+    },
+    "owner": "mxwidgetsdk"
   }
 }
