@@ -114,12 +114,18 @@ jobs:
           disable-animations: true
           script: |
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
-            mkdir -p maestro-output
-            maestro test ./example/maestro/ --format junit --output maestro-results.xml || true
-            maestro record ./example/maestro/ --output maestro-output/ || maestro test ./example/maestro/
-            test -f maestro-results.xml && mv maestro-results.xml example/ || echo "No results file"
-            test -d maestro-output && mv maestro-output example/ || echo "No maestro output directory"
-            ls -la example/
+            mkdir -p example/maestro-output
+            # Run tests (produce JUnit results) and capture artifacts under example/maestro-output
+            maestro test ./example/maestro/ --format junit --output example/maestro-results.xml || true
+            # Run record to capture screenshots & artifacts into the output directory
+            maestro record ./example/maestro/ --output example/maestro-output/ || true
+            # If Maestro also wrote to the user home tests dir, copy those into the output dir for upload
+            if [ -d "$HOME/.maestro/tests" ]; then
+              mkdir -p example/maestro-output/.maestro-tests
+              cp -r "$HOME/.maestro/tests/." example/maestro-output/.maestro-tests/ || true
+            fi
+            ls -la example/maestro-output || true
+            ls -la example/ || true
 
       - name: Upload Maestro test results
         if: always()
