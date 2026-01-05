@@ -117,7 +117,7 @@ jobs:
             mkdir -p example/maestro-output
             # Run tests (produce JUnit results) and capture artifacts under example/maestro-output
             mkdir -p example/maestro-output/debug
-            maestro test ./example/maestro/ --format junit --output example/maestro-results.xml --debug-output example/maestro-output/debug || true
+            maestro test ./example/maestro/ --format junit --output example/maestro-results.xml --debug-output example/maestro-output/debug --test-output-dir example/maestro-output/debug || true
             # Attempt to record each Flow file individually (maestro record accepts a single flow file)
             bash -lc 'for f in ./example/maestro/*.yaml ./example/maestro/*.yml ./example/maestro/*.flow; do if [ -f "$f" ]; then echo "Recording $f"; maestro record --local "$f" "example/maestro-output/$(basename "$f").mp4" --debug-output example/maestro-output/debug || echo "record failed for $f"; fi; done' || true
             # If Maestro wrote to the user home tests dir, copy those into the output dir for upload
