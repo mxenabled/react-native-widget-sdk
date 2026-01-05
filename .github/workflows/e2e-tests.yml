@@ -116,13 +116,19 @@ jobs:
             adb install example/android/app/build/outputs/apk/debug/app-debug.apk
             mkdir -p example/maestro-output
             # Run tests (produce JUnit results) and capture artifacts under example/maestro-output
-            maestro test ./example/maestro/ --format junit --output example/maestro-results.xml || true
-            # Run record to capture screenshots & artifacts into the output directory (use --local to render a video file)
-            maestro record --local ./example/maestro/ example/maestro-output/recording.mp4 || true
-            # If Maestro also wrote to the user home tests dir, copy those into the output dir for upload
+            mkdir -p example/maestro-output/debug
+            maestro test ./example/maestro/ --format junit --output example/maestro-results.xml --debug-output example/maestro-output/debug || true
+            # Attempt to record each Flow file individually (maestro record accepts a single flow file)
+            for f in ./example/maestro/*.yaml ./example/maestro/*.yml ./example/maestro/*.flow; do
+              if [ -f "$f" ]; then
+                echo "Recording $f"
+                maestro record --local "$f" "example/maestro-output/$(basename "$f").mp4" --debug-output example/maestro-output/debug || echo "record failed for $f"
+              fi
+            done
+            # If Maestro wrote to the user home tests dir, copy those into the output dir for upload
             if [ -d "$HOME/.maestro/tests" ]; then
               mkdir -p example/maestro-output/.maestro-tests
-              cp -r "$HOME/.maestro/tests/." example/maestro-output/.maestro-tests/ || true
+              rsync -a "$HOME/.maestro/tests/" example/maestro-output/.maestro-tests/ || true
             fi
             echo "Listing example/maestro-output contents:"; ls -la example/maestro-output || true
             if [ -d example/maestro-output ]; then
