@@ -1,7 +1,12 @@
 appId: com.anonymous.example
 ---
 - launchApp
+- screenshot: "after-launch"
 - tapOn: "Connect"
+- screenshot: "after-tap-connect"
 - assertVisible: "Select your institution"
+- screenshot: "after-select-institution"
 - tapOn: ".*MX Bank.*"
+- screenshot: "after-tap-mx-bank"
 - assertVisible: "Enter your credentials"
+- screenshot: "after-enter-credentials"
