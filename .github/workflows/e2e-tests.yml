@@ -117,14 +117,18 @@ jobs:
             mkdir -p example/maestro-output
             # Run tests (produce JUnit results) and capture artifacts under example/maestro-output
             maestro test ./example/maestro/ --format junit --output example/maestro-results.xml || true
-            # Run record to capture screenshots & artifacts into the output directory
-            maestro record ./example/maestro/ --output example/maestro-output/ || true
+            # Run record to capture screenshots & artifacts into the output directory (use --local to render a video file)
+            maestro record --local ./example/maestro/ example/maestro-output/recording.mp4 || true
             # If Maestro also wrote to the user home tests dir, copy those into the output dir for upload
             if [ -d "$HOME/.maestro/tests" ]; then
               mkdir -p example/maestro-output/.maestro-tests
               cp -r "$HOME/.maestro/tests/." example/maestro-output/.maestro-tests/ || true
             fi
-            ls -la example/maestro-output || true
+            echo "Listing example/maestro-output contents:"; ls -la example/maestro-output || true
+            if [ -d example/maestro-output ]; then
+              echo "Creating tarball example/maestro-output.tar.gz"
+              tar -czf example/maestro-output.tar.gz -C example maestro-output || true
+            fi
             ls -la example/ || true
 
       - name: Upload Maestro test results
@@ -135,6 +139,7 @@ jobs:
           path: |
             example/maestro-results.xml
             example/maestro-output/
+            example/maestro-output.tar.gz
             ~/.maestro/tests/
           retention-days: 7
           if-no-files-found: warn
