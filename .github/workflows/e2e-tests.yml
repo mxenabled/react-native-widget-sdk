@@ -1,0 +1,184 @@
+name: E2E Tests
+
+on:
+  pull_request:
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Free up disk space
+        run: |
+          echo "Disk space before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo docker image prune --all --force
+          echo "Disk space after cleanup:"
+          df -h
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Cache SDK npm modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: sdk-npm-${{ runner.os }}-${{ hashFiles('package-lock.json','package.json') }}
+          restore-keys: |
+            sdk-npm-${{ runner.os }}-
+
+      - name: Install SDK dependencies
+        run: npm install
+
+      - name: Build SDK
+        run: npm run build
+
+      - name: Cache example npm modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            example/node_modules
+          key: example-npm-${{ runner.os }}-${{ hashFiles('example/package-lock.json','example/package.json') }}
+          restore-keys: |
+            example-npm-${{ runner.os }}-
+
+      - name: Install example app dependencies
+        working-directory: ./example
+        run: npm install
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle & Maven
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: ${{ runner.os }}-gradle-m2-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-m2-
+
+      - name: Install Maestro CLI
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Verify Maestro installation
+        run: maestro --version
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Cache AVD
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-31
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          target: google_apis
+          profile: pixel_6
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Build Android app
+        working-directory: ./example
+        run: |
+          npx expo prebuild --platform android
+          cd android
+          ./gradlew assembleDebug
+          ls -la app/build/outputs/apk/debug/
+
+      - name: Run Maestro tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          target: google_apis
+          profile: pixel_6
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: |
+            adb install example/android/app/build/outputs/apk/debug/app-debug.apk
+            mkdir -p example/maestro-output
+            # Run tests (produce JUnit results) and capture artifacts under example/maestro-output
+            mkdir -p example/maestro-output/debug
+            maestro test ./example/maestro/ --format junit --output example/maestro-results.xml --debug-output example/maestro-output/debug --test-output-dir example/maestro-output/debug || true
+            # Attempt to record each Flow file individually (maestro record accepts a single flow file)
+            bash -lc 'for f in ./example/maestro/*.yaml ./example/maestro/*.yml ./example/maestro/*.flow; do if [ -f "$f" ]; then echo "Recording $f"; maestro record --local "$f" "example/maestro-output/$(basename "$f").mp4" --debug-output example/maestro-output/debug || echo "record failed for $f"; fi; done' || true
+            echo "Listing example/maestro-output contents:"; ls -la example/maestro-output || true
+            echo "Debug dir contents:"; ls -la example/maestro-output/debug || true
+            echo "MP4 files:"; ls -la example/maestro-output/*.mp4 || true
+            ls -la example/ || true
+
+      - name: Collect Maestro artifacts
+        if: always()
+        run: |
+          echo "Waiting for recordings to flush"
+          sleep 5
+          sync || true
+          mkdir -p example/maestro-output/.maestro-tests
+          if [ -d "$HOME/.maestro/tests" ]; then
+            echo "Copying $HOME/.maestro/tests -> example/maestro-output/.maestro-tests/"
+            rsync -a "$HOME/.maestro/tests/" example/maestro-output/.maestro-tests/ || true
+            sync || true
+          else
+            echo "No $HOME/.maestro/tests directory found"
+          fi
+          echo "Listing example/maestro-output contents:"; ls -la example/maestro-output || true
+          echo "Debug dir contents:"; ls -la example/maestro-output/debug || true
+          echo "MP4 files:"; ls -la example/maestro-output/*.mp4 || true
+          echo "Disk usage of outputs:"; du -sh example/maestro-output || true
+          if [ -d example/maestro-output ]; then
+            echo "Creating tarball example/maestro-output.tar.gz"
+            tar -czf example/maestro-output.tar.gz -C example maestro-output || true
+          fi
+          ls -la example/ || true
+
+      - name: Upload Maestro test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-test-results
+          path: |
+            example/maestro-results.xml
+            example/maestro-output/
+            example/maestro-output.tar.gz
+            ~/.maestro/tests/
+          retention-days: 7
+          if-no-files-found: warn
