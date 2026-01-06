@@ -121,26 +121,28 @@ jobs:
             # Attempt to record each Flow file individually (maestro record accepts a single flow file)
             bash -lc 'for f in ./example/maestro/*.yaml ./example/maestro/*.yml ./example/maestro/*.flow; do if [ -f "$f" ]; then echo "Recording $f"; maestro record --local "$f" "example/maestro-output/$(basename "$f").mp4" --debug-output example/maestro-output/debug || echo "record failed for $f"; fi; done' || true
             echo "Listing example/maestro-output contents:"; ls -la example/maestro-output || true
-            if [ -d example/maestro-output ]; then
-              echo "Creating tarball example/maestro-output.tar.gz"
-              tar -czf example/maestro-output.tar.gz -C example maestro-output || true
-            fi
+            echo "Debug dir contents:"; ls -la example/maestro-output/debug || true
+            echo "MP4 files:"; ls -la example/maestro-output/*.mp4 || true
             ls -la example/ || true
 
       - name: Collect Maestro artifacts
         if: always()
         run: |
           echo "Waiting for recordings to flush"
-          sleep 2
+          sleep 5
           sync || true
           mkdir -p example/maestro-output/.maestro-tests
           if [ -d "$HOME/.maestro/tests" ]; then
             echo "Copying $HOME/.maestro/tests -> example/maestro-output/.maestro-tests/"
             rsync -a "$HOME/.maestro/tests/" example/maestro-output/.maestro-tests/ || true
+            sync || true
           else
             echo "No $HOME/.maestro/tests directory found"
           fi
           echo "Listing example/maestro-output contents:"; ls -la example/maestro-output || true
+          echo "Debug dir contents:"; ls -la example/maestro-output/debug || true
+          echo "MP4 files:"; ls -la example/maestro-output/*.mp4 || true
+          echo "Disk usage of outputs:"; du -sh example/maestro-output || true
           if [ -d example/maestro-output ]; then
             echo "Creating tarball example/maestro-output.tar.gz"
             tar -czf example/maestro-output.tar.gz -C example maestro-output || true
