@@ -30,11 +30,31 @@ jobs:
           node-version: 20
           cache: "npm"
 
+      - name: Cache SDK npm modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: sdk-npm-${{ runner.os }}-${{ hashFiles('package-lock.json','package.json') }}
+          restore-keys: |
+            sdk-npm-${{ runner.os }}-
+
       - name: Install SDK dependencies
         run: npm install
 
       - name: Build SDK
         run: npm run build
+
+      - name: Cache example npm modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            example/node_modules
+          key: example-npm-${{ runner.os }}-${{ hashFiles('example/package-lock.json','example/package.json') }}
+          restore-keys: |
+            example-npm-${{ runner.os }}-
 
       - name: Install example app dependencies
         working-directory: ./example
@@ -49,15 +69,16 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Cache Gradle
+      - name: Cache Gradle & Maven
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            ~/.m2/repository
+          key: ${{ runner.os }}-gradle-m2-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-m2-
 
       - name: Install Maestro CLI
         run: |
