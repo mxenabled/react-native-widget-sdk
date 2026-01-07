@@ -1,0 +1,10 @@
+# This test assumes that a budget has been generated for the specific user
+
+appId: com.anonymous.example
+---
+- launchApp
+- tapOn: "Budgets"
+- scrollUntilVisible:
+    centerElement: true
+    element:
+      text: "Spent.*Budgeted"
