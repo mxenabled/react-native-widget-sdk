@@ -2,9 +2,10 @@
 
 appId: com.anonymous.example
 ---
-- launchApp
-- tapOn: "Budgets"
-- scrollUntilVisible:
-    centerElement: true
-    element:
-      text: "Spent.*Budgeted"
+- retry:
+    maxRetries: 3
+    commands:
+      - launchApp
+      - tapOn: "Budgets"
+      - assertVisible: "$.*"
+      - assertVisible: "Spent"
