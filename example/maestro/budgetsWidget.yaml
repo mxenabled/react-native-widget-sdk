@@ -1,0 +1,11 @@
+# This test assumes that a budget has been generated for the specific user
+
+appId: com.anonymous.example
+---
+- retry:
+    maxRetries: 3
+    commands:
+      - launchApp
+      - tapOn: "Budgets"
+      - assertVisible: "$.*"
+      - assertVisible: "Spent"
