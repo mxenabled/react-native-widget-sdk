@@ -1,0 +1,8 @@
+appId: com.anonymous.example
+---
+- retry:
+    maxRetries: 3
+    commands:
+      - launchApp
+      - tapOn: "Pulse"
+      - assertVisible: ".*see what insights we have for you.*"
