@@ -3,9 +3,10 @@
 appId: com.anonymous.example
 ---
 - retry:
-    maxRetries: 3
+    maxRetries: 2
     commands:
       - launchApp
       - tapOn: "Budgets"
       - assertVisible: "$.*"
-      - assertVisible: "Spent"
+      - scrollUntilVisible:
+          element: "Budget Categories"

@@ -1,7 +1,7 @@
 appId: com.anonymous.example
 ---
 - retry:
-    maxRetries: 3
+    maxRetries: 2
     commands:
       - launchApp
       - tapOn: "Pulse"

@@ -1,10 +1,9 @@
 appId: com.anonymous.example
 ---
 - retry:
-    maxRetries: 3
+    maxRetries: 2
     commands:
       - launchApp
       - tapOn: "Spending"
-      - assertVisible: "Spending"
-      - assertVisible: "Income"
-      - assertVisible: "Total.*"
+      - assertVisible: "Spending.*"
+      - assertVisible: "Income.*"
