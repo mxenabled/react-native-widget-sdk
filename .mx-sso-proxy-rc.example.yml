@@ -1,4 +1,9 @@
+# For the E2E tests to pass a client needs to be setup in a certain way to ensure the correct widgets are returned
+# This test client should be used when running e2e tests: https://batcave.int.internal.mx/clients/CLT-9c423da1-3b85-4218-bb4c-a66ab8a9c133
+# The clientId and apiKey can be retrieved from the client page in batcave
+# Other users can be used, but the example user is known to work
+
 apiKey: ""
 apiHost: "https://int-api.mx.com"
 clientId: ""
-defaultUserGuid: ""
+defaultUserGuid: "USR-e7353471-51d7-447f-b621-db255148a10c"

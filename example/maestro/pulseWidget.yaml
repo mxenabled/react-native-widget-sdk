@@ -4,5 +4,5 @@ appId: com.anonymous.example
     maxRetries: 2
     commands:
       - launchApp
-      - tapOn: "Connect"
-      - assertVisible: "Select your institution"
+      - tapOn: "Pulse"
+      - assertVisible: ".*see what insights we have for you.*"
