@@ -1,8 +1,28 @@
 appId: com.anonymous.example
 ---
 - retry:
-    maxRetries: 2
+    maxRetries: 3
     commands:
       - launchApp
+      - assertVisible: "Connect"
       - tapOn: "Connect"
       - assertVisible: "Select your institution"
+      - tapOn: ".*(OAuth).*"
+      - tapOn: "Go to log in"
+      - assertVisible: "Authorization required"
+      - assertVisible: "Authorize"
+      - runFlow:
+          when:
+            platform: android
+          commands:
+            - tapOn:
+                text: "Authorize"
+      - runFlow:
+          when:
+            platform: iOS
+          commands:
+            - tapOn:
+                text: "Authorize"
+                index: 1
+            - tapOn: "Open"
+      - assertVisible: "Done"
