@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.0.3]
+
+### Added
+
+- An E2E test for the app redirect
+
+### Fixed
+
+- Redirect back to the example app after a successful connection
+
 ## [2.0.2]
 
 ### Added
