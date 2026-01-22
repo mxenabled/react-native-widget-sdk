@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [3.0.0]
+
+### Removed
+
+- No longer rendering the widgets inside of a SafeAreaView. Users of the widgets need to handle this.
+
+### Updated
+
+- Stopped using the deprecated react-native SafeAreaView in favor of react-native-safe-area-context
+
 ## [2.0.3]
 
 ### Added
