@@ -1,5 +1,6 @@
 import React, { FC, PropsWithChildren } from "react"
-import { SafeAreaView, Text, View, StyleSheet } from "react-native"
+import { Text, View, StyleSheet } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { Link } from "expo-router"
 
 const styles = StyleSheet.create({
