@@ -1,5 +1,6 @@
 import React from "react"
-import { SafeAreaView, StyleSheet, Platform } from "react-native"
+import { StyleSheet, Platform } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 import { BudgetsWidget } from "@mxenabled/react-native-widget-sdk"
 

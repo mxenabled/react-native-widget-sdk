@@ -1,5 +1,5 @@
 import React, { useRef, MutableRefObject, ReactElement } from "react"
-import { SafeAreaView, StyleProp, ViewStyle } from "react-native"
+import { StyleProp, ViewStyle, View } from "react-native"
 import { WebView } from "react-native-webview"
 import { Payload } from "@mxenabled/widget-post-message-definitions"
 
@@ -35,7 +35,7 @@ export function useWidgetRendererWithRef<Configuration>(
   const style = props.style || fullscreenStyles
 
   if (!url) {
-    return [ref, <SafeAreaView style={style} />]
+    return [ref, <View style={style} />]
   }
 
   const scheme = props.uiMessageWebviewUrlScheme || "mx"
@@ -54,7 +54,7 @@ export function useWidgetRendererWithRef<Configuration>(
 
   return [
     ref,
-    <SafeAreaView testID="widget_view" style={style}>
+    <View testID="widget_view" style={style}>
       <WebView
         testID="widget_webview"
         style={props.webViewStyle}
@@ -70,6 +70,6 @@ export function useWidgetRendererWithRef<Configuration>(
         onShouldStartLoadWithRequest={handler}
         onError={props.onWebViewError}
       />
-    </SafeAreaView>,
+    </View>,
   ]
 }
