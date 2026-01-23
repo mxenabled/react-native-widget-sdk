@@ -1,4 +1,4 @@
-import { Linking } from "react-native"
+import * as WebBrowser from "expo-web-browser"
 
 function asError(error: unknown): Error {
   if (error instanceof Error) {
@@ -10,17 +10,13 @@ function asError(error: unknown): Error {
   return new Error(((error || {}) as { valueOf(): string }).valueOf())
 }
 
-function onLoadUrlInBrowser(url: string) {
-  Linking.openURL(url)
-}
-
 function onLoadUrlInBrowserError(url: string, error: Error) {
   console.log(`Error loading ${url}: ${error}`)
 }
 
-export function loadUrlInBrowser(url: string) {
+export async function loadUrlInBrowser(url: string) {
   try {
-    onLoadUrlInBrowser(url)
+    await WebBrowser.openAuthSessionAsync(url)
   } catch (error) {
     onLoadUrlInBrowserError(url, asError(error))
   }

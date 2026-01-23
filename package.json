@@ -32,6 +32,9 @@
   },
   "dependencies": {
     "@mxenabled/widget-post-message-definitions": "^1.4.0",
+    "expo-web-browser": "^13.0.0",
+    "install": "^0.13.0",
+    "npm": "^11.8.0",
     "react-native-base64": "^0.2.1",
     "url": "^0.11.0"
   },
