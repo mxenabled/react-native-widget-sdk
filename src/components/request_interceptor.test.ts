@@ -5,7 +5,7 @@ import {
   LoadPayload,
   dispatchConnectLocationChangeEvent as handler,
 } from "@mxenabled/widget-post-message-definitions"
-import { makeRequestInterceptor } from "../../src/components/request_interceptor"
+import { makeRequestInterceptor } from "./request_interceptor"
 import * as ExpoWebBrowser from "expo-web-browser"
 
 jest.mock("expo-web-browser", () => {

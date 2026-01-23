@@ -23,7 +23,7 @@ export const ConnectVerificationWidget = makeWidgetComponentWithDefaults(Connect
 
 export function ConnectWidget(props: ConnectWidgetProps) {
   props = {
-    onOAuthRequested: makeDefaultConnectOnOAuthRequested(props),
+    onOAuthRequested: makeDefaultConnectOnOAuthRequested(),
     ...props,
   }
 

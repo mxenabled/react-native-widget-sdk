@@ -2,14 +2,14 @@ import React, { FC } from "react"
 import { render, waitFor } from "@testing-library/react-native"
 import { act } from "react-test-renderer"
 
-import { BudgetsWidget, MasterWidget } from "../../src/components/MoneyMapWidgets"
-import { PulseWidget, MiniPulseCarouselWidget } from "../../src/components/PulseWidgets"
-import { ConnectWidget, ConnectVerificationWidget } from "../../src/components/ConnectWidgets"
-import { Props } from "../../src/components/make_component"
+import { BudgetsWidget, MasterWidget } from "./MoneyMapWidgets"
+import { PulseWidget, MiniPulseCarouselWidget } from "./PulseWidgets"
+import { ConnectVerificationWidget } from "./ConnectWidgets"
+import { Props } from "./make_component"
 
-import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
-import { http, server } from "../mocks/server"
-import { Dimensions, triggerDeviceRotation, triggerUrlChange } from "../mocks/react_native"
+import TestingErrorBoundary from "../../test/helpers/TestingErrorBoundary"
+import { http, server } from "../../test/mocks/server"
+import { Dimensions, triggerDeviceRotation } from "../../test/mocks/react_native"
 
 jest.mock("expo-web-browser", () => {
   return {
@@ -23,90 +23,7 @@ describe("MasterWidget", () => fullWidgetComponentTestSuite(MasterWidget))
 describe("MiniPulseCarouselWidget", () => fullWidgetComponentTestSuite(MiniPulseCarouselWidget))
 describe("PulseWidget", () => fullWidgetComponentTestSuite(PulseWidget))
 
-describe("ConnectWidget", () => {
-  fullWidgetComponentTestSuite(ConnectWidget)
-
-  describe("OAuth", () => {
-    const testCases: {
-      label: string
-      url: string
-      check: (msg: string) => void
-    }[] = [
-      {
-        label:
-          "an OAuth deeplink triggers a post message to the web view (public URL with matching host)",
-        url: "appscheme://oauth_complete?member_guid=MBR-123&status=success",
-        check: (msg) => expect(msg).toContain("MBR-123"),
-      },
-      {
-        label:
-          "an OAuth deeplink triggers a post message to the web view (local URL with matching path)",
-        url: "exp://127.0.0.1:19000/--/oauth_complete?member_guid=MBR-123&status=success",
-        check: (msg) => expect(msg).toContain("MBR-123"),
-      },
-      {
-        label:
-          "an OAuth deeplink triggers a post message to the web view (public URL with matching path)",
-        url: "exp://exp.host/@community/with-webbrowser-redirect/--/oauth_complete?member_guid=MBR-123&status=success",
-        check: (msg) => expect(msg).toContain("MBR-123"),
-      },
-      {
-        label:
-          "an OAuth success deeplink includes the right status (public URL with matching host)",
-        url: "appscheme://oauth_complete?member_guid=MBR-123&status=success",
-        check: (msg) => expect(msg).toContain("oauthComplete/success"),
-      },
-      {
-        label: "an OAuth success deeplink includes the right status (local URL with matching path)",
-        url: "exp://127.0.0.1:19000/--/oauth_complete?member_guid=MBR-123&status=success",
-        check: (msg) => expect(msg).toContain("oauthComplete/success"),
-      },
-      {
-        label:
-          "an OAuth success deeplink includes the right status (public URL with matching path)",
-        url: "exp://exp.host/@community/with-webbrowser-redirect/--/oauth_complete?member_guid=MBR-123&status=success",
-        check: (msg) => expect(msg).toContain("oauthComplete/success"),
-      },
-      {
-        label:
-          "an OAuth failure deeplink includes the right status (public URL with matching host)",
-        url: "appscheme://oauth_complete?member_guid=MBR-123&status=error",
-        check: (msg) => expect(msg).toContain("oauthComplete/error"),
-      },
-      {
-        label: "an OAuth failure deeplink includes the right status (local URL with matching path)",
-        url: "exp://127.0.0.1:19000/--/oauth_complete?member_guid=MBR-123&status=error",
-        check: (msg) => expect(msg).toContain("oauthComplete/error"),
-      },
-      {
-        label:
-          "an OAuth failure deeplink includes the right status (public URL with matching path)",
-        url: "exp://exp.host/@community/with-webbrowser-redirect/--/oauth_complete?member_guid=MBR-123&status=error",
-        check: (msg) => expect(msg).toContain("oauthComplete/error"),
-      },
-    ]
-
-    testCases.forEach((testCase) => {
-      test(testCase.label, async () => {
-        expect.assertions(1)
-
-        const component = render(
-          <ConnectWidget
-            url="https://widgets.moneydesktop.com/md/..."
-            sendOAuthPostMessage={(_ref, msg) => {
-              testCase.check(msg)
-            }}
-          />,
-        )
-
-        await waitFor(() => component.findByTestId("widget_webview"))
-        triggerUrlChange(testCase.url)
-      })
-    })
-  })
-})
-
-function fullWidgetComponentTestSuite(Component: FC<Props>) {
+export function fullWidgetComponentTestSuite(Component: FC<Props>) {
   testSsoUrlLoading(Component)
   testStyling(Component)
 }
