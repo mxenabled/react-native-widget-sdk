@@ -11,6 +11,12 @@ import TestingErrorBoundary from "../helpers/TestingErrorBoundary"
 import { http, server } from "../mocks/server"
 import { Dimensions, triggerDeviceRotation, triggerUrlChange } from "../mocks/react_native"
 
+jest.mock("expo-web-browser", () => {
+  return {
+    openAuthSessionAsync: jest.fn().mockResolvedValue({ type: "success" }),
+  }
+})
+
 describe("BudgetsWidget", () => fullWidgetComponentTestSuite(BudgetsWidget))
 describe("ConnectVerificationWidget", () => fullWidgetComponentTestSuite(ConnectVerificationWidget))
 describe("MasterWidget", () => fullWidgetComponentTestSuite(MasterWidget))

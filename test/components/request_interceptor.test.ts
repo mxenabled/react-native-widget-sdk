@@ -5,9 +5,14 @@ import {
   LoadPayload,
   dispatchConnectLocationChangeEvent as handler,
 } from "@mxenabled/widget-post-message-definitions"
-import * as ReactNative from "react-native"
 import { makeRequestInterceptor } from "../../src/components/request_interceptor"
+import * as ExpoWebBrowser from "expo-web-browser"
 
+jest.mock("expo-web-browser", () => {
+  return {
+    openAuthSessionAsync: jest.fn().mockResolvedValue({ type: "success" }),
+  }
+})
 jest.mock("react-native")
 
 const makeNavigationEvent = (url: string) =>
@@ -67,7 +72,7 @@ describe("makeRequestInterceptor", () => {
       const req = makeNavigationEvent(externalUrl)
 
       fn(req)
-      expect(ReactNative.Linking.openURL).toHaveBeenCalledWith(externalUrl)
+      expect(ExpoWebBrowser.openAuthSessionAsync).toHaveBeenCalledWith(externalUrl)
     })
   })
 

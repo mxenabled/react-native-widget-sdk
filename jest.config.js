@@ -6,7 +6,7 @@ module.exports = {
   collectCoverageFrom: ["src/**/**"],
   setupFiles: ["./test/setup.ts"],
   setupFilesAfterEnv: ["./test/mocks/setup.ts", "./test/mocks/react_native_webview.ts"],
-  testRegex: ["_test\\.[jt]sx?$"],
+  testRegex: [".test\\.[jt]sx?$"],
   testPathIgnorePatterns: [
     "<rootDir>/node_modules",
     "<rootDir>/dist",
