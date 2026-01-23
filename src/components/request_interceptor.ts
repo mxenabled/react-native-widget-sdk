@@ -1,7 +1,7 @@
 import { WebViewNavigation } from "react-native-webview"
 import { parse as parseUrl } from "url"
 
-import { loadUrlInBrowser } from "./load_url_in_browser"
+import { loadUrlInBrowser } from "./loadUrlInBrowser"
 
 export enum Action {
   LoadInApp,
