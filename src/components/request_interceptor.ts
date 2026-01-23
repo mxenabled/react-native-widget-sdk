@@ -1,6 +1,8 @@
 import { WebViewNavigation } from "react-native-webview"
 import { parse as parseUrl } from "url"
 
+import { loadUrlInBrowser } from "./load_url_in_browser"
+
 export enum Action {
   LoadInApp,
   LoadInBrowser,
@@ -9,7 +11,6 @@ export enum Action {
 
 type Callbacks = {
   onIntercept?: (url: string) => void
-  onLoadUrlInBrowser?: (url: string) => void
 }
 
 class Interceptor {
@@ -53,7 +54,7 @@ export function makeRequestInterceptor(
         return false
 
       case Action.LoadInBrowser:
-        callbacks.onLoadUrlInBrowser?.(request.url)
+        loadUrlInBrowser(request.url)
         return false
     }
   }

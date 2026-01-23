@@ -5,9 +5,10 @@ import {
   LoadPayload,
   dispatchConnectLocationChangeEvent as handler,
 } from "@mxenabled/widget-post-message-definitions"
-
-import { loadUrlInBrowser } from "../../src/components/load_url_in_browser"
+import * as ReactNative from "react-native"
 import { makeRequestInterceptor } from "../../src/components/request_interceptor"
+
+jest.mock("react-native")
 
 const makeNavigationEvent = (url: string) =>
   ({
@@ -56,6 +57,17 @@ describe("makeRequestInterceptor", () => {
       const req = makeNavigationEvent("appscheme://connect/loaded")
 
       expect(fn(req)).toBe(false)
+    })
+
+    test("it calls loadUrlInBrowser for external urls", () => {
+      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {
+        onIntercept: (url) => handler(url, {}),
+      })
+      const externalUrl = "https://example.com/page"
+      const req = makeNavigationEvent(externalUrl)
+
+      fn(req)
+      expect(ReactNative.Linking.openURL).toHaveBeenCalledWith(externalUrl)
     })
   })
 

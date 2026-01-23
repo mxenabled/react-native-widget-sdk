@@ -4,7 +4,6 @@ import { WebView } from "react-native-webview"
 import { Payload } from "@mxenabled/widget-post-message-definitions"
 
 import { Props, useSsoUrl } from "../sso"
-import { loadUrlInBrowser } from "./load_url_in_browser"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
 import { sdkVersion } from "../version"
@@ -42,9 +41,6 @@ export function useWidgetRendererWithRef<Configuration>(
   const handler = makeRequestInterceptor(url, scheme, {
     onIntercept: (url) => {
       dispatchEvent(url, props)
-    },
-    onLoadUrlInBrowser: (url) => {
-      loadUrlInBrowser(url)
     },
   })
 
