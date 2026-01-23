@@ -60,43 +60,6 @@ describe("makeRequestInterceptor", () => {
   })
 
   describe("callbacks", () => {
-    test("calls the onLoadUrlInBrowser callback when loading a valid non post message url", () => {
-      expect.assertions(1)
-
-      const newUrl = "https://mx.com/page2"
-      const callbacks = {
-        onLoadUrlInBrowser: (url: string) => expect(url).toBe(newUrl),
-      }
-
-      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {
-        onIntercept: (url) => handler(url, {}),
-        onLoadUrlInBrowser: (url) => loadUrlInBrowser(url, callbacks),
-      })
-      const req = makeNavigationEvent(newUrl)
-
-      fn(req)
-    })
-
-    test("calls the onLoadUrlInBrowserError callback when loading a url causes an error", () => {
-      expect.assertions(1)
-
-      const newUrl = "https://mx.com/page2"
-      const callbacks = {
-        onLoadUrlInBrowser: (_url: string) => {
-          throw new Error("not today")
-        },
-        onLoadUrlInBrowserError: (url: string, _error: Error) => expect(url).toBe(newUrl),
-      }
-
-      const fn = makeRequestInterceptor("https://mx.com/", "appscheme", {
-        onIntercept: (url) => handler(url, {}),
-        onLoadUrlInBrowser: (url) => loadUrlInBrowser(url, callbacks),
-      })
-      const req = makeNavigationEvent(newUrl)
-
-      fn(req)
-    })
-
     test("valid mx/load message calls onLoad callback", () => {
       expect.assertions(1)
 

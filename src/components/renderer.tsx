@@ -4,7 +4,7 @@ import { WebView } from "react-native-webview"
 import { Payload } from "@mxenabled/widget-post-message-definitions"
 
 import { Props, useSsoUrl } from "../sso"
-import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
+import { loadUrlInBrowser } from "./load_url_in_browser"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
 import { sdkVersion } from "../version"
@@ -15,7 +15,7 @@ export type StylingProps = {
 }
 
 type MaybeWebViewRef = MutableRefObject<WebView | null>
-type BaseProps<Configuration> = Props<Configuration> & StylingProps & LoadUrlInBrowserProps
+type BaseProps<Configuration> = Props<Configuration> & StylingProps
 
 export function useWidgetRenderer<Configuration>(
   props: BaseProps<Configuration>,
@@ -44,7 +44,7 @@ export function useWidgetRendererWithRef<Configuration>(
       dispatchEvent(url, props)
     },
     onLoadUrlInBrowser: (url) => {
-      loadUrlInBrowser(url, props)
+      loadUrlInBrowser(url)
     },
   })
 

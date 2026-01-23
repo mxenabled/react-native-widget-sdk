@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [4.0.0]
+
+### Removed
+
+- Custom onLoadUrlInBrowser and onLoadUrlInBrowserError props
+
 ## [3.0.0]
 
 ### Removed

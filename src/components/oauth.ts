@@ -5,11 +5,11 @@ import { ConnectOAuthRequestedPayload } from "@mxenabled/widget-post-message-def
 
 import { WebViewRef } from "./webview"
 import { onUrlChange } from "../platform/deeplink"
-import { loadUrlInBrowser, LoadUrlInBrowserProps } from "./load_url_in_browser"
+import { loadUrlInBrowser } from "./load_url_in_browser"
 
-export function makeDefaultConnectOnOAuthRequested(props: LoadUrlInBrowserProps) {
+export function makeDefaultConnectOnOAuthRequested() {
   return function ({ url }: ConnectOAuthRequestedPayload) {
-    loadUrlInBrowser(url, props)
+    loadUrlInBrowser(url)
   }
 }
 
