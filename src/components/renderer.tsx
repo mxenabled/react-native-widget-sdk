@@ -37,8 +37,7 @@ export function useWidgetRendererWithRef<Configuration>(
     return [ref, <View style={style} />]
   }
 
-  const scheme = props.uiMessageWebviewUrlScheme || "mx"
-  const handler = makeRequestInterceptor(url, scheme, {
+  const handler = makeRequestInterceptor(url, {
     onIntercept: (url) => {
       dispatchEvent(url, props)
     },

@@ -38,6 +38,9 @@ export default function Connect() {
         onLoaded={(_payload) => {
           console.log("Widget has loaded")
         }}
+        onMemberConnected={(payload) => {
+          console.log(`Member connected with payload: ${JSON.stringify(payload)}`)
+        }}
         onStepChange={(payload) => {
           console.log(`Moving from ${payload.previous} to ${payload.current}`)
         }}

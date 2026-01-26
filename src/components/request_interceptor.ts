@@ -10,11 +10,11 @@ export enum Action {
 }
 
 type Callbacks = {
-  onIntercept?: (url: string) => void
+  onIntercept: (url: string) => void
 }
 
 class Interceptor {
-  constructor(protected widgetUrl: string, protected uiMessageWebviewUrlScheme: string) {}
+  constructor(protected widgetUrl: string) {}
 
   action(request: WebViewNavigation): Action {
     if (request.url === this.widgetUrl) {
@@ -23,12 +23,7 @@ class Interceptor {
 
     const { protocol } = parseUrl(request.url)
 
-    /* The `uiMessageWebviewUrlScheme` value will be something like "appscheme"
-     * but the `url.protocol` will be "appscheme:", so we slice off the last
-     * character so that we can compare them.
-     */
-    const scheme = (protocol || "").slice(0, -1)
-    if (scheme === this.uiMessageWebviewUrlScheme) {
+    if (protocol === "mx:") {
       return Action.Intercept
     }
 
@@ -36,12 +31,8 @@ class Interceptor {
   }
 }
 
-export function makeRequestInterceptor(
-  widgetUrl: string,
-  uiMessageWebviewUrlScheme: string,
-  callbacks: Callbacks,
-) {
-  const interceptor = new Interceptor(widgetUrl, uiMessageWebviewUrlScheme)
+export function makeRequestInterceptor(widgetUrl: string, callbacks: Callbacks) {
+  const interceptor = new Interceptor(widgetUrl)
 
   return function (request: WebViewNavigation) {
     const action = interceptor.action(request)
@@ -50,7 +41,7 @@ export function makeRequestInterceptor(
         return true
 
       case Action.Intercept:
-        callbacks.onIntercept?.(request.url)
+        callbacks.onIntercept(request.url)
         return false
 
       case Action.LoadInBrowser:
