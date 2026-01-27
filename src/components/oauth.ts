@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react"
 import { parse as parseUrl, UrlWithParsedQuery } from "url"
-
-import { ConnectOAuthRequestedPayload } from "@mxenabled/widget-post-message-definitions"
-
 import { WebViewRef } from "./webview"
 import { onUrlChange } from "../platform/deeplink"
-import { loadUrlInBrowser } from "./loadUrlInBrowser"
-
-export function makeDefaultConnectOnOAuthRequested() {
-  return function ({ url }: ConnectOAuthRequestedPayload) {
-    loadUrlInBrowser(url)
-  }
-}
 
 /* Used when handling and parsing an OAuth deeplink. This is what the OAuth
  * flow uses to communicate state and status back to the app.

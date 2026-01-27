@@ -1,52 +1,22 @@
 import { WebViewNavigation } from "react-native-webview"
-import { parse as parseUrl } from "url"
-
-import { loadUrlInBrowser } from "./loadUrlInBrowser"
-
-export enum Action {
-  LoadInApp,
-  LoadInBrowser,
-  Intercept,
-}
+import * as WebBrowser from "expo-web-browser"
 
 type Callbacks = {
   onIntercept: (url: string) => void
 }
 
-class Interceptor {
-  constructor(protected widgetUrl: string) {}
-
-  action(request: WebViewNavigation): Action {
-    if (request.url === this.widgetUrl) {
-      return Action.LoadInApp
-    }
-
-    const { protocol } = parseUrl(request.url)
-
-    if (protocol === "mx:") {
-      return Action.Intercept
-    }
-
-    return Action.LoadInBrowser
-  }
-}
-
 export function makeRequestInterceptor(widgetUrl: string, callbacks: Callbacks) {
-  const interceptor = new Interceptor(widgetUrl)
+  return (request: WebViewNavigation) => {
+    const { protocol } = new URL(request.url)
 
-  return function (request: WebViewNavigation) {
-    const action = interceptor.action(request)
-    switch (action) {
-      case Action.LoadInApp:
-        return true
-
-      case Action.Intercept:
-        callbacks.onIntercept(request.url)
-        return false
-
-      case Action.LoadInBrowser:
-        loadUrlInBrowser(request.url)
-        return false
+    if (request.url === widgetUrl) {
+      return true
+    } else if (protocol === "mx:") {
+      callbacks.onIntercept(request.url)
+      return false
+    } else {
+      WebBrowser.openBrowserAsync(request.url)
+      return false
     }
   }
 }
