@@ -10,7 +10,7 @@ import * as ExpoWebBrowser from "expo-web-browser"
 
 jest.mock("expo-web-browser", () => {
   return {
-    openAuthSessionAsync: jest.fn().mockResolvedValue({ type: "success" }),
+    openBrowserAsync: jest.fn().mockResolvedValue({ type: "success" }),
   }
 })
 jest.mock("react-native")
@@ -72,7 +72,7 @@ describe("makeRequestInterceptor", () => {
       const req = makeNavigationEvent(externalUrl)
 
       fn(req)
-      expect(ExpoWebBrowser.openAuthSessionAsync).toHaveBeenCalledWith(externalUrl)
+      expect(ExpoWebBrowser.openBrowserAsync).toHaveBeenCalledWith(externalUrl)
     })
   })
 
