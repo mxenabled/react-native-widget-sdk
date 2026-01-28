@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Now opening oauth tabs inside the app instead of in a separate browser. This simplifies the configuration process and makes it easier for the user to get back to the app in case of failures.
+- When onOAuthRequested is provided to the connect widget it no longer overrides oauth redirect behavior. It is now called in addition to the built in redirect behavior.
 
 ## [3.0.0]
 
