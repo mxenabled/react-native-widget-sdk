@@ -2,7 +2,7 @@ import React, { useRef, MutableRefObject, ReactElement } from "react"
 import { StyleProp, ViewStyle, View } from "react-native"
 import { WebView } from "react-native-webview"
 import { Payload } from "@mxenabled/widget-post-message-definitions"
-
+import * as WebBrowser from "expo-web-browser"
 import { Props, useSsoUrl } from "../sso"
 import { makeRequestInterceptor } from "./request_interceptor"
 import { useFullscreenStyles } from "./screen_dimensions"
@@ -62,6 +62,9 @@ export function useWidgetRendererWithRef<Configuration>(
         javaScriptEnabled={true}
         domStorageEnabled={true}
         incognito={true}
+        onOpenWindow={(event) => {
+          WebBrowser.openBrowserAsync(event.nativeEvent.targetUrl)
+        }}
         onShouldStartLoadWithRequest={handler}
         onError={props.onWebViewError}
       />
