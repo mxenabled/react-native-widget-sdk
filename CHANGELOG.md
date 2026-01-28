@@ -13,13 +13,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [4.0.0]
+
+### Removed
+
+- Custom onLoadUrlInBrowser and onLoadUrlInBrowserError props
+- uiMessageWebviewUrlScheme is no longer supported. The default scheme of the mx widgets will be use which is "mx"
+
+### Changed
+
+- Now opening oauth tabs inside the app instead of in a separate browser. This simplifies the configuration process and makes it easier for the user to get back to the app in case of failures.
+- When onOAuthRequested is provided to the connect widget it no longer overrides oauth redirect behavior. It is now called in addition to the built in redirect behavior.
+- Now opening external links without leaving the app
+
 ## [3.0.0]
 
 ### Removed
 
 - No longer rendering the widgets inside of a SafeAreaView. Users of the widgets need to handle this.
 
-### Updated
+### Changed
 
 - Stopped using the deprecated react-native SafeAreaView in favor of react-native-safe-area-context
 

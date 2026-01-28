@@ -89,7 +89,6 @@ export function getWidgetConfigurationFromProps(
     is_mobile_webview: true,
     mode: props.mode,
     ui_message_version: 4,
-    ui_message_webview_url_scheme: props.uiMessageWebviewUrlScheme,
     update_credentials: props.updateCredentials,
     widget_type: props.widgetType,
   }
