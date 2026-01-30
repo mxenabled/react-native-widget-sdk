@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Custom onLoadUrlInBrowser and onLoadUrlInBrowserError props
-- uiMessageWebviewUrlScheme is no longer supported. The default scheme of the mx widgets will be use which is "mx"
+- uiMessageWebviewUrlScheme is no longer supported. The default scheme of the mx widgets will be used which is "mx". clientRedirectUrl has been the recommended method for redirecting from oauth for [years](https://docs.mx.com/release-notes/2022/#february)
 
 ### Changed
 
