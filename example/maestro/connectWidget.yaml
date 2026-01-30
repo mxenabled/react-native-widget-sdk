@@ -9,8 +9,6 @@ appId: com.anonymous.example
       - assertVisible: "Select your institution"
       - tapOn: ".*(OAuth).*"
       - tapOn: "Go to log in"
-      - assertVisible: "Authorization required"
-      - assertVisible: "Authorize"
       - runFlow:
           when:
             platform: android
@@ -22,7 +20,13 @@ appId: com.anonymous.example
             platform: iOS
           commands:
             - tapOn:
-                text: "Authorize"
-                index: 1
-            - tapOn: "Open"
+                text: "Continue"
+            - tapOn: # Maestro doesn't provide a wait command, so we use a delayed optional tap
+                text: "non_existent_text"
+                optional: true
+                repeat: 1
+                delay: 10000
+            # Maestro can't see within ASWebAuthenticationSession, so we have to use points
+            - tapOn:
+                point: 21%,51%
       - assertVisible: "Done"
