@@ -21,7 +21,7 @@ export default function Connect() {
   return (
     <SafeAreaView style={styles.page}>
       <ConnectWidget
-        proxy={proxy}
+        url="junk"
         clientRedirectUrl={clientRedirectUrl}
         onSsoUrlLoadError={(error) => {
           console.error(`SSO URL load error: ${error}`)
