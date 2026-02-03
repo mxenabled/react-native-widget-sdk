@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
 
 import { ConnectWidget } from "@mxenabled/react-native-widget-sdk"
-import { fetchWidgetUrl } from "../shared/api"
+import { fetchConnectWidgetUrl } from "../shared/api"
 
 const styles = StyleSheet.create({
   page: {
@@ -19,7 +19,7 @@ export default function Connect() {
   const [url, setUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    fetchWidgetUrl({ clientRedirectUrl, widgetType: "connect_widget" }).then((url) => {
+    fetchConnectWidgetUrl(clientRedirectUrl).then((url) => {
       setUrl(url)
     })
   }, [clientRedirectUrl])
