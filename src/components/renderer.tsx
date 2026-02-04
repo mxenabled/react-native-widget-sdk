@@ -1,4 +1,4 @@
-import React, { useRef, MutableRefObject, ReactElement } from "react"
+import React, { ReactElement } from "react"
 import { StyleProp, ViewStyle, View } from "react-native"
 import { WebView } from "react-native-webview"
 import { Payload } from "@mxenabled/widget-post-message-definitions"
@@ -13,28 +13,18 @@ export type StylingProps = {
   webViewStyle?: StyleProp<ViewStyle>
 }
 
-type MaybeWebViewRef = MutableRefObject<WebView | null>
 type BaseProps<Configuration> = Props<Configuration> & StylingProps
 
 export function useWidgetRenderer<Configuration>(
   props: BaseProps<Configuration>,
   dispatchEvent: (url: string, callbacks: BaseProps<Configuration>) => Payload | undefined,
 ): ReactElement {
-  const [_ref, elem] = useWidgetRendererWithRef(props, dispatchEvent)
-  return elem
-}
-
-export function useWidgetRendererWithRef<Configuration>(
-  props: BaseProps<Configuration>,
-  dispatchEvent: (url: string, callbacks: BaseProps<Configuration>) => Payload | undefined,
-): [MaybeWebViewRef, ReactElement] {
-  const ref = useRef<WebView>(null)
   const url = useSsoUrl(props)
   const fullscreenStyles = useFullscreenStyles()
   const style = props.style || fullscreenStyles
 
   if (!url) {
-    return [ref, <View style={style} />]
+    return <View style={style} />
   }
 
   const handler = makeRequestInterceptor(url, {
@@ -47,13 +37,11 @@ export function useWidgetRendererWithRef<Configuration>(
     window.MXReactNativeSDKVersion = "${sdkVersion}";
   `
 
-  return [
-    ref,
+  return (
     <View testID="widget_view" style={style}>
       <WebView
         testID="widget_webview"
         style={props.webViewStyle}
-        ref={ref}
         scrollEnabled={true}
         source={{ uri: url }}
         originWhitelist={["*"]}
@@ -68,6 +56,6 @@ export function useWidgetRendererWithRef<Configuration>(
         onShouldStartLoadWithRequest={handler}
         onError={props.onWebViewError}
       />
-    </View>,
-  ]
+    </View>
+  )
 }
