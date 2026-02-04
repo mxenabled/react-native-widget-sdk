@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Custom onLoadUrlInBrowser and onLoadUrlInBrowserError props
 - uiMessageWebviewUrlScheme is no longer supported. The default scheme of the mx widgets will be used which is "mx". clientRedirectUrl has been the recommended method for redirecting from oauth for [years](https://docs.mx.com/release-notes/2022/#february)
+- The proxy property has been removed from the connect widget. Before a connect widget is rendered a widget url should be fetched and then provided to the widget.
 
 ### Changed
 

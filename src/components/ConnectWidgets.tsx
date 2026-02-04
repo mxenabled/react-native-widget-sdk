@@ -7,12 +7,10 @@ import {
 import { Type, SsoUrlProps, ConnectWidgetConfigurationProps } from "../sso"
 import * as WebBrowser from "expo-web-browser"
 import { makeWidgetComponentWithDefaults } from "./make_component"
-import { useOAuthDeeplink, OAuthProps } from "./oauth"
-import { useWidgetRendererWithRef, StylingProps } from "./renderer"
+import { StylingProps, useWidgetRenderer } from "./renderer"
 
 export type ConnectWidgetProps = SsoUrlProps &
   StylingProps &
-  OAuthProps &
   ConnectPostMessageCallbackProps<string> &
   ConnectWidgetConfigurationProps &
   JSX.IntrinsicAttributes
@@ -40,12 +38,10 @@ export function ConnectWidget(props: ConnectWidgetProps) {
     onOAuthRequested,
   }
 
-  const [ref, elem] = useWidgetRendererWithRef(
+  const elem = useWidgetRenderer(
     { ...modifiedProps, widgetType: Type.ConnectWidget },
     dispatchConnectLocationChangeEvent,
   )
-
-  useOAuthDeeplink(ref, modifiedProps)
 
   return elem
 }
