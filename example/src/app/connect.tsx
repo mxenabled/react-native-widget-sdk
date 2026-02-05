@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, useWindowDimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
 
@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
 export default function Connect() {
   const clientRedirectUrl = Linking.createURL("connect")
 
+  const { height, width } = useWindowDimensions()
+
   const [url, setUrl] = useState<string | null>(null)
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function Connect() {
   }, [clientRedirectUrl])
 
   return (
-    <SafeAreaView style={styles.page}>
+    <SafeAreaView style={{ ...styles.page, height, width }}>
       {url && (
         <ConnectWidget
           url={url}
