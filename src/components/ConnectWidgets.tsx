@@ -6,7 +6,6 @@ import {
 
 import { Type, SsoUrlProps, ConnectWidgetConfigurationProps } from "../sso"
 import * as WebBrowser from "expo-web-browser"
-import { makeWidgetComponentWithDefaults } from "./make_component"
 import { StylingProps, useWidgetRenderer } from "./renderer"
 
 export type ConnectWidgetProps = SsoUrlProps &
@@ -14,11 +13,6 @@ export type ConnectWidgetProps = SsoUrlProps &
   ConnectPostMessageCallbackProps<string> &
   ConnectWidgetConfigurationProps &
   JSX.IntrinsicAttributes
-
-export const ConnectVerificationWidget = makeWidgetComponentWithDefaults(ConnectWidget, {
-  mode: "verification",
-  includeTransactions: false,
-})
 
 export function ConnectWidget(props: ConnectWidgetProps) {
   const onOAuthRequested = (payload: ConnectOAuthRequestedPayload) => {

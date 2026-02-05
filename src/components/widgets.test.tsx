@@ -4,7 +4,6 @@ import { act } from "react-test-renderer"
 
 import { BudgetsWidget, MasterWidget } from "./MoneyMapWidgets"
 import { PulseWidget, MiniPulseCarouselWidget } from "./PulseWidgets"
-import { ConnectVerificationWidget } from "./ConnectWidgets"
 import { Props } from "./make_component"
 
 import TestingErrorBoundary from "../../test/helpers/TestingErrorBoundary"
@@ -18,7 +17,6 @@ jest.mock("expo-web-browser", () => {
 })
 
 describe("BudgetsWidget", () => fullWidgetComponentTestSuite(BudgetsWidget))
-describe("ConnectVerificationWidget", () => fullWidgetComponentTestSuite(ConnectVerificationWidget))
 describe("MasterWidget", () => fullWidgetComponentTestSuite(MasterWidget))
 describe("MiniPulseCarouselWidget", () => fullWidgetComponentTestSuite(MiniPulseCarouselWidget))
 describe("PulseWidget", () => fullWidgetComponentTestSuite(PulseWidget))
