@@ -1,0 +1,12 @@
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "Google Pixel 9 Emulator",
+  "appium:platformVersion": "16.0",
+  "appium:appPackage": "com.anonymous.example",
+  "appium:appActivity": ".MainActivity",
+  "appium:appWaitActivity": "*",
+  "sauce:options": {
+    "appiumVersion": "2.11.0"
+  }
+}

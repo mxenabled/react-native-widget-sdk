@@ -1,0 +1,9 @@
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "Google.*|Samsung.*",
+  "appium:platformVersion": "^1[4-6].*",
+  "sauce:options": {
+    "appiumVersion": "latest"
+  }
+}

@@ -1,0 +1,243 @@
+name: E2E tests (Sauce Labs)
+
+# Builds the example app as a release APK and runs the Maestro flows in
+# example/maestro on a Sauce Labs device with maestro-runner. The SSO proxy
+# runs on this runner, and the device reaches it through a Sauce Connect
+# tunnel. See E2E_TESTING.md for the required secrets.
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "example/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/e2e-sauce-labs.yml"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Sauce Labs device type
+        type: choice
+        options:
+          - android-emulator
+          - android-real-device
+        default: android-emulator
+
+concurrency:
+  group: e2e-sauce-labs-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Sauce Connect can't proxy "localhost" to real devices, so the app talks to
+  # this alias, which the test job points at 127.0.0.1 in /etc/hosts.
+  PROXY_HOST: sdk-e2e-proxy
+  PROXY_PORT: "8089"
+
+jobs:
+  check-secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      # PRs from forks and Dependabot don't get repository secrets, so skip
+      # the run instead of failing it.
+      - id: check
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+          MX_CLIENT_ID: ${{ secrets.MX_CLIENT_ID }}
+          MX_API_KEY: ${{ secrets.MX_API_KEY }}
+        run: |
+          missing=()
+          for name in SAUCE_USERNAME SAUCE_ACCESS_KEY MX_CLIENT_ID MX_API_KEY; do
+            [ -n "${!name}" ] || missing+=("$name")
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::notice::Skipping Sauce Labs E2E tests, missing secrets: ${missing[*]}"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # Doesn't need secrets, so it runs on every PR and catches build breaks
+  # even when the Sauce Labs tests are skipped.
+  build-android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            example/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      # ubuntu-latest already has the Android SDK (ANDROID_HOME). Gradle installs
+      # anything missing, like the NDK version React Native pins.
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('example/package-lock.json', 'example/app.json') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Install SDK dependencies
+        run: npm ci
+
+      - name: Build SDK
+        run: npm run build
+
+      - name: Install example app dependencies
+        working-directory: example
+        run: npm ci
+
+      - name: Build release APK
+        working-directory: example
+        env:
+          EXPO_PUBLIC_PROXY_BASE_URL: http://${{ env.PROXY_HOST }}:${{ env.PROXY_PORT }}
+        run: |
+          npx expo prebuild --platform android --no-install
+          cd android
+          ./gradlew assembleRelease --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: example-app-release-apk
+          path: example/android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 7
+          if-no-files-found: error
+
+  test-android:
+    needs: [check-secrets, build-android]
+    if: needs.check-secrets.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      TARGET: ${{ inputs.target || 'android-emulator' }}
+      SAUCE_REGION: ${{ vars.SAUCE_REGION || 'us-west-1' }}
+      SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+      SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      MAESTRO_RUNNER_VERSION: 1.1.29
+      RUN_NAME: rn-sdk-e2e-${{ github.run_id }}-${{ github.run_attempt }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # For the SSO proxy (@mxenabled/sso-api-proxy, a dev dependency).
+      - name: Install SDK dependencies
+        run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: example-app-release-apk
+          path: ${{ runner.temp }}/apk
+
+      - name: Start SSO proxy
+        env:
+          MX_CLIENT_ID: ${{ secrets.MX_CLIENT_ID }}
+          MX_API_KEY: ${{ secrets.MX_API_KEY }}
+          MX_API_HOST: ${{ vars.MX_API_HOST || 'https://int-api.mx.com' }}
+          MX_DEFAULT_USER_GUID: ${{ vars.MX_DEFAULT_USER_GUID || 'USR-e7353471-51d7-447f-b621-db255148a10c' }}
+        run: |
+          echo "127.0.0.1 $PROXY_HOST" | sudo tee -a /etc/hosts
+          # </dev/null: if a setting is missing the proxy prompts for it; fail instead of hanging.
+          nohup npx mx-sso-proxy run --port "$PROXY_PORT" </dev/null >"$RUNNER_TEMP/sso-proxy.log" 2>&1 &
+
+          # Wait until the proxy can create a widget URL, which also checks the credentials.
+          for _ in $(seq 1 30); do
+            if curl -sf -o /dev/null -X POST "http://$PROXY_HOST:$PROXY_PORT/user/widget_urls" \
+              -H "Content-Type: application/json" \
+              -d '{"widget_url":{"widget_type":"connect_widget","is_mobile_webview":true}}'; then
+              echo "SSO proxy is up"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::error::SSO proxy didn't return a widget URL"
+          cat "$RUNNER_TEMP/sso-proxy.log"
+          exit 1
+
+      - name: Start Sauce Connect tunnel
+        uses: saucelabs/sauce-connect-action@v3
+        with:
+          username: ${{ secrets.SAUCE_USERNAME }}
+          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          region: ${{ env.SAUCE_REGION }}
+          tunnelName: ${{ env.RUN_NAME }}
+          # The proxy alias resolves to 127.0.0.1, which Sauce Connect 5 blocks by default.
+          proxyLocalhost: allow
+
+      - name: Upload APK to Sauce Labs
+        id: upload
+        run: |
+          app_name="$RUN_NAME.apk"
+          curl -fsS -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
+            -X POST "https://api.$SAUCE_REGION.saucelabs.com/v1/storage/upload" \
+            -F "payload=@$RUNNER_TEMP/apk/app-release.apk" \
+            -F "name=$app_name" \
+            -o "$RUNNER_TEMP/upload.json"
+          echo "file_id=$(jq -r '.item.id' "$RUNNER_TEMP/upload.json")" >> "$GITHUB_OUTPUT"
+
+          jq --arg app "$app_name" --arg build "$RUN_NAME" --arg tunnel "$RUN_NAME" \
+            '. + {"appium:app": ("storage:filename=" + $app)} | ."sauce:options" += {build: $build, tunnelName: $tunnel}' \
+            "example/sauce/$TARGET.json" > "$RUNNER_TEMP/caps.json"
+          cat "$RUNNER_TEMP/caps.json"
+
+      - name: Run Maestro flows on Sauce Labs
+        run: |
+          # Real devices share the mobile team's concurrency, so use one at a time.
+          parallel=2
+          [ "$TARGET" = "android-real-device" ] && parallel=1
+
+          npx -y "maestro-runner@$MAESTRO_RUNNER_VERSION" \
+            --driver appium \
+            --appium-url "https://$SAUCE_USERNAME:$SAUCE_ACCESS_KEY@ondemand.$SAUCE_REGION.saucelabs.com/wd/hub" \
+            --caps "$RUNNER_TEMP/caps.json" \
+            test --parallel "$parallel" --output maestro-report --flatten example/maestro/
+
+      - name: Remove credentials from the report
+        if: always()
+        run: |
+          # maestro-runner writes the Appium URL, which includes the access key,
+          # into its log and session files. Don't publish them.
+          [ -d maestro-report ] || exit 0
+          find maestro-report \( -name 'maestro-runner.log' -o -name '*session*.json' \) -delete
+          grep -rlF -- "$SAUCE_ACCESS_KEY" maestro-report | xargs -r rm -f
+
+      - name: Upload Maestro report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-report-${{ env.TARGET }}
+          path: maestro-report/
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: SSO proxy log
+        if: failure()
+        run: cat "$RUNNER_TEMP/sso-proxy.log" || true
+
+      - name: Delete APK from Sauce Labs
+        if: always() && steps.upload.outputs.file_id != '' && steps.upload.outputs.file_id != 'null'
+        run: |
+          curl -fsS -o /dev/null -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
+            -X DELETE "https://api.$SAUCE_REGION.saucelabs.com/v1/storage/files/${{ steps.upload.outputs.file_id }}" || true
