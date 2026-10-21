@@ -1,7 +1,4 @@
-import { Platform } from "react-native"
-
-const baseUrl = Platform.OS === "android" ? "http://10.0.2.2:8089" : "http://localhost:8089"
-const proxyUrl = `${baseUrl}/user/widget_urls`
+import { proxy } from "./proxy"
 
 interface WidgetUrlResponse {
   widget_url: {
@@ -27,7 +24,7 @@ export const fetchConnectWidgetUrl = async (clientRedirectUrl: string) => {
   })
 
   try {
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(proxy, {
       body,
       headers,
       method,

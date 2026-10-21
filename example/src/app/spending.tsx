@@ -1,10 +1,8 @@
 import React from "react"
-import { StyleSheet, Platform } from "react-native"
+import { StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { SpendingWidget } from "@mxenabled/react-native-widget-sdk"
-
-const baseUrl = Platform.OS === "android" ? "http://10.0.2.2:8089" : "http://localhost:8089"
-const proxy = `${baseUrl}/user/widget_urls`
+import { proxy } from "../shared/proxy"
 
 const styles = StyleSheet.create({
   page: {
