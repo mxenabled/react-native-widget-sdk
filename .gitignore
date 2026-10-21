@@ -4,6 +4,8 @@ TestRnApp_*
 build
 coverage
 dist
-.mx-sso-proxy-rc.yaml
+# Local SSO proxy config (real credentials). The example file is committed.
+.mx-sso-proxy-rc*
+!.mx-sso-proxy-rc.example.yml
 node_modules
 npm-debug.log

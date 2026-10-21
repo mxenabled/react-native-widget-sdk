@@ -1,0 +1,9 @@
+{
+  "name": "example-sauce-e2e-tools",
+  "private": true,
+  "description": "Tools the Sauce Labs E2E workflow runs (see E2E_TESTING.md). Locked so CI installs exactly these.",
+  "devDependencies": {
+    "@mxenabled/sso-api-proxy": "1.3.4",
+    "maestro-runner": "1.1.29"
+  }
+}
